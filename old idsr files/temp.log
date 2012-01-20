@@ -1,0 +1,3680 @@
+
+
+====================================
+Log started, 07/04/2011 04:04:07
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE d%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='11' AND name LIKE 'd%'
+
+Done in 0.083720922470093s
+
+
+
+====================================
+Log started, 07/04/2011 05:04:05
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE d%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='11' AND name LIKE 'd%'
+
+Done in 0.04927396774292s
+
+
+
+====================================
+Log started, 07/04/2011 06:04:51
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE j%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='1' AND name LIKE 'j%'
+
+Done in 0.25539779663086s
+
+
+
+====================================
+Log started, 07/04/2011 06:04:51
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE jj%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='1' AND name LIKE 'jj%'
+
+Done in 0.1285240650177s
+
+
+
+====================================
+Log started, 07/04/2011 06:04:19
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE j%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='1' AND name LIKE 'j%'
+
+Done in 0.0094761848449707s
+
+
+
+====================================
+Log started, 07/04/2011 06:04:20
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE J%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='1' AND name LIKE 'J%'
+
+Done in 0.0058279037475586s
+
+
+
+====================================
+Log started, 07/04/2011 08:04:53
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE s%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='1' AND name LIKE 's%'
+
+Done in 0.28804183006287s
+
+
+
+====================================
+Log started, 07/04/2011 08:04:52
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE g%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='1' AND name LIKE 'g%'
+
+Done in 0.0066709518432617s
+
+
+
+====================================
+Log started, 07/04/2011 08:04:56
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='1' AND name LIKE 'G%'
+
+Done in 0.0075421333312988s
+
+
+
+====================================
+Log started, 07/04/2011 08:04:21
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE d%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='1' AND name LIKE 'd%'
+
+Done in 0.0061261653900146s
+
+
+
+====================================
+Log started, 07/04/2011 08:04:22
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE ds%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='1' AND name LIKE 'ds%'
+
+Done in 0.010526895523071s
+
+
+
+====================================
+Log started, 07/04/2011 08:04:24
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE a%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='1' AND name LIKE 'a%'
+
+Done in 0.048346996307373s
+
+
+
+====================================
+Log started, 07/04/2011 08:04:30
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE Aid Intergrated Programme Mangu Dispensary%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='1' AND name LIKE 'Aid Intergrated Programme Mangu Dispensary%'
+
+Done in 0.0057721138000488s
+
+
+
+====================================
+Log started, 07/04/2011 08:04:34
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE b%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='1' AND name LIKE 'b%'
+
+Done in 0.047937870025635s
+
+
+
+====================================
+Log started, 07/04/2011 08:04:34
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE Bu%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='1' AND name LIKE 'Bu%'
+
+Done in 0.0085861682891846s
+
+
+
+====================================
+Log started, 07/04/2011 08:04:35
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE Bun%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='1' AND name LIKE 'Bun%'
+
+Done in 0.044995784759521s
+
+
+
+====================================
+Log started, 07/04/2011 08:04:37
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE B%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='1' AND name LIKE 'B%'
+
+Done in 0.048510074615479s
+
+
+
+====================================
+Log started, 07/04/2011 08:04:22
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE a%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='1' AND name LIKE 'a%'
+
+Done in 0.045459985733032s
+
+
+
+====================================
+Log started, 07/04/2011 08:04:23
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE A%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='1' AND name LIKE 'A%'
+
+Done in 0.045736074447632s
+
+
+
+====================================
+Log started, 07/04/2011 08:04:28
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE a%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='1' AND name LIKE 'a%'
+
+Done in 0.0057568550109863s
+
+
+
+====================================
+Log started, 07/04/2011 08:04:29
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE A%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='1' AND name LIKE 'A%'
+
+Done in 0.0081419944763184s
+
+
+
+====================================
+Log started, 07/04/2011 08:04:34
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE n%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='1' AND name LIKE 'n%'
+
+Done in 0.0070888996124268s
+
+
+
+====================================
+Log started, 07/04/2011 08:04:34
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE Ny%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='1' AND name LIKE 'Ny%'
+
+Done in 0.0055928230285645s
+
+
+
+====================================
+Log started, 07/04/2011 08:04:35
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE N%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='1' AND name LIKE 'N%'
+
+Done in 0.0093319416046143s
+
+
+
+====================================
+Log started, 07/04/2011 09:04:07
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE s%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='1' AND name LIKE 's%'
+
+Done in 0.10900592803955s
+
+
+
+====================================
+Log started, 07/04/2011 09:04:09
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE S%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='1' AND name LIKE 'S%'
+
+Done in 0.065132856369019s
+
+
+
+====================================
+Log started, 07/04/2011 09:04:39
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE hj%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='1' AND name LIKE 'hj%'
+
+Done in 0.0084199905395508s
+
+
+
+====================================
+Log started, 07/04/2011 09:04:41
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE h%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='1' AND name LIKE 'h%'
+
+Done in 0.0081119537353516s
+
+
+
+====================================
+Log started, 07/04/2011 09:04:21
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE k%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='1' AND name LIKE 'k%'
+
+Done in 0.0073270797729492s
+
+
+
+====================================
+Log started, 08/04/2011 10:04:27
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE k%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='11' AND name LIKE 'k%'
+
+Done in 0.30387687683105s
+
+
+
+====================================
+Log started, 08/04/2011 10:04:52
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE k%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='11' AND name LIKE 'k%'
+
+Done in 0.18181180953979s
+
+
+
+====================================
+Log started, 08/04/2011 11:04:53
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:     ;name LIKE n%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE  province='5'  AND name LIKE 'n%'
+
+Done in 0.010799884796143s
+
+
+
+====================================
+Log started, 08/04/2011 11:04:04
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE m%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE  district BETWEEN 53 AND 55  AND name LIKE 'm%'
+
+Done in 0.016248941421509s
+
+
+
+====================================
+Log started, 08/04/2011 11:04:43
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE j%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='11' AND name LIKE 'j%'
+
+Done in 0.011884927749634s
+
+
+
+====================================
+Log started, 08/04/2011 12:04:50
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE s%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='11' AND name LIKE 's%'
+
+Done in 0.062288999557495s
+
+
+
+====================================
+Log started, 08/04/2011 12:04:54
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE Sa%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='11' AND name LIKE 'Sa%'
+
+Done in 0.007051944732666s
+
+
+
+====================================
+Log started, 08/04/2011 12:04:13
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE a%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='11' AND name LIKE 'a%'
+
+Done in 0.076707124710083s
+
+
+
+====================================
+Log started, 20/04/2011 10:04:19
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE D%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='' AND name LIKE 'D%'
+
+Done in 0.72053599357605s
+
+
+
+====================================
+Log started, 20/04/2011 10:04:20
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE DS%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='' AND name LIKE 'DS%'
+
+Done in 0.022110939025879s
+
+
+
+====================================
+Log started, 20/04/2011 10:04:22
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE E%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='' AND name LIKE 'E%'
+
+Done in 0.0064518451690674s
+
+
+
+====================================
+Log started, 20/04/2011 10:04:33
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE s%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 's%'
+
+Done in 0.17044591903687s
+
+
+
+====================================
+Log started, 20/04/2011 10:04:06
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE s%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 's%'
+
+Done in 0.012373924255371s
+
+
+
+====================================
+Log started, 20/04/2011 10:04:08
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE S%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'S%'
+
+Done in 0.021669864654541s
+
+
+
+====================================
+Log started, 20/04/2011 10:04:10
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE t%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 't%'
+
+Done in 0.0059440135955811s
+
+
+
+====================================
+Log started, 20/04/2011 10:04:10
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Th%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Th%'
+
+Done in 0.012791156768799s
+
+
+
+====================================
+Log started, 20/04/2011 09:04:36
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE k%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'k%'
+
+Done in 0.01634407043457s
+
+
+
+====================================
+Log started, 20/04/2011 11:04:39
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.002655029296875s
+
+
+
+====================================
+Log started, 20/04/2011 12:04:19
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE d%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'd%'
+
+Done in 0.0036778450012207s
+
+
+
+====================================
+Log started, 20/04/2011 01:04:51
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE d%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'd%'
+
+Done in 0.0045931339263916s
+
+
+
+====================================
+Log started, 20/04/2011 05:04:52
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.066997051239014s
+
+
+
+====================================
+Log started, 26/04/2011 08:04:40
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.20796799659729s
+
+
+
+====================================
+Log started, 26/04/2011 08:04:27
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.064669132232666s
+
+
+
+====================================
+Log started, 26/04/2011 08:04:18
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE 3%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE '3%'
+
+Done in 0.069955110549927s
+
+
+
+====================================
+Log started, 26/04/2011 08:04:42
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE h%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'h%'
+
+Done in 0.0030078887939453s
+
+
+
+====================================
+Log started, 26/04/2011 11:04:43
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.091003894805908s
+
+
+
+====================================
+Log started, 26/04/2011 11:04:33
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE r%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'r%'
+
+Done in 0.023639917373657s
+
+
+
+====================================
+Log started, 26/04/2011 12:04:35
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE d%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'd%'
+
+Done in 0.018854141235352s
+
+
+
+====================================
+Log started, 27/04/2011 10:04:19
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE S%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'S%'
+
+Done in 0.033347845077515s
+
+
+
+====================================
+Log started, 28/04/2011 01:04:43
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE h%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'h%'
+
+Done in 0.019182920455933s
+
+
+
+====================================
+Log started, 28/04/2011 02:04:36
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.0024929046630859s
+
+
+
+====================================
+Log started, 28/04/2011 04:04:11
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.0049729347229004s
+
+
+
+====================================
+Log started, 28/04/2011 04:04:57
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.0040538311004639s
+
+
+
+====================================
+Log started, 28/04/2011 05:04:41
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE k%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'k%'
+
+Done in 0.0059840679168701s
+
+
+
+====================================
+Log started, 28/04/2011 06:04:13
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.035023927688599s
+
+
+
+====================================
+Log started, 28/04/2011 06:04:22
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.0048379898071289s
+
+
+
+====================================
+Log started, 28/04/2011 06:04:11
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.0049090385437012s
+
+
+
+====================================
+Log started, 28/04/2011 09:04:28
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.071614027023315s
+
+
+
+====================================
+Log started, 28/04/2011 11:04:12
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE w%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'w%'
+
+Done in 0.004241943359375s
+
+
+
+====================================
+Log started, 29/04/2011 12:04:12
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE T%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'T%'
+
+Done in 0.0042769908905029s
+
+
+
+====================================
+Log started, 29/04/2011 08:04:57
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE d%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'd%'
+
+Done in 0.025781869888306s
+
+
+
+====================================
+Log started, 29/04/2011 08:04:32
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE d%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'd%'
+
+Done in 0.023987054824829s
+
+
+
+====================================
+Log started, 29/04/2011 08:04:17
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE A%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'A%'
+
+Done in 0.0018589496612549s
+
+
+
+====================================
+Log started, 29/04/2011 08:04:44
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE a%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'a%'
+
+Done in 0.0035150051116943s
+
+
+
+====================================
+Log started, 29/04/2011 08:04:31
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE f%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'f%'
+
+Done in 0.003180980682373s
+
+
+
+====================================
+Log started, 29/04/2011 08:04:40
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE s%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 's%'
+
+Done in 0.0039849281311035s
+
+
+
+====================================
+Log started, 29/04/2011 08:04:19
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.0030810832977295s
+
+
+
+====================================
+Log started, 29/04/2011 08:04:12
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE h%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'h%'
+
+Done in 0.0023558139801025s
+
+
+
+====================================
+Log started, 29/04/2011 08:04:13
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE H%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'H%'
+
+Done in 0.0038859844207764s
+
+
+
+====================================
+Log started, 29/04/2011 09:04:52
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.016839981079102s
+
+
+
+====================================
+Log started, 04/05/2011 10:05:36
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.0064511299133301s
+
+
+
+====================================
+Log started, 04/05/2011 10:05:36
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Ga%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Ga%'
+
+Done in 0.0029029846191406s
+
+
+
+====================================
+Log started, 04/05/2011 10:05:36
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Gat%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Gat%'
+
+Done in 0.0050721168518066s
+
+
+
+====================================
+Log started, 04/05/2011 10:05:39
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE T%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'T%'
+
+Done in 0.0059008598327637s
+
+
+
+====================================
+Log started, 04/05/2011 10:05:40
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Th%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Th%'
+
+Done in 0.0043578147888184s
+
+
+
+====================================
+Log started, 04/05/2011 10:05:42
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE n%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'n%'
+
+Done in 0.0054910182952881s
+
+
+
+====================================
+Log started, 04/05/2011 10:05:42
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Ni%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Ni%'
+
+Done in 0.0041711330413818s
+
+
+
+====================================
+Log started, 04/05/2011 10:05:43
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE N%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'N%'
+
+Done in 0.0063209533691406s
+
+
+
+====================================
+Log started, 04/05/2011 10:05:45
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Na%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Na%'
+
+Done in 0.0052690505981445s
+
+
+
+====================================
+Log started, 04/05/2011 10:05:45
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Nai%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Nai%'
+
+Done in 0.0033860206604004s
+
+
+
+====================================
+Log started, 04/05/2011 10:05:17
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.0041959285736084s
+
+
+
+====================================
+Log started, 04/05/2011 10:05:17
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Gat%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Gat%'
+
+Done in 0.0070130825042725s
+
+
+
+====================================
+Log started, 04/05/2011 12:05:32
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.0034220218658447s
+
+
+
+====================================
+Log started, 04/05/2011 12:05:00
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.0046789646148682s
+
+
+
+====================================
+Log started, 04/05/2011 12:05:00
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Ga%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Ga%'
+
+Done in 0.0022518634796143s
+
+
+
+====================================
+Log started, 05/05/2011 08:05:19
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE K%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'K%'
+
+Done in 0.069401979446411s
+
+
+
+====================================
+Log started, 05/05/2011 08:05:19
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Ki%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Ki%'
+
+Done in 0.0022208690643311s
+
+
+
+====================================
+Log started, 05/05/2011 08:05:20
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Kis%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Kis%'
+
+Done in 0.0017449855804443s
+
+
+
+====================================
+Log started, 05/05/2011 08:05:29
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE k%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'k%'
+
+Done in 0.0073108673095703s
+
+
+
+====================================
+Log started, 05/05/2011 08:05:29
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE ki%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'ki%'
+
+Done in 0.0030848979949951s
+
+
+
+====================================
+Log started, 05/05/2011 09:05:26
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE d%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'd%'
+
+Done in 0.002443790435791s
+
+
+
+====================================
+Log started, 05/05/2011 09:05:29
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE K%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'K%'
+
+Done in 0.0028760433197021s
+
+
+
+====================================
+Log started, 10/05/2011 10:05:29
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.10517001152039s
+
+
+
+====================================
+Log started, 10/05/2011 10:05:29
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Ga%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Ga%'
+
+Done in 0.014898777008057s
+
+
+
+====================================
+Log started, 10/05/2011 10:05:21
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.075507879257202s
+
+
+
+====================================
+Log started, 10/05/2011 11:05:32
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.0079598426818848s
+
+
+
+====================================
+Log started, 10/05/2011 11:05:32
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Ga%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Ga%'
+
+Done in 0.0027968883514404s
+
+
+
+====================================
+Log started, 10/05/2011 11:05:33
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Gat%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Gat%'
+
+Done in 0.002439022064209s
+
+
+
+====================================
+Log started, 10/05/2011 11:05:18
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.012223958969116s
+
+
+
+====================================
+Log started, 10/05/2011 11:05:18
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Ga%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Ga%'
+
+Done in 0.002316951751709s
+
+
+
+====================================
+Log started, 10/05/2011 11:05:19
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Gat%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Gat%'
+
+Done in 0.0017950534820557s
+
+
+
+====================================
+Log started, 11/05/2011 12:05:45
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='' AND name LIKE 'G%'
+
+Done in 0.034262895584106s
+
+
+
+====================================
+Log started, 11/05/2011 12:05:45
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE Ga%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='' AND name LIKE 'Ga%'
+
+Done in 0.010273933410645s
+
+
+
+====================================
+Log started, 11/05/2011 12:05:48
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE a%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='' AND name LIKE 'a%'
+
+Done in 0.0070500373840332s
+
+
+
+====================================
+Log started, 11/05/2011 12:05:50
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE A%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='' AND name LIKE 'A%'
+
+Done in 0.0058460235595703s
+
+
+
+====================================
+Log started, 11/05/2011 12:05:52
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE As%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='' AND name LIKE 'As%'
+
+Done in 0.0056509971618652s
+
+
+
+====================================
+Log started, 11/05/2011 12:05:52
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE Ass%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='' AND name LIKE 'Ass%'
+
+Done in 0.010246992111206s
+
+
+
+====================================
+Log started, 11/05/2011 12:05:52
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE Asss%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='' AND name LIKE 'Asss%'
+
+Done in 0.0078098773956299s
+
+
+
+====================================
+Log started, 11/05/2011 12:05:53
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE Assss%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='' AND name LIKE 'Assss%'
+
+Done in 0.0044360160827637s
+
+
+
+====================================
+Log started, 11/05/2011 12:05:37
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: id,name
+Where:name LIKE A%;
+Start:
+Count:
+
+Relation:
+
+SELECT  id,name FROM facilitys WHERE name LIKE 'A%'
+
+Done in 0.022063016891479s
+
+
+
+====================================
+Log started, 11/05/2011 12:05:27
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: id,name
+Where:name LIKE a%;
+Start:
+Count:
+
+Relation:
+
+SELECT  id,name FROM facilitys WHERE name LIKE 'a%'
+
+Done in 0.046248912811279s
+
+
+
+====================================
+Log started, 11/05/2011 12:05:27
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: id,name
+Where:name LIKE A%;
+Start:
+Count:
+
+Relation:
+
+SELECT  id,name FROM facilitys WHERE name LIKE 'A%'
+
+Done in 0.010978937149048s
+
+
+
+====================================
+Log started, 11/05/2011 12:05:50
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: id,name
+Where:name LIKE A%;
+Start:
+Count:
+
+Relation:
+
+SELECT  id,name FROM facilitys WHERE name LIKE 'A%'
+
+Done in 0.012079000473022s
+
+
+
+====================================
+Log started, 11/05/2011 12:05:07
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: id,name
+Where:name LIKE A%;
+Start:
+Count:
+
+Relation:
+
+SELECT  id,name FROM facilitys WHERE name LIKE 'A%'
+
+Done in 0.01117992401123s
+
+
+
+====================================
+Log started, 11/05/2011 12:05:07
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: id,name
+Where:name LIKE Ai%;
+Start:
+Count:
+
+Relation:
+
+SELECT  id,name FROM facilitys WHERE name LIKE 'Ai%'
+
+Done in 0.004741907119751s
+
+
+
+====================================
+Log started, 11/05/2011 12:05:21
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: id,name
+Where:name LIKE Ainamoi Health Centr%;
+Start:
+Count:
+
+Relation:
+
+SELECT  id,name FROM facilitys WHERE name LIKE 'Ainamoi Health Centr%'
+
+Done in 0.0076239109039307s
+
+
+
+====================================
+Log started, 11/05/2011 12:05:21
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: id,name
+Where:name LIKE Ainamo%;
+Start:
+Count:
+
+Relation:
+
+SELECT  id,name FROM facilitys WHERE name LIKE 'Ainamo%'
+
+Done in 0.0046679973602295s
+
+
+
+====================================
+Log started, 11/05/2011 12:05:21
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: id,name
+Where:name LIKE Ainam%;
+Start:
+Count:
+
+Relation:
+
+SELECT  id,name FROM facilitys WHERE name LIKE 'Ainam%'
+
+Done in 0.0043900012969971s
+
+
+
+====================================
+Log started, 11/05/2011 12:05:21
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: id,name
+Where:name LIKE Aina%;
+Start:
+Count:
+
+Relation:
+
+SELECT  id,name FROM facilitys WHERE name LIKE 'Aina%'
+
+Done in 0.0042970180511475s
+
+
+
+====================================
+Log started, 11/05/2011 12:05:21
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: id,name
+Where:name LIKE Ain%;
+Start:
+Count:
+
+Relation:
+
+SELECT  id,name FROM facilitys WHERE name LIKE 'Ain%'
+
+Done in 0.006417989730835s
+
+
+
+====================================
+Log started, 11/05/2011 12:05:23
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: id,name
+Where:name LIKE B%;
+Start:
+Count:
+
+Relation:
+
+SELECT  id,name FROM facilitys WHERE name LIKE 'B%'
+
+Done in 0.01306676864624s
+
+
+
+====================================
+Log started, 11/05/2011 12:05:02
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: id,name
+Where:name LIKE K%;
+Start:
+Count:
+
+Relation:
+
+SELECT  id,name FROM facilitys WHERE name LIKE 'K%'
+
+Done in 0.13943696022034s
+
+
+
+====================================
+Log started, 11/05/2011 12:05:43
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: id,name
+Where:name LIKE K%;
+Start:
+Count:
+
+Relation:
+
+SELECT  id,name FROM facilitys WHERE name LIKE 'K%'
+
+Done in 0.17214894294739s
+
+
+
+====================================
+Log started, 11/05/2011 12:05:27
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: id,name
+Where:name LIKE A%;
+Start:
+Count:
+
+Relation:
+
+SELECT  id,name FROM facilitys WHERE name LIKE 'A%'
+
+Done in 0.013601064682007s
+
+
+
+====================================
+Log started, 11/05/2011 01:05:56
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: id,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  id,name FROM facilitys WHERE name LIKE 'G%'
+
+Done in 0.025169134140015s
+
+
+
+====================================
+Log started, 11/05/2011 01:05:58
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: id,name
+Where:name LIKE Ga%;
+Start:
+Count:
+
+Relation:
+
+SELECT  id,name FROM facilitys WHERE name LIKE 'Ga%'
+
+Done in 0.012428045272827s
+
+
+
+====================================
+Log started, 11/05/2011 01:05:58
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: id,name
+Where:name LIKE Gat%;
+Start:
+Count:
+
+Relation:
+
+SELECT  id,name FROM facilitys WHERE name LIKE 'Gat%'
+
+Done in 0.0065391063690186s
+
+
+
+====================================
+Log started, 11/05/2011 01:05:59
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: id,name
+Where:name LIKE Gatu%;
+Start:
+Count:
+
+Relation:
+
+SELECT  id,name FROM facilitys WHERE name LIKE 'Gatu%'
+
+Done in 0.0053231716156006s
+
+
+
+====================================
+Log started, 11/05/2011 01:05:00
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: id,name
+Where:name LIKE Gatun%;
+Start:
+Count:
+
+Relation:
+
+SELECT  id,name FROM facilitys WHERE name LIKE 'Gatun%'
+
+Done in 0.00754714012146s
+
+
+
+====================================
+Log started, 11/05/2011 01:05:28
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.017570972442627s
+
+
+
+====================================
+Log started, 11/05/2011 01:05:30
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.0037899017333984s
+
+
+
+====================================
+Log started, 11/05/2011 02:05:03
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: id,name
+Where:name LIKE A%;
+Start:
+Count:
+
+Relation:
+
+SELECT  id,name FROM facilitys WHERE name LIKE 'A%'
+
+Done in 0.027410984039307s
+
+
+
+====================================
+Log started, 11/05/2011 02:05:05
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: id,name
+Where:name LIKE Ac%;
+Start:
+Count:
+
+Relation:
+
+SELECT  id,name FROM facilitys WHERE name LIKE 'Ac%'
+
+Done in 0.011029005050659s
+
+
+
+====================================
+Log started, 11/05/2011 02:05:06
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: id,name
+Where:name LIKE Aca%;
+Start:
+Count:
+
+Relation:
+
+SELECT  id,name FROM facilitys WHERE name LIKE 'Aca%'
+
+Done in 0.0065591335296631s
+
+
+
+====================================
+Log started, 12/05/2011 02:05:18
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE K%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'K%'
+
+Done in 0.0068788528442383s
+
+
+
+====================================
+Log started, 13/05/2011 05:05:39
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.018263101577759s
+
+
+
+====================================
+Log started, 17/05/2011 04:05:55
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE B%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'B%'
+
+Done in 0.048758029937744s
+
+
+
+====================================
+Log started, 17/05/2011 04:05:55
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Bu%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Bu%'
+
+Done in 0.0044090747833252s
+
+
+
+====================================
+Log started, 17/05/2011 04:05:55
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Bun%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Bun%'
+
+Done in 0.0019938945770264s
+
+
+
+====================================
+Log started, 17/05/2011 04:05:55
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Bung%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Bung%'
+
+Done in 0.0024490356445312s
+
+
+
+====================================
+Log started, 17/05/2011 04:05:50
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE D%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'D%'
+
+Done in 0.002979040145874s
+
+
+
+====================================
+Log started, 17/05/2011 04:05:54
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE W%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'W%'
+
+Done in 0.0032579898834229s
+
+
+
+====================================
+Log started, 18/05/2011 01:05:11
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.036300182342529s
+
+
+
+====================================
+Log started, 18/05/2011 01:05:11
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Gatu%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Gatu%'
+
+Done in 0.033485889434814s
+
+
+
+====================================
+Log started, 18/05/2011 01:05:22
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.0053820610046387s
+
+
+
+====================================
+Log started, 18/05/2011 01:05:22
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Ga%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Ga%'
+
+Done in 0.035089015960693s
+
+
+
+====================================
+Log started, 18/05/2011 03:05:21
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.0048840045928955s
+
+
+
+====================================
+Log started, 18/05/2011 03:05:21
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Gatu%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Gatu%'
+
+Done in 0.0029151439666748s
+
+
+
+====================================
+Log started, 18/05/2011 03:05:22
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Gatun%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Gatun%'
+
+Done in 0.0039548873901367s
+
+
+
+====================================
+Log started, 18/05/2011 03:05:22
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Gatund%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Gatund%'
+
+Done in 0.0030529499053955s
+
+
+
+====================================
+Log started, 18/05/2011 03:05:22
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Gatundu%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Gatundu%'
+
+Done in 0.0039269924163818s
+
+
+
+====================================
+Log started, 18/05/2011 03:05:46
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.004054069519043s
+
+
+
+====================================
+Log started, 18/05/2011 03:05:46
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Ga%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Ga%'
+
+Done in 0.0084540843963623s
+
+
+
+====================================
+Log started, 18/05/2011 03:05:46
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Gat%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Gat%'
+
+Done in 0.0041279792785645s
+
+
+
+====================================
+Log started, 18/05/2011 03:05:47
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Gatu%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Gatu%'
+
+Done in 0.0034449100494385s
+
+
+
+====================================
+Log started, 18/05/2011 03:05:47
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Gatun%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Gatun%'
+
+Done in 0.0036649703979492s
+
+
+
+====================================
+Log started, 18/05/2011 03:05:29
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE G%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'G%'
+
+Done in 0.0045108795166016s
+
+
+
+====================================
+Log started, 18/05/2011 03:05:29
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Gatun%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Gatun%'
+
+Done in 0.0024199485778809s
+
+
+
+====================================
+Log started, 18/05/2011 03:05:29
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Gatund%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Gatund%'
+
+Done in 0.0032510757446289s
+
+
+
+====================================
+Log started, 18/05/2011 03:05:30
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Gatundu%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Gatundu%'
+
+Done in 0.0042798519134521s
+
+
+
+====================================
+Log started, 20/05/2011 11:05:43
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Gat%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Gat%'
+
+Done in 0.013899087905884s
+
+
+
+====================================
+Log started, 20/05/2011 11:05:44
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:districts
+Fieldset: ID,name
+Where:name LIKE Gatu%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM districts WHERE name LIKE 'Gatu%'
+
+Done in 0.011575937271118s
+
+
+
+====================================
+Log started, 16/06/2011 01:06:52
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE A%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='' AND name LIKE 'A%'
+
+Done in 0.017557144165039s
+
+
+
+====================================
+Log started, 05/10/2011 01:10:30
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE T%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='' AND name LIKE 'T%'
+
+Done in 0.014084100723267s
+
+
+
+====================================
+Log started, 05/10/2011 01:10:31
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE Ta%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='' AND name LIKE 'Ta%'
+
+Done in 0.0056099891662598s
+
+
+
+====================================
+Log started, 05/10/2011 01:10:37
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE Taita dist%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='' AND name LIKE 'Taita dist%'
+
+Done in 0.005728006362915s
+
+
+
+====================================
+Log started, 05/10/2011 01:10:55
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE T%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='' AND name LIKE 'T%'
+
+Done in 0.0061631202697754s
+
+
+
+====================================
+Log started, 05/10/2011 01:10:56
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE Ta%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='' AND name LIKE 'Ta%'
+
+Done in 0.005547046661377s
+
+
+
+====================================
+Log started, 05/10/2011 01:10:57
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE Tai%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='' AND name LIKE 'Tai%'
+
+Done in 0.0056009292602539s
+
+
+
+====================================
+Log started, 05/10/2011 01:10:58
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE Tait%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='' AND name LIKE 'Tait%'
+
+Done in 0.0059819221496582s
+
+
+
+====================================
+Log started, 05/10/2011 01:10:00
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE Taita%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='' AND name LIKE 'Taita%'
+
+Done in 0.0056071281433105s
+
+
+
+====================================
+Log started, 05/10/2011 01:10:26
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE T%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='' AND name LIKE 'T%'
+
+Done in 0.0057761669158936s
+
+
+
+====================================
+Log started, 05/10/2011 01:10:27
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE Tait%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='' AND name LIKE 'Tait%'
+
+Done in 0.0055499076843262s
+
+
+
+====================================
+Log started, 05/10/2011 01:10:27
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: ID,name
+Where:     ;name LIKE Taita%;
+Start:
+Count:
+
+Relation:
+
+SELECT  ID,name FROM facilitys WHERE   district='' AND name LIKE 'Taita%'
+
+Done in 0.0056390762329102s
+
+
+
+====================================
+Log started, 28/11/2011 07:11:59
+====================================
+
+Dyn loading request received, but server side was not configured to process dyn. loading. 
+
+Source:facilitys
+Fieldset: id,name
+Where:name LIKE A%;
+Start:
+Count:
+
+Relation:
+
+SELECT  id,name FROM facilitys WHERE name LIKE 'A%'
+
+Done in 0.15759801864624s
+

@@ -1,0 +1,66 @@
+<script type="text/javascript">
+    //function to create ajax object
+    function pullAjax(){
+        var a;
+        try{
+            a=new XMLHttpRequest()
+        }
+        catch(b)
+        {
+            try
+            {
+                a=new ActiveXObject("Msxml2.XMLHTTP")
+            }catch(b)
+            {
+                try
+                {
+                    a=new ActiveXObject("Microsoft.XMLHTTP")
+                }
+                catch(b)
+                {
+                    alert("Your browser broke!");return false
+                }
+            }
+        }
+        return a;
+    }
+    function validateDistrict()
+    {
+        site_root = '';
+        var x = document.getElementById('uname');
+        var msg = document.getElementById('msg');
+        user = x.value;
+        code = '';
+        message = '';
+        obj=pullAjax();
+        obj.onreadystatechange=function()
+        {
+            if(obj.readyState==4)
+            {
+                eval("result = "+obj.responseText);
+                code = result['code'];
+                message = result['result'];
+                if(code <=0)
+                {
+                    x.style.border = "1px solid red";
+                    msg.style.color = "red";
+                }
+                else
+                {
+                    x.style.border = "1px solid #000";
+                    msg.style.color = "green";
+                }
+                msg.innerHTML = message;
+            }
+        }
+        obj.open("GET",site_root+"validate.php?username="+user,true);
+        obj.send(null);
+    }
+</script>
+<style>
+    #uname{border: 1px solid #000;}
+</style>
+<h3>Enter anything and you will get positive validation. If you leave blank, it will show negative validation</h3>
+<input type="text" name="uname" id="uname"/>
+<input type="button" onclick="validateDistrict();" value="Check Availability" />
+<div id="msg"></div>

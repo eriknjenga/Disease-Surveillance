@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Fancy Style Username availability Checking using jQuery</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<script src="jquery.js" type="text/javascript" language="javascript"></script>
+<script language="javascript">
+//<!---------------------------------+
+//  Developed by Roshan Bhattarai 
+//  Visit http://roshanbh.com.np for this script and more.
+//  This notice MUST stay intact for legal use
+// --------------------------------->
+$(document).ready(function()
+{
+    $("#username").blur(function()
+    {
+        //remove all the class add the messagebox classes and start fading
+        $("#msgbox").removeClass().addClass('messagebox').text('Checking...').fadeIn("slow");
+        //check the username exists or not from ajax
+        $.post("user_availability.php",{ user_name:$(this).val() } ,function(data)
+        {
+          if(data=='no') //if username not avaiable
+          {
+            $("#msgbox").fadeTo(200,0.1,function() //start fading the messagebox
+            { 
+              //add message and change the class of the box and start fading
+              $(this).html('This User name Already exists').addClass('messageboxerror').fadeTo(900,1);
+            });     
+          }
+          else
+          {
+            $("#msgbox").fadeTo(200,0.1,function()  //start fading the messagebox
+            { 
+              //add message and change the class of the box and start fading
+              $(this).html('Username available to register').addClass('messageboxok').fadeTo(900,1);    
+            });
+          }
+                
+        });
+ 
+    });
+});
+</script>
+<style type="text/css">
+body {
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:11px;
+}
+.top {
+margin-bottom: 15px;
+}
+.messagebox{
+    position:absolute;
+    width:100px;
+    margin-left:30px;
+    border:1px solid #c93;
+    background:#ffc;
+    padding:3px;
+}
+.messageboxok{
+    position:absolute;
+    width:auto;
+    margin-left:30px;
+    border:1px solid #349534;
+    background:#C9FFCA;
+    padding:3px;
+    font-weight:bold;
+    color:#008000;
+    
+}
+.messageboxerror{
+    position:absolute;
+    width:auto;
+    margin-left:30px;
+    border:1px solid #CC0000;
+    background:#F7CBCA;
+    padding:3px;
+    font-weight:bold;
+    color:#CC0000;
+}
+
+</style>
+</head>
+<body>
+
+ 
+<br>
+<br>
+<div align="center">
+<div class="top" > A fancy username availability checker using jQuery - <strong>Username &quot;roshan&quot;, &quot;mike&quot; ,&quot;jason&quot; already exists</strong><br>
+  Please move the focus out of the box to check the availability of username
+</div>
+<div >
+   User Name : <input name="username" type="text" id="username" value="" maxlength="15" />
+   <span id="msgbox" style="display:none"></span>
+</div>
+
+</div>
+</body>
+</html>
