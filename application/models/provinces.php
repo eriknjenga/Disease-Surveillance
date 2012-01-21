@@ -10,7 +10,7 @@ class Provinces extends Doctrine_Record {
 	}//end setUp
 
 	public function getAll() {
-		$query = Doctrine_Query::create() -> select("name") -> from("Provinces");
+		$query = Doctrine_Query::create() -> select("ID, name") -> from("Provinces");
 		$provinceData = $query -> execute();
 		return $provinceData;
 	}//end getAll
