@@ -36,7 +36,7 @@ class Surveillance extends Doctrine_Record {
 	}
 
 	public static function getWeekEnding($year, $epiweek) {
-		$query = Doctrine_Query::create() -> select("Week_Ending") -> from("surveillance") -> where("Reporting_Year = '$year' and epiweek = '$epiweek'")->limit(1);
+		$query = Doctrine_Query::create() -> select("Week_Ending") -> from("surveillance") -> where("Reporting_Year = '$year' and epiweek = '$epiweek'") -> limit(1);
 		$week_ending = $query -> execute(array(), Doctrine::HYDRATE_ARRAY);
 		return $week_ending[0]['Week_Ending'];
 	}
@@ -64,5 +64,7 @@ class Surveillance extends Doctrine_Record {
 		$surveillance = $query -> execute(array(), Doctrine::HYDRATE_ARRAY);
 		return $surveillance[0];
 	}
+
+
 
 }

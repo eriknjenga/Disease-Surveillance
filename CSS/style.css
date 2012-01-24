@@ -312,39 +312,34 @@ input[type =
 }
 /* Tables */
 
+table {margin-bottom: 1.4em; }
+th {font-weight: bold;}
+thead th {background: #C3D9FF;}
+th,td,caption {padding: 4px 10px 4px 5px;}
+tr.even td {background: #F2F6FA;}
+tfoot {font-style: italic;}
+caption {background: #EEE;}
+
 table.data-table {
-	border: 2px solid #DDD;
-	margin: 10px auto;
-	border-spacing: 0px;
+	border: 1px solid #CCB;
+	margin-bottom: 2em;
+	/*width: 100%;*/
 }
 table.data-table th {
-	border: none;
-	color: #036;
+	background: #F0F0F0;
+	border: 1px solid #DDD;
+	color: #555;
 	text-align: center;
-	text-shadow: 0 1px rgba(0, 0, 0, 0.1);
-	letter-spacing: 1px;
-	background-color: #F5F5F5;
-	border: 2px solid #DDD;
-	border-top:none;
+	/*text-align: left;*/
+}
+table.data-table tr {border-bottom: 1px solid #DDD;}
+table.data-table td, table th {padding: 5px;}
+table.data-table td {
+	background: #F6F6F6;
+	border: 1px solid #DDD;
+}
+table.data-table tr.even td {background: #FCFCFC;}
 
-} 
-table.data-table td, table th {
-	padding: 10px;
-}
-table.data-table td{
-	border:none;
-	border-left: 2px solid #DDD;
-	border-right: 2px solid #DDD;
-	height:30px;
-	margin:0px;
-	max-width: 350px;
-}
-table.data-table tr.normal_row td {
-	background: white;
-}
-table.data-table tr.alternate_row td {
-	background: #F1F1F1;
-}
 #view_content {
 	overflow: hidden;
 }

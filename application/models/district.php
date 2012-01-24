@@ -11,6 +11,7 @@ class District extends Doctrine_Record {
 	public function setUp() {
 		$this -> setTableName('districts');
 		$this -> hasOne('Province as Province_Object', array('local' => 'Province', 'foreign' => 'id'));
+		$this -> hasOne('Surveillance as Surveillance', array('local' => 'id', 'foreign' => 'District'));
 	}//end setUp
 
 	public function getAll() {
@@ -20,7 +21,7 @@ class District extends Doctrine_Record {
 	}//end getAll
 
 	public function getDistrict($id) {
-		$query = Doctrine_Query::create() -> select("*") -> from("District")->where("id = '$id'");
+		$query = Doctrine_Query::create() -> select("*") -> from("District") -> where("id = '$id'");
 		$districtData = $query -> execute();
 		return $districtData;
 	}
@@ -29,6 +30,12 @@ class District extends Doctrine_Record {
 		$query = Doctrine_Query::create() -> select("*") -> from("District") -> where("Province = '$id'");
 		$districtData = $query -> execute(array(), Doctrine::HYDRATE_ARRAY);
 		return $districtData;
+	}
+
+	public static function getDNRDistricts($year, $epiweek) {
+		$query = Doctrine_Query::create() -> select("d.Name, d.Province") -> from("district d") -> leftJoin("d.Surveillance s on d.id = s.district and reporting_year = '$year' and epiweek = '$epiweek'") -> where("s.district is null");
+		$districts = $query -> execute(array(), Doctrine::HYDRATE_ARRAY);
+		return $districts;
 	}
 
 }//end class

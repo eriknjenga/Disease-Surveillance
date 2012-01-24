@@ -12,7 +12,18 @@ class DNR_Districts extends MY_Controller {
 
 	public function show_interface() {
 		$data = array();
-		$data['settings_view'] = "dnr_districts_v";
+		$data['report_view'] = "dnr_districts_v";
+		$this -> base_params($data);
+	}
+	
+	public function view_list(){ 
+		$year = $this->input->post("year");
+		$epiweek = $this->input->post("epiweek");
+		$dnr_districts = District::getDNRDistricts($year,$epiweek);
+		$provinces = Province::getAll();
+		$data['provinces'] = $provinces;
+		$data['dnr_districts'] = $dnr_districts; 
+		$data['report_view'] = "dnr_districts_v";
 		$this -> base_params($data);
 	}
  
@@ -22,7 +33,7 @@ class DNR_Districts extends MY_Controller {
 		$data['scripts'] = array("jquery-ui.js");
 		$data['quick_link'] = "dnr_districts";
 		$data['title'] = "System Reports";
-		$data['report_view'] = "dnr_districts_v";
+		
 		$data['content_view'] = "reports_v";
 		$data['banner_text'] = "'DNR' Districts";
 		$data['link'] = "reports_management";
