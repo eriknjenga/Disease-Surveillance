@@ -38,5 +38,17 @@ class District extends Doctrine_Record {
 		return $districts;
 	}
 
+	public function getName($districtId) {
+		$query = Doctrine_Query::create() -> select("Name") -> from("district") -> where(" id = '$districtId'");
+		$results = $query -> execute();
+		return $results[0];
+	}
+
+	public function getNameAndId($provinceId) {
+		$query = Doctrine_Query::create() -> select("*") -> from("district") -> where("Province = '$provinceId'");
+		$results = $query -> execute();
+		return $results;
+	}
+
 }//end class
 ?>

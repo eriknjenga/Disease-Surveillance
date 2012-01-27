@@ -17,4 +17,16 @@ class Disease extends Doctrine_Record {
 		return $diseases;
 	}
 
+	public function getAllObjects() {
+		$query = Doctrine_Query::create() -> select("*") -> from("Disease");
+		$diseases = $query -> execute();
+		return $diseases;
+	}
+
+	public function getName($diseaseId) {
+		$query = Doctrine_Query::create() -> select("name") -> from("disease") -> where("id ='$diseaseId'");
+		$results = $query -> execute();
+		return $results[0];
+	}
+
 }
