@@ -5,6 +5,9 @@ if (!$this -> session -> userdata('user_id')) {
 if (!isset($link)) {
 	$link = null;
 }
+if (!isset($quick_link)) {
+	$quick_link = null;
+}
 $access_level = $this -> session -> userdata('user_indicator');
 $user_is_administrator = false;
 $user_is_nascop = false;
@@ -82,13 +85,13 @@ if (isset($styles)) {
 	$current = $this -> router -> class;
 	$counter = 0;
 ?>
- 	<a href="home_controller" class="top_menu_link  first_link <?php
+ 	<a href="<?php echo base_url();?>home_controller" class="top_menu_link  first_link <?php
 	if ($current == "home_controller") {echo " top_menu_active ";
 	}
 ?>">Home </a>
 <?php
 foreach($menus as $menu){?>
-	<a href = "<?php echo base_url().$menu['url'];?>" class="top_menu_link <?php
+	<a href = "<?php echo base_url() . $menu['url'];?>" class="top_menu_link <?php
 	if ($current == $menu['url'] || $menu['url'] == $link) {echo " top_menu_active ";
 	}
 ?>"><?php echo $menu['text'];?>
@@ -104,7 +107,12 @@ $counter++;
 </div>
 
 <div id="inner_wrapper"> 
-
+<div id="sub_menu">
+	<a href="<?php echo site_url('weekly_data_management');?>" class="top_menu_link sub_menu_link first_link  <?php
+	if ($quick_link == "weekly_data_management") {echo "top_menu_active";
+	}
+	?>">Add Weekly Data</a>
+</div>
 
 <div id="main_wrapper"> 
  

@@ -33,17 +33,6 @@ class Home_Controller extends MY_Controller {
 		$this -> load -> view("template", $data);
 
 	}
-
-	public function synchronize_patients() {
-		$data['regimens'] = Regimen::getAll();
-		$data['supporters'] = Supporter::getAll();
-		$data['service_types'] = Regimen_Service_Type::getAll();
-		$data['sources'] = Patient_Source::getAll();
-		$data['drugs'] = Drugcode::getAll();
-		$data['regimen_change_purpose'] = Regimen_Change_Purpose::getAll();
-		$data['visit_purpose'] = Visit_Purpose::getAll();
-		$data['opportunistic_infections'] = Opportunistic_Infection::getAll();
-		$data['regimen_drugs'] = Regimen_Drug::getAll();
-	}
+ 
 
 }

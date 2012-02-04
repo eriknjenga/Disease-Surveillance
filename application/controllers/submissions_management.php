@@ -1,6 +1,6 @@
 <?php
 
-class Submissions_c extends CI_Controller {
+class Submissions_Management extends CI_Controller {
 	function __construct() {
 		parent::__construct();
 	}
@@ -171,7 +171,7 @@ class Submissions_c extends CI_Controller {
 	public function base_params($data) {
 		$data['title'] = "Submissions";
 		$data['banner_text'] = "Submissions";
-		$data['link'] = "submissions_c";
+		$data['link'] = "submissions_management";
 		$this -> load -> view("template", $data);
 	}
 
