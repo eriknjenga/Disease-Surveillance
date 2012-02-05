@@ -969,27 +969,36 @@
 		 @param  date  Date - the date to get the week for
 		 @return  number - the number of the week within the year that contains this date */
 		iso8601Week : function(date) {
-
 			var checkDate = new Date(date.getTime());
 			// Find Sunday of this week starting on Monday
 			checkDate.setDate(checkDate.getDate() + 7 - (checkDate.getDay() || 7));
+			//get the time for that sunday
 			var time = checkDate.getTime();
-			checkDate.setMonth(0);
-			// Compare with Jan 1
-			checkDate.setDate(1); 
+			//Compare this with January 1st of that year
+			//set the month to january
+			checkDate.setMonth(0); 
+			//set the date to 1st january
+			checkDate.setDate(1);
+			//Calculate the modulous of the difference to determine how many days in that year fall in the first week
+			var week_days_in_year = (((time - checkDate) / 86400000) % 7) + 1;
+			//Calculate the week number
 			var week_number = Math.floor(Math.round((time - checkDate) / 86400000) / 7);
+			//If the number of days falling in the first week are greater than 4, increment the weeknumber by 1 since these days will be considered as the first week of the year
+			if(week_days_in_year >= 4) {
+				week_number += 1;
+			}
+			//If the week number is '0' assign the week number of the last week of the previous year
 			if(week_number == 0) {
+				//Set the year to the previous year
 				checkDate.setYear(checkDate.getFullYear() - 1);
+				//set month as december
 				checkDate.setMonth(11);
-				// Compare with Jan 1 of previous year
-				checkDate.setDate(31); 
-				var time = checkDate.getTime();
-				checkDate.setMonth(0);
-				// Compare with Jan 1 of previous year
-				checkDate.setDate(1);
-				
-				var week_number = Math.floor(Math.round((time - checkDate) / 86400000) / 7);
-				
+				//set date as 24th 
+				checkDate.setDate(24);
+				//Call this function again to retrieve the week number of the 2nd last week of the previous year. 24th December is set as the date since it is guaranteed to be in this last week.
+				var last_week = arguments.callee(checkDate);
+				//Increment this week number to get the last week of that year
+				week_number = last_week += 1;
 			}
 			return week_number;
 		},
