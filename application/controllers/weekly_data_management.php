@@ -13,7 +13,7 @@ class Weekly_Data_Management extends MY_Controller {
 		$provinces = Province::getAll();
 		$districts = District::getAll();
 		$diseases = Disease::getAllObjects();
- 
+
 		$data['provinces'] = $provinces;
 		$data['districts'] = $districts;
 		$data['diseases'] = $diseases;
@@ -23,21 +23,18 @@ class Weekly_Data_Management extends MY_Controller {
 
 	public function save() {
 		$i = 0;
-		//$diseases = Diseases::getAll();
 		$valid = $this -> _validate_submission();
 		if ($valid == false) {
-			$diseases = Diseases::getAllObjects();
-			$data['diseases'] = $diseases;
-			$data['content-view'] = "weeklydata_add_v";
-			$this -> base_params($data);
+			$this -> add();
 		} else {
-			$diseases = new Diseases();
-			$i = 0;
-			$weekending = $this -> input -> post("weekending");
+			$diseases = Disease::getAllObjects();
+
+			$weekending = $this -> input -> post("week_ending");
+			$reporting_year = $this -> input -> post("reporting_year");
 			$epiweek = $this -> input -> post("epiweek");
 			$district = $this -> input -> post("district");
-			$reportingfacilities = $this -> input -> post("reportingfacilities");
-			$expectedfacilities = $this -> input -> post("expectedfacilities");
+			$reportingfacilities = $this -> input -> post("reporting_facilities");
+			$expectedfacilities = $this -> input -> post("expected_facilities");
 			$lmcase = $this -> input -> post("lmcase");
 			$lfcase = $this -> input -> post("lfcase");
 			$lmdeath = $this -> input -> post("lmdeath");
@@ -47,11 +44,12 @@ class Weekly_Data_Management extends MY_Controller {
 			$gmdeath = $this -> input -> post("gmdeath");
 			$gfdeath = $this -> input -> post("gfdeath");
 			$sickness = $this -> input -> post("disease");
-
+			$reported_by = $this -> input -> post("reported_by");
+			$designation = $this -> input -> post("designation");
+			$i = 0;
 			foreach ($diseases as $disease) {
-
 				$surveillance = new Surveillance();
-				$surveillance -> Weekending = $weekending;
+				$surveillance -> Week_Ending = $weekending;
 				$surveillance -> Epiweek = $epiweek;
 				$surveillance -> District = $district;
 				$surveillance -> Submitted = $reportingfacilities;
@@ -65,6 +63,11 @@ class Weekly_Data_Management extends MY_Controller {
 				$surveillance -> Gmdeath = $gmdeath[$i];
 				$surveillance -> Gfdeath = $gfdeath[$i];
 				$surveillance -> Disease = $disease;
+				$surveillance -> Reporting_Year = $reporting_year;
+				$surveillance -> Created_By = $this -> session -> userdata('user_id');
+				$surveillance -> Date_Created = date("d-m-Y");
+				$surveillance -> Reported_By = $reported_by;
+				$surveillance -> Designation = $designation;
 				$surveillance -> save();
 				$i++;
 			}//end foreach
@@ -75,20 +78,22 @@ class Weekly_Data_Management extends MY_Controller {
 			$weekending = $this -> input -> post("weekending");
 			$district = $this -> input -> post("district");
 
-			$totaltestedlessfive = $this -> input -> post("totaltestedlessfive");
-			$totaltestedgreaterfive = $this -> input -> post("totaltestedgreaterfive");
-			$totalpositivelessfive = $this -> input -> post("totalpostitivelessfive");
-			$totalpositivegreaterfive = $this -> input -> post("totalpositivegreaterfive");
+			$totaltestedlessfive = $this -> input -> post("total_tested_less_than_five");
+			$totaltestedgreaterfive = $this -> input -> post("total_tested_greater_than_five");
+			$totalpositivelessfive = $this -> input -> post("total_positive_less_than_five");
+			$totalpositivegreaterfive = $this -> input -> post("total_positive_greater_than_five");
 			$remarks = $this -> input -> post("remarks");
 
 			$labdata -> Epiweek = $epiweek;
-			$labdata -> Weekending = $weekending;
+			$labdata -> Week_Ending = $weekending;
 			$labdata -> District = $district;
-			$labdata -> Malaria_below_5 = $totaltestedlessfive;
-			$labdata -> Malaria_above_5 = $totaltestedgreaterfive;
-			$labdata -> Positive_below_5 = $totalpositivelessfive;
-			$labdata -> Positive_above_5 = $totalpositivegreaterfive;
+			$labdata -> Malaria_Below_5 = $totaltestedlessfive;
+			$labdata -> Malaria_Above_5 = $totaltestedgreaterfive;
+			$labdata -> Positive_Below_5 = $totalpositivelessfive;
+			$labdata -> Positive_Above_5 = $totalpositivegreaterfive;
 			$labdata -> Remarks = $remarks;
+			$labdata -> Reporting_Year = $reporting_year;
+			$labdata -> Date_Created = date("d-m-Y");
 			$labdata -> save();
 		}
 	}//end save

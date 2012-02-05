@@ -108,10 +108,14 @@ $counter++;
 
 <div id="inner_wrapper"> 
 <div id="sub_menu">
-	<a href="<?php echo site_url('weekly_data_management');?>" class="top_menu_link sub_menu_link first_link  <?php
+	<a style="width:200px !important" href="<?php echo site_url('weekly_data_management');?>" class="top_menu_link sub_menu_link first_link  <?php
 	if ($quick_link == "weekly_data_management") {echo "top_menu_active";
 	}
-	?>">Add Weekly Data</a>
+	?>">Add Epidemiological Data</a>
+		<a style="width:200px !important" href="<?php echo site_url('weekly_data_management');?>" class="top_menu_link sub_menu_link last_link  <?php
+		if ($quick_link == "zoonotic_data_management") {echo "top_menu_active";
+		}
+	?>">Add Zoonotic Data</a>
 </div>
 
 <div id="main_wrapper"> 

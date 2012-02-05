@@ -15,7 +15,7 @@ class District extends Doctrine_Record {
 	}//end setUp
 
 	public function getAll() {
-		$query = Doctrine_Query::create() -> select("*") -> from("District");
+		$query = Doctrine_Query::create() -> select("*") -> from("District")->OrderBy("Name asc");
 		$districtData = $query -> execute();
 		return $districtData;
 	}//end getAll

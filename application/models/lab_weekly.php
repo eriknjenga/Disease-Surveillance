@@ -12,6 +12,7 @@ class Lab_Weekly extends Doctrine_Record {
 		$this -> hasColumn('Positive_Above_5', 'varchar', 32);
 		$this -> hasColumn('Date_Created', 'varchar', 32);
 		$this -> hasColumn('Reporting_Year', 'varchar', 10);
+		$this -> hasColumn('Remarks', 'text');
 	}//end setTableDefinition
 
 	public function setUp() {
