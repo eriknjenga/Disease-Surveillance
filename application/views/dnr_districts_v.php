@@ -72,6 +72,7 @@ for($x=1;$x<=53;$x++){
 if(isset($dnr_districts[0])){
 	?>
 	<table class="data-table" style="margin: 0 auto">
+		<caption><?php echo $small_title;?></caption>
 		<th>Province</th>
 		<th>District</th>
 		<?php

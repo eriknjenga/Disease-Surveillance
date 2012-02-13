@@ -34,7 +34,7 @@ class Submissions_Management extends CI_Controller {
 		$filterdyear = $_POST['filteryear'];
 		$provinceId = $_POST['province'];
 
-		$districtId = $_POST['districts'];
+		$districtId = $_POST['district'];
 		$district = District::getName($districtId);
 		$districtName = $district -> Name;
 		$districts = District::getAll();

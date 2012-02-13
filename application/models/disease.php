@@ -28,5 +28,11 @@ class Disease extends Doctrine_Record {
 		$results = $query -> execute();
 		return $results[0];
 	}
+	
+	public function getTotal(){
+		$query = Doctrine_Query::create() -> select("count(*) as Total_Diseases") -> from("Disease");
+		$diseases = $query -> execute();
+		return $diseases[0]->Total_Diseases;
+	}
 
 }

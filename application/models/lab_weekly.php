@@ -51,5 +51,17 @@ class Lab_Weekly extends Doctrine_Record {
 		return $lab_weekly[0];
 	}
 
+	public static function getWeeklyDistrictLabData($epiweek, $reporting_year, $district) {
+		$query = Doctrine_Query::create() -> select("*") -> from("lab_weekly") -> where("Reporting_Year = '$reporting_year' and Epiweek = '$epiweek' and District = '$district'");
+		$lab_weekly = $query -> execute();
+		return $lab_weekly;
+	}
+
+	public static function getLabObject($id) {
+		$query = Doctrine_Query::create() -> select("*") -> from("lab_weekly") -> where("id = '$id'");
+		$lab_weekly = $query -> execute();
+		return $lab_weekly[0];
+	}
+
 }
 ?>

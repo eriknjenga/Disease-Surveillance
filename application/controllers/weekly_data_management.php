@@ -3,11 +3,11 @@ class Weekly_Data_Management extends MY_Controller {
 
 	function __construct() {
 		parent::__construct();
-	}//end constructor
+	}
 
 	public function index() {
 		$this -> add();
-	}//end index
+	}
 
 	public function add() {
 		$provinces = Province::getAll();
@@ -17,9 +17,29 @@ class Weekly_Data_Management extends MY_Controller {
 		$data['provinces'] = $provinces;
 		$data['districts'] = $districts;
 		$data['diseases'] = $diseases;
-		$data['scripts'] = array("special_date_picker.js");
+		$data['editing'] = false;
+		$data['prediction'] = Surveillance::getPrediction();
+		$data['scripts'] = array("special_date_picker.js", "validationEngine-en.js", "validator.js");
+		$data["styles"] = array("validator.css");
 		$this -> base_params($data);
-	}//end add
+	}
+
+	public function edit_weekly_data($epiweek, $reporting_year, $district) {
+		$provinces = Province::getAll();
+		$districts = District::getAll();
+		$diseases = Disease::getAllObjects();
+
+		$data['provinces'] = $provinces;
+		$data['districts'] = $districts;
+		$data['diseases'] = $diseases;
+		$data['prediction'] = Surveillance::getPrediction();
+		$data['surveillance_data'] = Surveillance::getSurveillanceData($epiweek, $reporting_year, $district);
+		$data['lab_data'] = Lab_Weekly::getWeeklyDistrictLabData($epiweek, $reporting_year, $district);
+		$data['editing'] = true;
+		$data['scripts'] = array("special_date_picker.js", "validationEngine-en.js", "validator.js");
+		$data["styles"] = array("validator.css");
+		$this -> base_params($data);
+	}
 
 	public function save() {
 		$i = 0;
@@ -27,6 +47,7 @@ class Weekly_Data_Management extends MY_Controller {
 		if ($valid == false) {
 			$this -> add();
 		} else {
+			$editing = false;
 			$diseases = Disease::getAllObjects();
 
 			$weekending = $this -> input -> post("week_ending");
@@ -46,9 +67,21 @@ class Weekly_Data_Management extends MY_Controller {
 			$sickness = $this -> input -> post("disease");
 			$reported_by = $this -> input -> post("reported_by");
 			$designation = $this -> input -> post("designation");
+			$lab_id = $this -> input -> post("lab_id");
+			$surveillance_ids = $this -> input -> post("surveillance_ids");
+			$total_diseases = Disease::getTotal();
+			$timestamp = date('U');
+			if ($lab_id > 0) {
+				$editing = true;
+			}
 			$i = 0;
 			foreach ($diseases as $disease) {
-				$surveillance = new Surveillance();
+				if ($editing == true) {
+					$surveillance = Surveillance::getSurveillance($surveillance_ids[$i]);
+				} else {
+					$surveillance = new Surveillance();
+				}
+
 				$surveillance -> Week_Ending = $weekending;
 				$surveillance -> Epiweek = $epiweek;
 				$surveillance -> District = $district;
@@ -65,15 +98,22 @@ class Weekly_Data_Management extends MY_Controller {
 				$surveillance -> Disease = $disease;
 				$surveillance -> Reporting_Year = $reporting_year;
 				$surveillance -> Created_By = $this -> session -> userdata('user_id');
-				$surveillance -> Date_Created = date("d-m-Y");
+				$surveillance -> Date_Created = date("Y-m-d");
 				$surveillance -> Reported_By = $reported_by;
 				$surveillance -> Designation = $designation;
+				$surveillance->Total_Diseases = $total_diseases;
+				$surveillance->Date_Reported = $timestamp;
 				$surveillance -> save();
 				$i++;
 			}//end foreach
 
 			//Lab Data
-			$labdata = new Lab_Weekly();
+			if ($editing == true) {
+				$labdata = Lab_Weekly::getLabObject($lab_id);
+			} else {
+				$labdata = new Lab_Weekly();
+			}
+			
 			$epiweek = $this -> input -> post("epiweek");
 			$weekending = $this -> input -> post("weekending");
 			$district = $this -> input -> post("district");
@@ -93,8 +133,9 @@ class Weekly_Data_Management extends MY_Controller {
 			$labdata -> Positive_Above_5 = $totalpositivegreaterfive;
 			$labdata -> Remarks = $remarks;
 			$labdata -> Reporting_Year = $reporting_year;
-			$labdata -> Date_Created = date("d-m-Y");
+			$labdata -> Date_Created = date("Y-m-d");
 			$labdata -> save();
+			redirect("weekly_data_management/add");
 		}
 	}//end save
 
@@ -103,6 +144,19 @@ class Weekly_Data_Management extends MY_Controller {
 
 		return $this -> form_validation -> run();
 	}//end validate_submission
+
+	/*
+	 * Function to check if district data for a particular week exists
+	 *
+	 */
+	function check_district_data($epiweek, $year, $district) {
+		$data = Surveillance::getDistrictData($epiweek, $year, $district);
+		if ($data -> id) {
+			echo "yes";
+		} else {
+			echo "no";
+		}
+	}
 
 	public function base_params($data) {
 		$data['title'] = "Weekly Data";

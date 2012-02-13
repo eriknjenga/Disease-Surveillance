@@ -24,6 +24,7 @@ class DNR_Districts extends MY_Controller {
 		$data['provinces'] = $provinces;
 		$data['dnr_districts'] = $dnr_districts; 
 		$data['report_view'] = "dnr_districts_v";
+		$data['small_title'] = "DNR Districts in ".$year." Epiweek ".$epiweek;
 		$this -> base_params($data);
 	}
  

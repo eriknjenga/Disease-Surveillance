@@ -39,6 +39,7 @@
          * ie. jQuery("#formID1").validationEngine('attach', {promptPosition : "centerRight"});
          */
         attach: function(userOptions) {
+        	
             var form = this;
             var options;
 
@@ -102,6 +103,7 @@
          * @return true if the form validates, false if it fails
          */
         validate: function() {
+        	
             return methods._validateFields(this);
         },
         /**
@@ -121,6 +123,7 @@
          * @return true if the form validates, false if it fails, undefined if ajax is used for form validation
          */
         validateform: function() {
+        	
             return methods._onSubmitEvent.call(this);
         },
         /**
@@ -193,6 +196,7 @@
          * @return false if form submission needs to be cancelled
          */
         _onSubmitEvent: function() {
+        	 
             var form = $(this);
  			var options = form.data('jqv');
    
@@ -238,6 +242,7 @@
          * @return true if form is valid, false if not, undefined if ajax form validation is done
          */
         _validateFields: function(form, skipAjaxValidation) {
+        	
             var options = form.data('jqv');
 
             // this variable is set to true if an error is found
@@ -247,9 +252,12 @@
 			form.trigger("jqv.form.validating");
             // first, evaluate status of non ajax fields
             form.find('[class*=validate]').not(':hidden').each( function() {
+            	
                 var field = $(this);
+                
                 errorFound |= methods._validateField(field, options, skipAjaxValidation);
             });
+            
             // second, check to see if all ajax calls completed ok
             // errorFound |= !methods._checkAjaxStatus(options);
 
@@ -395,6 +403,7 @@
          * @return true if field is valid
          */
         _validateField: function(field, options, skipAjaxValidation) {
+        	
             if (!field.attr("id"))
                 $.error("jQueryValidate: an ID attribute is required for this field: " + field.attr("name") + " class:" +
                 field.attr("class"));
@@ -492,19 +501,21 @@
                 field = $($("input[name='" + fieldName + "'][type!=hidden]:first"));
                 options.showArrow = false;
             }
-            //field.attr('class').contains daterange
+           
+            /*//field.attr('class').contains daterange
             if (fieldType == "text" && $("input[name='" + fieldName + "']").size() > 1) {
+            	 
                 field = $($("input[name='" + fieldName + "'][type!=hidden]:first"));
                 options.showArrow = false;
-            }
+            }*/
 
             if (options.isError){
-
                 methods._showPrompt(field, promptText, "", false, options);
             }else{
 				if (!isAjaxValidator) methods._closePrompt(field);
 			}
 			field.trigger("jqv.field.result", [field, options.isError, promptText]);
+			 
             return options.isError;
         },
         /**
