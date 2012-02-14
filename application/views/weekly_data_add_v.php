@@ -80,10 +80,10 @@
 		var epiweek = $("#epiweek").attr("value");
 		var reporting_year = $("#reporting_year").attr("value");
 		var district = $("#district").attr("value");
-		var url = "weekly_data_management/check_district_data/" + epiweek + "/" + reporting_year + "/" + district;
+		var url =  '<?php echo base_url()?>'+"weekly_data_management/check_district_data/" + epiweek + "/" + reporting_year + "/" + district;
 		$.get(url, function(data) {
 			if(data == "yes") {
-				var edit_url = "weekly_data_management/edit_weekly_data/" + epiweek + "/" + reporting_year + "/" + district;
+				var edit_url = '<?php echo base_url()?>'+"weekly_data_management/edit_weekly_data/" + epiweek + "/" + reporting_year + "/" + district; 
 				var error_html = "<p>Data for this district already exists! <a href='" + edit_url + "' class='link'>Click here</a> to edit the data instead!</p>";
 				$("#data_exists_error").html(error_html);
 				$("#data_exists_error").css("border-color", "red");
@@ -196,8 +196,8 @@
 	$week_ending = $week_data->Week_Ending;
 	$reporting_year = $week_data->Reporting_Year;
 	$reported_by = $week_data->Reported_By;
-	$designation = $week_data->Designation;
-	foreach($surveillance_data as $data){
+	$designation = $week_data->Designation; 
+	foreach($surveillance_data as $data){	
 		$disease_surveillance_data[$data->Disease]['lmcase'] = $data->Lmcase;
 		$disease_surveillance_data[$data->Disease]['lfcase'] = $data->Lfcase;
 		$disease_surveillance_data[$data->Disease]['lmdeath'] = $data->Lmdeath;
@@ -231,7 +231,6 @@
 	}
 	}
 	if(isset($lab_data)){ 
-
 	$week_data = $lab_data[0];
 	$lab_id = $week_data->id;
 	$malaria_below_5 = $week_data->Malaria_Below_5;
@@ -398,6 +397,7 @@ if($disease -> id != "12"){
 			<td>
 			<input type="checkbox" id ="<?php echo "check_" . $disease -> id;?>" class="zero_reporting">
 			</td>
+			<input type="hidden" name="surveillance_ids[]" value="<?php echo $disease_surveillance_data[$disease->id]['surveillance_id']?>" />
 		</tr>
 		<?php
 		}//end else if
@@ -431,7 +431,7 @@ if($disease -> id != "12"){
 		</tr>
 		<tr class="even">
 			<td colspan="1"><strong> Remarks </strong></td>
-			<td colspan="9">			<textarea name="remarks" rows="2" cols="50" value="<?php echo $remarks;?>"></textarea></td>
+			<td colspan="9">			<textarea name="remarks" rows="2" cols="50" value="<?php echo $remarks;?>"><?php echo $remarks;?></textarea></td>
 		</tr>
 		<tr>
 			<td><strong> Reported by </strong></td>

@@ -161,4 +161,16 @@ class Surveillance extends Doctrine_Record {
 		return $result;
 	}
 
+	public function getSurveillanceDataRange($first_surveillance_id, $last_surveillance_id) {
+		$query = Doctrine_Query::create() -> select("*") -> from("surveillance") -> where("id between '$first_surveillance_id' and $last_surveillance_id");
+		$result = $query -> execute();
+		return $result;
+	}
+
+	public function getReports($year, $epiweek) {
+		$query = Doctrine_Query::create() -> select("*") -> from("surveillance") -> where("Reporting_Year = '$year' and Epiweek = '$epiweek'")->groupBy("District");
+		$result = $query -> execute();
+		return $result;
+	}
+
 }

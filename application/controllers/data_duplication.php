@@ -46,9 +46,39 @@ class Data_Duplication extends MY_Controller {
 		$data['diseases'] = Disease::getAllObjects();
 		$this -> base_params($data);
 	}
-	
-	public function edit_duplicate(){
-		
+
+	public function edit_duplicate($number_of_diseases, $first_surveillance_id, $malaria_data_id) {
+		$last_surveillance_id = $first_surveillance_id + $number_of_diseases - 1;
+		$provinces = Province::getAll();
+		$districts = District::getAll();
+		$diseases = Disease::getAllObjects();
+
+		$data['provinces'] = $provinces;
+		$data['districts'] = $districts;
+		$data['diseases'] = $diseases;
+		$data['prediction'] = Surveillance::getPrediction();
+		$data['surveillance_data'] = Surveillance::getSurveillanceDataRange($first_surveillance_id, $last_surveillance_id);
+		$data['lab_data'] = Lab_Weekly::getLabObjects($malaria_data_id);
+		$data['editing'] = true;
+		$data['scripts'] = array("special_date_picker.js", "validationEngine-en.js", "validator.js");
+		$data["styles"] = array("validator.css");
+		$data['title'] = "Duplicate Data Editing";
+		$data['content_view'] = "weekly_data_add_v";
+		$data['banner_text'] = "Weekly Data Correction";
+		$data['link'] = "data_quality_management";
+		$this -> load -> view("template", $data);
+	}
+
+	public function delete_duplicate($number_of_diseases, $first_surveillance_id, $malaria_data_id,$district,$epiweek,$year) {
+		$last_surveillance_id = $first_surveillance_id + $number_of_diseases - 1;
+		$surveillance_records = Surveillance::getSurveillanceDataRange($first_surveillance_id, $last_surveillance_id);
+		foreach($surveillance_records as $surveillance_record){
+			$surveillance_record->delete();
+		}
+		$lab_data = Lab_Weekly::getLabObjects($malaria_data_id);
+		$lab_data->delete();
+		$redirection_url = base_url()."data_duplication/view_details/".$epiweek."/".$year."/".$district;
+		redirect($redirection_url); 
 	}
 
 }

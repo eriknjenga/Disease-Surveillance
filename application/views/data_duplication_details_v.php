@@ -34,8 +34,16 @@ $counter = 0;
 //Loop through all the records sets that have been retrieved
 foreach ($surveillance_sets as $set) {
 	$malaria_data = $lab_data[$counter];
-	$edit_url = "";
-	$delete_url = "";
+	$malaria_id = $malaria_data->id;
+	$surveillance_id = $set[0]->id;
+	if($malaria_data->id == ""){
+		$malaria_id = "0";
+	}
+	if($set[0]->id == ""){
+		$surveillance_id = "0";
+	}
+	$edit_url = base_url()."data_duplication/edit_duplicate/".$set[0] -> Total_Diseases."/".$surveillance_id."/".$malaria_id;
+	$delete_url = base_url()."data_duplication/delete_duplicate/".$set[0] -> Total_Diseases."/".$surveillance_id."/".$malaria_id."/".$set[0]->District."/".$set[0]->Epiweek."/".$set[0]->Reporting_Year;
 ?>
 <style>
 	.section {
@@ -43,7 +51,7 @@ foreach ($surveillance_sets as $set) {
 		width: 800px;
 		margin: 5px auto;
 		padding: 5px;
-	}
+	}
 </style>
 <div  class="section" align="center">
 	<table class="data-table" style="margin: 10px auto;">
@@ -148,8 +156,7 @@ $class = "even";
 			<td colspan="2"><?php echo $set[0] -> Designation;?></td>
 		</tr>
 	</table>
-	<a href="<?php echo base_url()."weekly_data_management/edit_duplicate"?>" class="link">Edit Record</a> -or- 
-	<a href="#" class="link">Delete Record</a>
+	<a href="<?php echo $edit_url;?>" class="link">Edit Record</a> -or- <a href="<?php echo $delete_url;?>" class="link">Delete Record</a>
 </div>
 <?php
 $counter++;

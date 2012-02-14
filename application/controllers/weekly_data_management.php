@@ -71,13 +71,14 @@ class Weekly_Data_Management extends MY_Controller {
 			$surveillance_ids = $this -> input -> post("surveillance_ids");
 			$total_diseases = Disease::getTotal();
 			$timestamp = date('U');
-			if ($lab_id > 0) {
+			if ($lab_id > 0) { 
 				$editing = true;
 			}
 			$i = 0;
 			foreach ($diseases as $disease) {
 				if ($editing == true) {
 					$surveillance = Surveillance::getSurveillance($surveillance_ids[$i]);
+					 
 				} else {
 					$surveillance = new Surveillance();
 				}
@@ -109,7 +110,7 @@ class Weekly_Data_Management extends MY_Controller {
 
 			//Lab Data
 			if ($editing == true) {
-				$labdata = Lab_Weekly::getLabObject($lab_id);
+				$labdata = Lab_Weekly::getLabObject($lab_id); 
 			} else {
 				$labdata = new Lab_Weekly();
 			}

@@ -63,5 +63,11 @@ class Lab_Weekly extends Doctrine_Record {
 		return $lab_weekly[0];
 	}
 
+	public static function getLabObjects($id) {
+		$query = Doctrine_Query::create() -> select("*") -> from("lab_weekly") -> where("id = '$id'");
+		$lab_weekly = $query -> execute();
+		return $lab_weekly;
+	}
+
 }
 ?>
