@@ -61,6 +61,7 @@ class CI_Router {
 	 */
 	function _set_routing()
 	{
+		
 		// Are query strings enabled in the config file?  Normally CI doesn't utilize query strings
 		// since URI segments are more search-engine friendly, but they can optionally be used.
 		// If this feature is enabled, we will gather the directory/class/method a little differently
@@ -181,7 +182,7 @@ class CI_Router {
 	 * @return	void
 	 */
 	function _set_request($segments = array())
-	{
+	{ 
 		$segments = $this->_validate_request($segments);
 
 		if (count($segments) == 0)
@@ -221,11 +222,11 @@ class CI_Router {
 	 */
 	function _validate_request($segments)
 	{
+		
 		if (count($segments) == 0)
 		{
 			return $segments;
 		}
-
 		// Does the requested controller exist in the root folder?
 		if (file_exists(APPPATH.'controllers/'.$segments[0].EXT))
 		{
@@ -280,6 +281,7 @@ class CI_Router {
 		// controller class.  We will now see if there is an override
 		if ( ! empty($this->routes['404_override']))
 		{
+			
 			$x = explode('/', $this->routes['404_override']);
 
 			$this->set_class($x[0]);
@@ -338,6 +340,7 @@ class CI_Router {
 		// If we got this far it means we didn't encounter a
 		// matching route so we'll set the site default route
 		$this->_set_request($this->uri->segments);
+		
 	}
 
 	// --------------------------------------------------------------------

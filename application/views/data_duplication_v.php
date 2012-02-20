@@ -80,10 +80,14 @@ if(isset($duplicates[0])){
 		<th>Action</th>
 		<?php
 		foreach ($duplicates as $duplicate) {
-			$details_url = base_url()."data_duplication/view_details/".$epiweek."/".$year."/".$duplicate->District;
-			echo "<tr><td>" . $duplicate->District_Object->Name . "</td><td>" . $duplicate->Records/$total_diseases . "</td><td><a class='link' href='".$details_url."'>View Details</a></td></tr>";
+			$details_url = base_url() . "data_duplication/view_details/" . $epiweek . "/" . $year . "/" . $duplicate -> District;
+			echo "<tr><td>" . $duplicate -> District_Object -> Name . "</td><td>" . $duplicate -> Records / $total_diseases . "</td><td><a class='link' href='" . $details_url . "'>View Details</a></td></tr>";
 		}
 		?>
 	</table>
-	<?php }?>
+	<?php }
+		else if(isset($duplicates) && sizeof($duplicates) == 0){
+		echo "<p style='margin:5px'>No duplicates were found in your selection. Change the parameters and try again</p>";
+		}
+	?>
 </div>

@@ -9,7 +9,7 @@ class Weekly_Data_Management extends MY_Controller {
 		$this -> add();
 	}
 
-	public function add() {
+	public function add($data = array()) {
 		$provinces = Province::getAll();
 		$districts = District::getAll();
 		$diseases = Disease::getAllObjects();
@@ -69,16 +69,26 @@ class Weekly_Data_Management extends MY_Controller {
 			$designation = $this -> input -> post("designation");
 			$lab_id = $this -> input -> post("lab_id");
 			$surveillance_ids = $this -> input -> post("surveillance_ids");
+			$data_exists = Surveillance::getDistrictData($epiweek, $reporting_year, $district);
+			if ($data_exists->id) {
+				$data = array();
+				$data['duplicate_district'] = District::getDistrict($district);
+				$data['duplicate_epiweek'] = $epiweek;
+				$data['duplicate_reporting_year'] = $reporting_year;
+				$data['existing_data'] = true;
+				$this -> add($data);
+				return;
+			}
 			$total_diseases = Disease::getTotal();
 			$timestamp = date('U');
-			if ($lab_id > 0) { 
+			if ($lab_id > 0) {
 				$editing = true;
 			}
 			$i = 0;
 			foreach ($diseases as $disease) {
 				if ($editing == true) {
 					$surveillance = Surveillance::getSurveillance($surveillance_ids[$i]);
-					 
+
 				} else {
 					$surveillance = new Surveillance();
 				}
@@ -92,29 +102,31 @@ class Weekly_Data_Management extends MY_Controller {
 				$surveillance -> Lfcase = $lfcase[$i];
 				$surveillance -> Lmdeath = $lmdeath[$i];
 				$surveillance -> Lfdeath = $lfdeath[$i];
-				$surveillance -> Gmcase = $gmcase[$i];
-				$surveillance -> Gfcase = $gfcase[$i];
-				$surveillance -> Gmdeath = $gmdeath[$i];
-				$surveillance -> Gfdeath = $gfdeath[$i];
+				if (isset($gmcase[$i])) {
+					$surveillance -> Gmcase = $gmcase[$i];
+					$surveillance -> Gfcase = $gfcase[$i];
+					$surveillance -> Gmdeath = $gmdeath[$i];
+					$surveillance -> Gfdeath = $gfdeath[$i];
+				}
 				$surveillance -> Disease = $disease;
 				$surveillance -> Reporting_Year = $reporting_year;
 				$surveillance -> Created_By = $this -> session -> userdata('user_id');
 				$surveillance -> Date_Created = date("Y-m-d");
 				$surveillance -> Reported_By = $reported_by;
 				$surveillance -> Designation = $designation;
-				$surveillance->Total_Diseases = $total_diseases;
-				$surveillance->Date_Reported = $timestamp;
+				$surveillance -> Total_Diseases = $total_diseases;
+				$surveillance -> Date_Reported = $timestamp;
 				$surveillance -> save();
 				$i++;
 			}//end foreach
 
 			//Lab Data
 			if ($editing == true) {
-				$labdata = Lab_Weekly::getLabObject($lab_id); 
+				$labdata = Lab_Weekly::getLabObject($lab_id);
 			} else {
 				$labdata = new Lab_Weekly();
 			}
-			
+
 			$epiweek = $this -> input -> post("epiweek");
 			$weekending = $this -> input -> post("weekending");
 			$district = $this -> input -> post("district");

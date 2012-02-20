@@ -112,7 +112,8 @@ $counter++;
 	if ($quick_link == "weekly_data_management") {echo "top_menu_active";
 	}
 	?>">Add Epidemiological Data</a>
-		<a style="width:200px !important" href="<?php echo site_url('weekly_data_management');?>" class="top_menu_link sub_menu_link last_link  <?php
+		<a style="width:250px !important" href="offline_add_weekly_data.html" class="top_menu_link sub_menu_link">Add Epidemiological Data (Offline)</a>
+		<a style="width:200px !important" href="<?php echo site_url('zoonotic_data_management');?>" class="top_menu_link sub_menu_link last_link  <?php
 		if ($quick_link == "zoonotic_data_management") {echo "top_menu_active";
 		}
 	?>">Add Zoonotic Data</a>

@@ -1,3 +1,8 @@
+<?php
+if (!isset($existing_data)) {
+	$existing_data = false;
+}
+?>
 <style>
 	.disease_input {
 		width: 50px;
@@ -18,82 +23,85 @@
 </style>
 <script type="text/javascript">
 	$(function() {
-		$("#entry-form").validationEngine();
-		$("#confirm_variables").click(function() {
-			$("#epiweek").attr("value", $("#predicted_epiweek").text());
-			$("#weekending").attr("value", $("#predicted_weekending").text());
-			$("#reporting_year").attr("value", $("#predicted_year").attr("value"));
-			$('#prediction').slideUp('slow');
-		});
-		$("#province").change(function() {
-			//Get the selected province
-			var province = $(this).attr("value");
-			$("#district").children('option').remove();
-			$.each($("#district_container").children('option'), function(i, v) {
-				var current_province = $(this).attr("province");
-				if(current_province == province) {
-					$("#district").append($("<option></option>").attr("value", $(this).attr("value")).text($(this).text()));
-				} else if(province == 0) {
-					$("#district").append($("<option></option>").attr("value", $(this).attr("value")).text($(this).text()));
-				}
-			});
-			//Loop through the list of all districts and display the ones from this province
+$("#entry-form").validationEngine();
+$("#confirm_variables").click(function() {
+$("#epiweek").attr("value", $("#predicted_epiweek").text());
+$("#weekending").attr("value", $("#predicted_weekending").text());
+$("#reporting_year").attr("value", $("#predicted_year").attr("value"));
+$('#prediction').slideUp('slow');
+});
+$("#province").change(function() {
+//Get the selected province
+var province = $(this).attr("value");
+$("#district").children('option').remove();
+$.each($("#district_container").children('option'), function(i, v) {
+var current_province = $(this).attr("province");
+if(current_province == province) {
+$("#district").append($("<option></option>").attr("value", $(this).attr("value")).text($(this).text()));
+} else if(province == 0) {
+$("#district").append($("<option></option>").attr("value", $(this).attr("value")).text($(this).text()));
+}
+});
+//Loop through the list of all districts and display the ones from this province
 
-		});
-		$("#district").change(function() {
-			checkDistrictData();
-		});
+});
+$("#district").change(function() {
+if($("#epiweek").attr("value") > 0) {
+checkDistrictData();
+}
+});
 
-		$("#weekending").datepicker({
-			altField : "#epiweek",
-			altFormat : "DD,d MM, yy",
-			firstDay : 1,
-			changeYear : true,
-			onClose : function(date, inst) {
-				//Create a new date object from the date selected
-				var new_date = new Date(date);
-				//Retrieve the week number and reporting year for this date object
-				var week_data = getWeek(new_date);
-				$("#epiweek").attr("value", week_data[0]);
-				$("#reporting_year").attr("value", week_data[1]);
-				if($("#district").attr("value") > 0) {
-					checkDistrictData();
-				}
+$("#weekending").datepicker({
+altField : "#epiweek",
+altFormat : "DD,d MM, yy",
+firstDay : 1,
+changeYear : true,
+onClose : function(date, inst) {
+//Create a new date object from the date selected
+var new_date = new Date(date);
+//Retrieve the week number and reporting year for this date object
+var week_data = getWeek(new_date);
+$("#epiweek").attr("value", week_data[0]);
+$("#reporting_year").attr("value", week_data[1]);
+if($("#district").attr("value") > 0) {
+checkDistrictData();
+}
 
-			},
-			beforeShowDay : function(date) {
-				//Disable all days except sundays
-				var day = date.getDay();
-				return [(day != 1 && day != 2 && day != 3 && day != 4 && day != 5 && day != 6)];
-			}
-		});
-		$(".zero_reporting").change(function() {
+},
+beforeShowDay : function(date) {
+//Disable all days except sundays
+var day = date.getDay();
+return [(day != 1 && day != 2 && day != 3 && day != 4 && day != 5 && day != 6)];
+}
+});
+$(".zero_reporting").change(function() {
 
-			zeroReporting(this.id);
-		});
+zeroReporting(this.id);
+});
+});
+/*
+* Function that checks if district data exists
+*/
+function checkDistrictData() {
+$("#data_exists_error").slideUp("slow");
+var epiweek = $("#epiweek").attr("value");
+var reporting_year = $("#reporting_year").attr("value");
+var district = $("#district").attr("value");
+var url =  '<?php echo base_url()?>'+"weekly_data_management/check_district_data/" + epiweek + "/" + reporting_year + "/" + district;
+$.get(url, function(data) {
+if(data == "yes") {
+var edit_url = '<?php echo base_url()?>
+	'+"weekly_data_management/edit_weekly_data/" + epiweek + "/" + reporting_year + "/" + district;
+	var error_html = "<p>Data for this district already exists! <a href='" + edit_url + "' class='link'>Click here</a> to edit the data instead!</p>";
+	$("#data_exists_error").html(error_html);
+	$("#data_exists_error").css("border-color", "red");
+	$("#data_exists_error").slideDown("slow");
+	} else {
+		$("#data_exists_error").html("<p>You can enter surveillance data for this district</p>");
+		$("#data_exists_error").css("border-color", "green");
+		$("#data_exists_error").slideDown("slow");
+	}
 	});
-	/*
-	 * Function that checks if district data exists
-	 */
-	function checkDistrictData() {
-		$("#data_exists_error").slideUp("slow");
-		var epiweek = $("#epiweek").attr("value");
-		var reporting_year = $("#reporting_year").attr("value");
-		var district = $("#district").attr("value");
-		var url =  '<?php echo base_url()?>'+"weekly_data_management/check_district_data/" + epiweek + "/" + reporting_year + "/" + district;
-		$.get(url, function(data) {
-			if(data == "yes") {
-				var edit_url = '<?php echo base_url()?>'+"weekly_data_management/edit_weekly_data/" + epiweek + "/" + reporting_year + "/" + district; 
-				var error_html = "<p>Data for this district already exists! <a href='" + edit_url + "' class='link'>Click here</a> to edit the data instead!</p>";
-				$("#data_exists_error").html(error_html);
-				$("#data_exists_error").css("border-color", "red");
-				$("#data_exists_error").slideDown("slow");
-			} else {
-				$("#data_exists_error").html("<p>You can enter surveillance data for this district</p>");
-				$("#data_exists_error").css("border-color", "green");
-				$("#data_exists_error").slideDown("slow");
-			}
-		});
 	}
 
 	/*
@@ -196,17 +204,17 @@
 	$week_ending = $week_data->Week_Ending;
 	$reporting_year = $week_data->Reporting_Year;
 	$reported_by = $week_data->Reported_By;
-	$designation = $week_data->Designation; 
-	foreach($surveillance_data as $data){	
-		$disease_surveillance_data[$data->Disease]['lmcase'] = $data->Lmcase;
-		$disease_surveillance_data[$data->Disease]['lfcase'] = $data->Lfcase;
-		$disease_surveillance_data[$data->Disease]['lmdeath'] = $data->Lmdeath;
-		$disease_surveillance_data[$data->Disease]['lfdeath'] = $data->Lfdeath;
-		$disease_surveillance_data[$data->Disease]['gmcase'] = $data->Gmcase;
-		$disease_surveillance_data[$data->Disease]['gfcase'] = $data->Gfcase;
-		$disease_surveillance_data[$data->Disease]['gmdeath'] = $data->Gmdeath;
-		$disease_surveillance_data[$data->Disease]['gfdeath'] = $data->Gfdeath;
-		$disease_surveillance_data[$data->Disease]['surveillance_id'] = $data->id;
+	$designation = $week_data->Designation;
+	foreach($surveillance_data as $data){
+	$disease_surveillance_data[$data->Disease]['lmcase'] = $data->Lmcase;
+	$disease_surveillance_data[$data->Disease]['lfcase'] = $data->Lfcase;
+	$disease_surveillance_data[$data->Disease]['lmdeath'] = $data->Lmdeath;
+	$disease_surveillance_data[$data->Disease]['lfdeath'] = $data->Lfdeath;
+	$disease_surveillance_data[$data->Disease]['gmcase'] = $data->Gmcase;
+	$disease_surveillance_data[$data->Disease]['gfcase'] = $data->Gfcase;
+	$disease_surveillance_data[$data->Disease]['gmdeath'] = $data->Gmdeath;
+	$disease_surveillance_data[$data->Disease]['gfdeath'] = $data->Gfdeath;
+	$disease_surveillance_data[$data->Disease]['surveillance_id'] = $data->id;
 	}
 	}
 	else{
@@ -219,18 +227,18 @@
 	$reported_by = "";
 	$designation = "";
 	foreach($diseases as $disease){
-		$disease_surveillance_data[$disease->id]['lmcase'] = '';
-		$disease_surveillance_data[$disease->id]['lfcase'] = '';
-		$disease_surveillance_data[$disease->id]['lmdeath'] = '';
-		$disease_surveillance_data[$disease->id]['lfdeath'] = '';
-		$disease_surveillance_data[$disease->id]['gmcase'] = '';
-		$disease_surveillance_data[$disease->id]['gfcase'] = '';
-		$disease_surveillance_data[$disease->id]['gmdeath'] = '';
-		$disease_surveillance_data[$disease->id]['gfdeath'] = '';
-		$disease_surveillance_data[$disease->id]['surveillance_id'] = '';
+	$disease_surveillance_data[$disease->id]['lmcase'] = '';
+	$disease_surveillance_data[$disease->id]['lfcase'] = '';
+	$disease_surveillance_data[$disease->id]['lmdeath'] = '';
+	$disease_surveillance_data[$disease->id]['lfdeath'] = '';
+	$disease_surveillance_data[$disease->id]['gmcase'] = '';
+	$disease_surveillance_data[$disease->id]['gfcase'] = '';
+	$disease_surveillance_data[$disease->id]['gmdeath'] = '';
+	$disease_surveillance_data[$disease->id]['gfdeath'] = '';
+	$disease_surveillance_data[$disease->id]['surveillance_id'] = '';
 	}
 	}
-	if(isset($lab_data)){ 
+	if(isset($lab_data)){
 	$week_data = $lab_data[0];
 	$lab_id = $week_data->id;
 	$malaria_below_5 = $week_data->Malaria_Below_5;
@@ -261,7 +269,7 @@
 			<td><b>Epiweek: </b></td>
 			<td>
 			<input type="text" name="epiweek" id="epiweek" readonly="" class="validate[required,custom[onlyNumberSp]]" value="<?php echo $epiweek;?>"/>
-			<input type="hidden" name="reporting_year" id="reporting_year" value="<?php echo $reporting_year;?>"/> 
+			<input type="hidden" name="reporting_year" id="reporting_year" value="<?php echo $reporting_year;?>"/>
 			<input type="hidden" name="lab_id" id="lab_id" value="<?php echo $lab_id;?>"/>
 			</td>
 		</tr>
@@ -308,7 +316,17 @@
 			</td>
 		</tr>
 	</table>
-	<div id="data_exists_error"></div>
+	<div id="data_exists_error" <?php
+		if ($existing_data == true) { echo "style='display:block'";
+		}
+	?>>
+		<?php
+		if ($existing_data == true) {
+			$edit_link = base_url()."weekly_data_management/edit_weekly_data/".$duplicate_epiweek."/".$duplicate_reporting_year."/". $duplicate_district[0]->id;
+			echo "<p>Epiweek " . $duplicate_epiweek . " data for " . $duplicate_district[0] -> Name . " district already exists for " . $duplicate_reporting_year . ".</p><p><a class='link' style='margin:0' href='$edit_link'>Click Here</a> to edit the existing data or select different parameters.</p>";
+		}
+		?>
+	</div>
 	<table class="data-table" style="margin: 0 auto;">
 		<tr>
 			<th rowspan="3">Disease</th>
@@ -345,28 +363,28 @@ if($disease -> id != "12"){
 		<tr class="<?php echo $class;?>">
 			<td><?php echo $disease -> Name;?></td>
 			<td style="background-color: #C4E8B7">
-			<input type="text" name="lmcase[]" id="<?php echo "lmcase_" . $disease -> id;?>"   class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease->id]['lmcase'];?>"/>
+			<input type="text" name="lmcase[]" id="<?php echo "lmcase_" . $disease -> id;?>"   class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease -> id]['lmcase'];?>"/>
 			</td>
 			<td style="background-color: #C4E8B7">
-			<input type="text" name="lfcase[]" id="<?php echo "lfcase_" . $disease -> id;?>"   class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease->id]['lfcase'];?>"/>
+			<input type="text" name="lfcase[]" id="<?php echo "lfcase_" . $disease -> id;?>"   class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease -> id]['lfcase'];?>"/>
 			</td>
 			<td style="background-color: #C4E8B7">
-			<input type="text" name="lmdeath[]" id="<?php echo "lmdeath_" . $disease -> id;?>"   class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease->id]['lmdeath'];?>"/>
+			<input type="text" name="lmdeath[]" id="<?php echo "lmdeath_" . $disease -> id;?>"   class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease -> id]['lmdeath'];?>"/>
 			</td>
 			<td style="background-color: #C4E8B7">
-			<input type="text" name="lfdeath[]" id="<?php echo "lfdeath_" . $disease -> id;?>"   class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease->id]['lfdeath'];?>"/>
+			<input type="text" name="lfdeath[]" id="<?php echo "lfdeath_" . $disease -> id;?>"   class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease -> id]['lfdeath'];?>"/>
 			</td>
 			<td style="background-color: #C4E8B7">
-			<input type="text" name="gmcase[]" id="<?php echo "gmcase_" . $disease -> id;?>"   class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease->id]['gmcase'];?>"/>
+			<input type="text" name="gmcase[]" id="<?php echo "gmcase_" . $disease -> id;?>"   class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease -> id]['gmcase'];?>"/>
 			</td>
 			<td style="background-color: #C4E8B7">
-			<input type="text" name="gfcase[]" id="<?php echo "gfcase_" . $disease -> id;?>"  class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease->id]['gfcase'];?>"/>
+			<input type="text" name="gfcase[]" id="<?php echo "gfcase_" . $disease -> id;?>"  class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease -> id]['gfcase'];?>"/>
 			</td>
 			<td style="background-color: #C4E8B7">
-			<input type="text" name="gmdeath[]" id="<?php echo "gmdeath_" . $disease -> id;?>"   class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease->id]['gmdeath'];?>"/>
+			<input type="text" name="gmdeath[]" id="<?php echo "gmdeath_" . $disease -> id;?>"   class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease -> id]['gmdeath'];?>"/>
 			</td>
 			<td style="background-color: #C4E8B7">
-			<input type="text" name="gfdeath[]" id="<?php echo "gfdeath_" . $disease -> id;?>"  class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease->id]['gfdeath'];?>"/>
+			<input type="text" name="gfdeath[]" id="<?php echo "gfdeath_" . $disease -> id;?>"  class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease -> id]['gfdeath'];?>"/>
 			</td>
 			<td>
 			<input type="checkbox" id ="<?php echo "check_" . $disease -> id;?>" class="zero_reporting">
@@ -379,16 +397,16 @@ if($disease -> id != "12"){
 		<tr class="<?php echo $class;?>">
 			<td><?php echo $disease -> Name;?></td>
 			<td style="background-color: #C4E8B7">
-			<input type="text" name="lmcase[]" id="<?php echo "lmcase_" . $disease -> id;?>" class="disease_input validate[required,custom[onlyNumberSp]]" value="<?php echo $disease_surveillance_data[$disease->id]['lmcase'];?>"/>
+			<input type="text" name="lmcase[]" id="<?php echo "lmcase_" . $disease -> id;?>" class="disease_input validate[required,custom[onlyNumberSp]]" value="<?php echo $disease_surveillance_data[$disease -> id]['lmcase'];?>"/>
 			</td>
 			<td style="background-color: #C4E8B7">
-			<input type="text" name="lfcase[]" id="<?php echo "lfcase_" . $disease -> id;?>"  class="disease_input validate[required,custom[onlyNumberSp]]" value="<?php echo $disease_surveillance_data[$disease->id]['lfcase'];?>"/>
+			<input type="text" name="lfcase[]" id="<?php echo "lfcase_" . $disease -> id;?>"  class="disease_input validate[required,custom[onlyNumberSp]]" value="<?php echo $disease_surveillance_data[$disease -> id]['lfcase'];?>"/>
 			</td>
 			<td style="background-color: #C4E8B7">
-			<input type="text" name="lmdeath[]" id="<?php echo "lmdeath_" . $disease -> id;?>"  class="disease_input validate[required,custom[onlyNumberSp]]" value="<?php echo $disease_surveillance_data[$disease->id]['lmdeath'];?>"/>
+			<input type="text" name="lmdeath[]" id="<?php echo "lmdeath_" . $disease -> id;?>"  class="disease_input validate[required,custom[onlyNumberSp]]" value="<?php echo $disease_surveillance_data[$disease -> id]['lmdeath'];?>"/>
 			</td>
 			<td style="background-color: #C4E8B7">
-			<input type="text" name="lfdeath[]" id="<?php echo "lfdeath_" . $disease -> id;?>"  class="disease_input validate[required,custom[onlyNumberSp]]" value="<?php echo $disease_surveillance_data[$disease->id]['lfdeath'];?>"/>
+			<input type="text" name="lfdeath[]" id="<?php echo "lfdeath_" . $disease -> id;?>"  class="disease_input validate[required,custom[onlyNumberSp]]" value="<?php echo $disease_surveillance_data[$disease -> id]['lfdeath'];?>"/>
 			</td>
 			<td style="background-color: #C4E8B7"> - </td>
 			<td style="background-color: #C4E8B7"> - </td>

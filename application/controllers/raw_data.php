@@ -23,7 +23,7 @@ class Raw_Data extends MY_Controller {
 		$start_week = $this -> input -> post('epiweek_from');
 		$end_week = $this -> input -> post('epiweek_to');
 		if (strlen($surveillance_data_requested)>0) {
-
+			$surveillance_data = Surveillance::getRawData($year, $start_week, $end_week);
 			$excell_headers = "Disease\t District Name\t Province Name\t Week Number\t Week Ending\t Male Cases (Less Than 5)\t Female Cases (Less Than 5)\t Male Cases (Greater Than 5)\t Female Cases (Greater Than 5)\t Total Cases\t Male Deaths (Less Than 5)\t Female Deaths (Less Than 5)\t Male Deaths (Greater Than 5)\t Female Deaths (Greater Than 5)\t Total Deaths\tYear\t Reported By\t Designation\t Date Reported\t\n";
 			$excell_data = "";
 			foreach ($surveillance_data as $result_set) {

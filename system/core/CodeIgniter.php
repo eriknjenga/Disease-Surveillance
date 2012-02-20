@@ -1,4 +1,5 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
 /**
  * CodeIgniter
  *
@@ -67,6 +68,7 @@
  *  Define a custom error handler so we can log PHP errors
  * ------------------------------------------------------
  */
+
 	set_error_handler('_exception_handler');
 
 	if ( ! is_php('5.3'))
@@ -167,7 +169,9 @@
  *  Instantiate the routing class and set the routing
  * ------------------------------------------------------
  */
+
 	$RTR =& load_class('Router', 'core');
+	
 	$RTR->_set_routing();
 
 	// Set any routing overrides that may exist in the main index file
@@ -259,6 +263,7 @@
  *  loader class can be called via the URI, nor can
  *  controller functions that begin with an underscore
  */
+
 	$class  = $RTR->fetch_class();
 	$method = $RTR->fetch_method();
 
@@ -282,6 +287,7 @@
  *  Instantiate the requested controller
  * ------------------------------------------------------
  */
+
 	// Mark a start point so we can benchmark the controller
 	$BM->mark('controller_execution_time_( '.$class.' / '.$method.' )_start');
 
@@ -298,7 +304,7 @@
  * ------------------------------------------------------
  *  Call the requested method
  * ------------------------------------------------------
- */
+ */ 
 	// Is there a "remap" function? If so, we call it instead
 	if (method_exists($CI, '_remap'))
 	{
@@ -316,7 +322,7 @@
 				$x = explode('/', $RTR->routes['404_override']);
 				$class = $x[0];
 				$method = (isset($x[1]) ? $x[1] : 'index');
-				if ( ! class_exists($class))
+
 				{
 					if ( ! file_exists(APPPATH.'controllers/'.$class.EXT))
 					{
