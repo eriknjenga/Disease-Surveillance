@@ -60,7 +60,7 @@ for($x=$current_year;$x>=$earliest_year;$x--){
 		<label for="epiweek_to">Epiweek</label>
 		<select name="epiweek_to">
 			<?php
-for($x=53;$x>=1;$x--){
+for($x=1;$x<=53;$x++){
 			?>
 			<option value="<?php echo $x;?>"><?php echo $x;?></option>
 			<?php }?>
@@ -83,7 +83,8 @@ foreach($districts as $district){
 			<option value="<?php echo $district->id;?>"><?php echo $district->Name;?></option>
 			<?php }?>
 		</select>
-		<input type="submit" name="generate" class="button"	value="Generate Weekly Report" />
+		<input type="submit" name="display_type" class="button"	value="Download Report PDF" />
+		<input type="submit" name="display_type" class="button"	value="View Report" />
 	</fieldset>
 	</form>
 </div>
