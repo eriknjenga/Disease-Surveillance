@@ -63,7 +63,7 @@ class Surveillance extends Doctrine_Record {
 
     
     public static function getWeeklySummaries($year, $epiweek, $district) {
-        $query = Doctrine_Query::create()->select("Submitted, Expected, Disease, Lfcase+Lmcase+Gfcase+Gmcase as Cases, Lfdeath+Lmdeath+Gfdeath+Gmdeath as Deaths")->from("surveillance")->where("Reporting_Year = '$year' and Epiweek = '$epiweek' and District = '$district'")->OrderBy("Disease asc");
+        $query = Doctrine_Query::create()->select("Submitted, Expected, Disease, Lfcase+Lmcase+Gfcase+Gmcase as Cases, Lfdeath+Lmdeath+Gfdeath+Gmdeath as Deaths")->from("surveillance")->where("Reporting_Year = '$year' and Epiweek = '$epiweek' and District = '$district'")->OrderBy("abs(Disease) asc");
         $surveillance = $query->execute(array(), Doctrine::HYDRATE_ARRAY);
         return $surveillance;
     }

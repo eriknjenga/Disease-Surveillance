@@ -148,7 +148,7 @@ class Weekly_Report extends MY_Controller {
         //Start section that shows cumulative data
         $bata_buffer .= "<table class='data-table'>
             <tr style='background: #F5D2AE;'>
-                <th rowspan=2></th>";
+                <th rowspan='2' colspan='5'>Cumulative Summaries</th>";
         //Loop through all the diseases to display their names
         foreach ($disease_array as $disease) {
             if ($disease['Name'] == 'Malaria') {
@@ -170,7 +170,7 @@ class Weekly_Report extends MY_Controller {
         //Get the malaria lab data summaries
         $lab_weekly_summary = Lab_Weekly::getWeeklyLabSummaries($year, $epiweek);
         //Start Displaying this week summary
-        $bata_buffer .= "<tr class='even'><td rowspan=2>Week ".$epiweek." Summary</td>";
+        $bata_buffer .= "<tr class='even'><td rowspan='2' colspan='5'>Week ".$epiweek." Summary</td>";
         //Get the summary for the week. Disease cases vs. deaths
         $disease_deaths = array();
         foreach ($disease_array as $disease_object) {
@@ -198,7 +198,7 @@ class Weekly_Report extends MY_Controller {
         //Get the malaria lab data summaries
         $lab_weekly_summary = Lab_Weekly::getAnnualLabSummaries($year);
         //Start Displaying this week summary
-        $bata_buffer .= "<tr class='even' style='background:#BB00FF'><td rowspan=2>Years Cummulative Summary</td>";
+        $bata_buffer .= "<tr class='even' style='background:#BB00FF'><td rowspan='2' colspan='5'>Years Cummulative Summary</td>";
         //Get the summary for the week. Disease cases vs. deaths
         $disease_deaths = array();
         foreach ($disease_array as $disease_object) {
