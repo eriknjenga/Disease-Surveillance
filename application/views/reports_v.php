@@ -4,10 +4,16 @@ if (!isset($quick_link)) {
 }
 ?>
 <div id="sub_menu">
+	<?php
+	if($this -> session -> userdata('can_download_raw_data') == '1'){ 
+	?>
 	<a href="<?php echo site_url('raw_data');?>" class="top_menu_link sub_menu_link first_link  <?php
 	if ($quick_link == "raw_data") {echo "top_menu_active";
 	}
 	?>">Raw Data</a>
+	<?php
+	}
+	?>
 	<a href="<?php echo site_url("dnr_districts");?>" class=" top_menu_link sub_menu_link  <?php
 	if ($quick_link == "dnr_districts") {echo "top_menu_active";
 	}

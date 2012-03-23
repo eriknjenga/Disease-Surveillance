@@ -13,6 +13,8 @@ class Users extends Doctrine_Record {
 		$this -> hasColumn('Added_By', 'varchar', 5);
 		$this -> hasColumn('District_Or_Province', 'varchar', 50);
 		$this -> hasColumn('Timestamp', 'varchar', 32);
+		$this -> hasColumn('Can_Delete', 'varchar', 5);
+		$this -> hasColumn('Can_Download_Raw_Data', 'varchar', 5);
 	}
 
 	public function setUp() {

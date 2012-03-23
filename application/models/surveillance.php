@@ -56,7 +56,7 @@ class Surveillance extends Doctrine_Record {
     }
     
     public static function getRawDataArray($year, $start_week, $end_week) {
-        $query = Doctrine_Query::create()->select("s.*, s.Disease_Object.Name as Disease_Name, d.Name as District_Name, d.Province_Object.Name as Province_Name")->from("surveillance s, s.District_Object d")->where("Reporting_Year = '$year' and epiweek between '$start_week' and '$end_week'");
+        $query = Doctrine_Query::create()->select("s.*, s.Disease_Object.Name as Disease_Name, d.Name as District_Name, d.Province_Object.Name as Province_Name")->from("surveillance s, s.District_Object d")->where("Reporting_Year = '$year' and abs(Epiweek) between '$start_week' and '$end_week'")->OrderBy("abs(Epiweek) asc");
 	    $surveillance = $query->execute(array(), Doctrine::HYDRATE_ARRAY);
         return $surveillance;
     }
@@ -133,7 +133,7 @@ class Surveillance extends Doctrine_Record {
         $year_query = Doctrine_Query::create()->select("Reporting_Year")->from("Surveillance")->orderBy("Reporting_Year DESC")->limit(1);
         $year_result = $year_query->execute();
         $last_year = $year_result[0]->Reporting_Year;
-        $week_query = Doctrine_Query::create()->select("Epiweek,Week_Ending")->from("Surveillance")->where("Reporting_Year = '$last_year'")->orderBy("Epiweek DESC")->limit(1);
+        $week_query = Doctrine_Query::create()->select("Epiweek,Week_Ending")->from("Surveillance")->where("Reporting_Year = '$last_year'")->orderBy("abs(Epiweek) DESC")->limit(1);
         $week_result = $week_query->execute();
         $last_epiweek = $week_result[0]->Epiweek;
         $last_weekending = $week_result[0]->Week_Ending;
