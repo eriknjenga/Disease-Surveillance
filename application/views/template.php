@@ -107,6 +107,7 @@ $counter++;
 </div>
 
 <div id="inner_wrapper"> 
+	<?php if(!$user_is_administrator){?>
 <div id="sub_menu">
 	<a style="width:200px !important" href="<?php echo site_url('weekly_data_management');?>" class="top_menu_link sub_menu_link first_link  <?php
 	if ($quick_link == "weekly_data_management") {echo "top_menu_active";
@@ -118,7 +119,7 @@ $counter++;
 		}
 	?>">Add Zoonotic Data</a>
 </div>
-
+<?php }?>
 <div id="main_wrapper"> 
  
 <?php $this -> load -> view($content_view);?>

@@ -6,6 +6,9 @@ class District extends Doctrine_Record {
 		$this -> hasColumn('Province', 'int', 14);
 		$this -> hasColumn('Comment', 'varchar', 32);
 		$this -> hasColumn('Flag', 'int', 32);
+		$this -> hasColumn('Latitude', 'varchar', 100);
+		$this -> hasColumn('Longitude', 'varchar', 100);
+		$this -> hasColumn('Disabled', 'varchar', 1);
 	}//end setTableDefinition
 
 	public function setUp() {
@@ -48,6 +51,17 @@ class District extends Doctrine_Record {
 		$query = Doctrine_Query::create() -> select("*") -> from("district") -> where("Province = '$provinceId'");
 		$results = $query -> execute();
 		return $results;
+	}
+	public static function getTotalNumber() {
+		$query = Doctrine_Query::create() -> select("COUNT(*) as Total_Districts") -> from("District");
+		$count = $query -> execute();
+		return $count[0] -> Total_Districts;
+	}
+
+	public function getPagedDistricts($offset, $items) {
+		$query = Doctrine_Query::create() -> select("*") -> from("District") -> orderBy("name") -> offset($offset) -> limit($items);
+		$districts = $query -> execute();
+		return $districts;
 	}
 
 }//end class
