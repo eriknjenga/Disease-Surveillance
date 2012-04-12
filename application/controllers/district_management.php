@@ -87,7 +87,7 @@ class District_Management extends MY_Controller {
 		$data['scripts'] = array("jquery-ui.js", "tab.js");
 		$data['styles'] = array("jquery-ui.css", "tab.css","pagination.css");
 		$data['quick_link'] = "district_management";
-		$data['link'] = "system_administration";
+		$data['link'] = "admin_management";
 		$data['content_view'] = "admin_view";
 		$data['banner_text'] = "Districts Listing";
 		$this -> load -> view('template', $data);

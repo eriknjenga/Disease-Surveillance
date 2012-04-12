@@ -101,8 +101,8 @@ body {
 }
 #my_profile_link {
 	background-color: #00B831;
-	width: auto;
-	padding: 0 10px 0 10px;
+	width: auto; 
+	margin:0px;
 }
 #my_profile_link:hover {
 	background-color: white;

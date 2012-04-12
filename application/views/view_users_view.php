@@ -1,5 +1,6 @@
-<div class="quick_menu">
-<a class="quick_menu_link" href="<?php echo site_url("user_management/add");?>">New User</a>
+<div id="sub_menu">
+<a href="<?php echo  site_url("user_management/add");?>" class="top_menu_link sub_menu_link first_link <?php if($quick_link == "add_user"){echo "top_menu_active";}?>">New User</a>  
+ 
 </div>
 <?php if (isset($pagination)): ?>
 <div style="width:450px; margin:0 auto 60px auto">
@@ -32,16 +33,35 @@
  <?php echo $user->Access->Level_Name;?>
  </td>
    <td>
- <?php echo $user->Province_Object->Name;?>
+ <?php 
+ if($user->Access->Indicator == "provincial_clerk"){
+ 	 echo $user->Province_Object->Name;
+ }
+?>
  </td>
    <td>
- <?php echo $user->District_Object->Name;?>
+ <?php 
+  if($user->Access->Indicator == "district_clerk"){
+ 	 echo $user->District_Object->Name;
+ } ?>
  </td>
    <td>
- <?php echo $user->Can_Delete;?>
+ <?php
+   if( $user->Can_Delete == "1"){
+ 	 echo "<span style='color:green'>Yes</span>";
+ } 
+ else{
+ 	 echo "<span style='color:red'>No</span>";
+ }?>
  </td>
    <td>
- <?php echo $user->Can_Download_Raw_Data;?>
+   	 <?php
+   if( $user->Can_Download_Raw_Data == "1"){
+ 	 echo "<span style='color:green'>Yes</span>";
+ } 
+ else{
+ 	 echo "<span style='color:red'>No</span>";
+ }?> 
  </td>
  
   <td>

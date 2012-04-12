@@ -273,6 +273,7 @@ var edit_url = '<?php echo base_url()?>
 			<input type="hidden" name="lab_id" id="lab_id" value="<?php echo $lab_id;?>"/>
 			</td>
 		</tr>
+		<?php if($this -> session -> userdata('user_indicator') != "district_clerk"){?>
 		<tr>
 			<td><b>Province: </b></td><td>
 			<select name="province" id="province">
@@ -308,6 +309,22 @@ var edit_url = '<?php echo base_url()?>
 				?>
 			</select></td>
 		</tr>
+		<?php
+		}
+else{?>
+			<tr>
+			<td><b>Facility: </b></td><td>
+			<select name="facility" id="facility">
+				<option value="0">Select Facility</option>
+				<?php
+				foreach ($facilities as $facility) {
+					echo '<option value="' . $facility -> id . '">' . $facility -> name . '</option>';
+				}//end foreach
+				?>
+			</select></td> 
+		</tr>
+		
+		<?php }?>
 		<tr>
 			<td><b>No. of Health Facility/Site reporting</b></td><td>
 			<input type="text" name="reporting_facilities" id="reporting_facilities" class="validate[required,custom[onlyNumberSp]]" value="<?php echo $submitted;?>"/>

@@ -6,10 +6,16 @@ class Weekly_Data_Management extends MY_Controller {
 	}
 
 	public function index() {
+		
 		$this -> add();
 	}
 
 	public function add($data = array()) {
+		$access_level = $this -> session -> userdata('user_indicator');
+		if($access_level == "district_clerk"){
+			$district = $this -> session -> userdata('district_province_id'); 
+			$data['facilities'] = Facilities::getDistrictFacilities($district);
+		}
 		$provinces = Province::getAll();
 		$districts = District::getAll();
 		$diseases = Disease::getAllObjects();

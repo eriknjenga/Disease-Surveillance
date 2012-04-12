@@ -12,6 +12,11 @@ class Access_Level extends Doctrine_Record {
 		'local' => 'id',
 		'foreign' => 'Access_Level'));
 	}
+ 	public function getAll() {
+		$query = Doctrine_Query::create() -> select("*") -> from("Access_Level");
+		$levels = $query -> execute();
+		return $levels;
+	}
  
 
 }

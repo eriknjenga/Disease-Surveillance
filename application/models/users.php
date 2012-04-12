@@ -85,4 +85,15 @@ class Users extends Doctrine_Record {
 		return $user[0];
 	}
 
+	public static function userExists($username) {
+		if ($u = Doctrine::getTable('Users') -> findOneByUsername($username)) {
+
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	}
+
+ 
+
 }
