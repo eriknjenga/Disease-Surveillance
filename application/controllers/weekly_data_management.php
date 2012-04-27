@@ -117,7 +117,7 @@ class Weekly_Data_Management extends MY_Controller {
 				return;
 			}
 			$total_diseases = Disease::getTotal();
-			$timestamp = date('U');
+			$timestamp = date('d/m/Y');
 
 			$i = 0;
 			foreach ($diseases as $disease) {
@@ -161,11 +161,6 @@ class Weekly_Data_Management extends MY_Controller {
 			} else {
 				$labdata = new Lab_Weekly();
 			}
-
-			$epiweek = $this -> input -> post("epiweek");
-			$weekending = $this -> input -> post("weekending");
-			$district = $this -> input -> post("district");
-
 			$totaltestedlessfive = $this -> input -> post("total_tested_less_than_five");
 			$totaltestedgreaterfive = $this -> input -> post("total_tested_greater_than_five");
 			$totalpositivelessfive = $this -> input -> post("total_positive_less_than_five");

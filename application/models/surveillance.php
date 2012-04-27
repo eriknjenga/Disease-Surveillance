@@ -50,7 +50,7 @@ class Surveillance extends Doctrine_Record {
     }
     
     public static function getRawData($year, $start_week, $end_week) {
-        $query = Doctrine_Query::create()->select("*")->from("surveillance")->where("Reporting_Year = '$year' and epiweek between '$start_week' and '$end_week'");
+        $query = Doctrine_Query::create()->select("*")->from("surveillance")->where("Reporting_Year = '$year' and abs(epiweek) between '$start_week' and '$end_week'")->orderBy("abs(epiweek)");
         $surveillance = $query->execute();
         return $surveillance;
     }

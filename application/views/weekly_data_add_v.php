@@ -309,6 +309,13 @@ var edit_url = '<?php echo base_url()?>
 				?>
 			</select></td>
 		</tr>
+		<tr>
+			<td><b>No. of Health Facility/Site reporting</b></td><td>
+			<input type="text" name="reporting_facilities" id="reporting_facilities" class="validate[required,custom[onlyNumberSp]]" value="<?php echo $submitted;?>"/>
+			</td><td><b>No. of Health Facility/Site reports expected</b></td><td>
+			<input type="text" name="expected_facilities" id="expected_facilities" class="validate[required,custom[onlyNumberSp]]" value="<?php echo $expected;?>"/>
+			</td>
+		</tr>
 		<?php
 		}
 else{?>
@@ -325,13 +332,7 @@ else{?>
 		</tr>
 		
 		<?php }?>
-		<tr>
-			<td><b>No. of Health Facility/Site reporting</b></td><td>
-			<input type="text" name="reporting_facilities" id="reporting_facilities" class="validate[required,custom[onlyNumberSp]]" value="<?php echo $submitted;?>"/>
-			</td><td><b>No. of Health Facility/Site reports expected</b></td><td>
-			<input type="text" name="expected_facilities" id="expected_facilities" class="validate[required,custom[onlyNumberSp]]" value="<?php echo $expected;?>"/>
-			</td>
-		</tr>
+		
 	</table>
 	<div id="data_exists_error" <?php
 		if ($existing_data == true) { echo "style='display:block'";

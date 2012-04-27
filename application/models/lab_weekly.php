@@ -28,7 +28,7 @@ class Lab_Weekly extends Doctrine_Record {
 	}//end getLabData
 
 	public static function getRawData($year, $start_week, $end_week) {
-		$query = Doctrine_Query::create() -> select("*") -> from("lab_weekly") -> where("Reporting_Year = '$year' and epiweek between '$start_week' and '$end_week'");
+		$query = Doctrine_Query::create() -> select("*") -> from("lab_weekly") -> where("Reporting_Year = '$year' and abs(epiweek) between '$start_week' and '$end_week'")->orderBy("abs(epiweek)");
 		$lab_data = $query -> execute();
 		return $lab_data;
 	}
