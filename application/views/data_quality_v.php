@@ -4,14 +4,14 @@ if (!isset($quick_link)) {
 }
 ?>
 <div id="sub_menu">
-	<a href="<?php echo site_url('data_duplication');?>" class="top_menu_link sub_menu_link first_link  <?php
-	if ($quick_link == "data_duplication") {echo "top_menu_active";
+	<a href="<?php echo site_url('facility_reports');?>" class="top_menu_link sub_menu_link first_link  <?php
+	if ($quick_link == "facility_reports") {echo "top_menu_active";
 	}
-	?>">Data Duplication</a>
-	<a href="<?php echo site_url('district_reports');?>" class="top_menu_link sub_menu_link first_link  <?php
-	if ($quick_link == "district_reports") {echo "top_menu_active";
+	?>">Facility Reports</a>
+	<a href="<?php echo site_url('data_delete_management');?>" class="top_menu_link sub_menu_link last_link  <?php
+	if ($quick_link == "data_delete") {echo "top_menu_active";
 	}
-	?>">District Reports</a>
+	?>">Deletion Logs</a>
 </div>
 <div id="main_content">
 	<?php

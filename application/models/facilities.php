@@ -3,7 +3,7 @@ class Facilities extends Doctrine_Record {
 	public function setTableDefinition() {
 		$this -> hasColumn('facilitycode', 'int', 32);
 		$this -> hasColumn('name', 'varchar', 100);
-		$this -> hasColumn('facilitytype', 'varchar', 5); 
+		$this -> hasColumn('facilitytype', 'varchar', 5);
 		$this -> hasColumn('district', 'varchar', 5);
 		$this -> hasColumn('flag', 'varchar', 2);
 		$this -> hasColumn('email', 'varchar', 50);
@@ -14,6 +14,7 @@ class Facilities extends Doctrine_Record {
 		$this -> setTableName('facilities');
 		$this -> hasOne('District as Parent_District', array('local' => 'district', 'foreign' => 'id'));
 		$this -> hasOne('Facility_Types as Type', array('local' => 'facilitytype', 'foreign' => 'id'));
+		$this -> hasOne('Facility_Surveillance_Data as Surveillance', array('local' => 'facilitycode', 'foreign' => 'Facility'));
 	}
 
 	public function getDistrictFacilities($district) {
@@ -59,6 +60,12 @@ class Facilities extends Doctrine_Record {
 		$query = Doctrine_Query::create() -> select("*") -> from("Facilities") -> where("facilitycode = '$id'");
 		$facility = $query -> execute();
 		return $facility[0];
+	}
+
+	public static function getDNRFacilities($year, $epiweek, $district) {
+		$query = Doctrine_Query::create() -> select("f.name") -> from("facilities f") -> leftJoin("f.Surveillance s on f.facilitycode = s.facility and reporting_year = '$year' and epiweek = '$epiweek'") -> where("s.facility is null  and f.district = '$district'");
+		$districts = $query -> execute(array(), Doctrine::HYDRATE_ARRAY);
+		return $districts;
 	}
 
 }

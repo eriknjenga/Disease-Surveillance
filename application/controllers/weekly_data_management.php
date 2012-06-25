@@ -54,27 +54,60 @@ class Weekly_Data_Management extends MY_Controller {
 
 	}
 
-	public function delete_weekly_data($epiweek, $reporting_year, $district) {
-		$data['surveillance_data'] = Surveillance::getSurveillanceData($epiweek, $reporting_year, $district);
+	public function delete_weekly_data($epiweek, $reporting_year, $facility) {
+		$data['surveillance_data'] = Facility_Surveillance_Data::getSurveillanceData($epiweek, $reporting_year, $facility);
 		$data['title'] = "Delete Weekly Data";
-		$data['content_view'] = "delete_weekly_data_v";
+		$data['content_view'] = "delete_facility_weekly_data_v";
 		$data['banner_text'] = "Delete Data";
 		$data['link'] = "submissions_management";
 		$this -> load -> view("template", $data);
 	}
 
-	public function confirm_delete_weekly_data($epiweek, $reporting_year, $district) {
-		$surveillance_data = Surveillance::getSurveillanceData($epiweek, $reporting_year, $district);
-		$lab_data = Lab_Weekly::getWeeklyDistrictLabData($epiweek, $reporting_year, $district);
-		//Delete the data
-		foreach ($surveillance_data as $disease_data) {
-			$disease_data -> delete();
+	public function confirm_delete_weekly_data($epiweek, $reporting_year, $facility) {
+		$district = $this -> session -> userdata('district_province_id');
+		//Get the diseases
+		$diseases = Disease::getAllObjects();
+		//Loop through the diseases to update the relevant data
+		foreach ($diseases as $disease) {
+			//Get the district surveillance data
+			$district_data = Surveillance::getDistrictDiseaseData($epiweek, $reporting_year, $district, $disease -> id);
+			//Get the facility surveillance data
+			$facility_data = Facility_Surveillance_Data::getFacilityDiseaseData($epiweek, $reporting_year, $facility, $disease -> id);
+			$lcase = $facility_data -> Lcase;
+			$ldeath = $facility_data -> Ldeath;
+			$gcase = $facility_data -> Gcase;
+			$gdeath = $facility_data -> Gdeath;
+
+			$district_data -> Lcase -= $lcase;
+			$district_data -> Ldeath -= $ldeath;
+			$district_data -> Gcase -= $gcase;
+			$district_data -> Gdeath -= $gdeath;
+			$district_data -> save();
+			$facility_data -> delete();
 		}
-		$lab_data -> delete();
+		//Get the district malaria lab data
+		$lab_data = Lab_Weekly::getWeeklyDistrictLabData($epiweek, $reporting_year, $district);
+		$lab_data = $lab_data[0];
+		//Get the facility malaria lab data
+		$facility_lab_data = Facility_Lab_Weekly::getWeeklyFacilityLabData($epiweek, $reporting_year, $facility);
+		$facility_lab_data = $facility_lab_data[0];
+
+		$totaltestedlessfive = $facility_lab_data -> Malaria_Below_5;
+		$totaltestedgreaterfive = $facility_lab_data -> Malaria_Above_5;
+		$totalpositivelessfive = $facility_lab_data -> Positive_Below_5;
+		$totalpositivegreaterfive = $facility_lab_data -> Positive_Above_5;
+
+		$lab_data -> Malaria_Below_5 -= $totaltestedlessfive;
+		$lab_data -> Malaria_Above_5 -= $totaltestedgreaterfive;
+		$lab_data -> Positive_Below_5 -= $totalpositivelessfive;
+		$lab_data -> Positive_Above_5 -= $totalpositivegreaterfive;
+		$lab_data->save();
+		$facility_lab_data->delete();
+
 		//Log the action
 		$log = new Data_Delete_Log();
 		$log -> Deleted_By = $this -> session -> userdata('user_id');
-		$log -> District_Affected = $district;
+		$log -> Facility_Affected = $facility;
 		$log -> Epiweek = $epiweek;
 		$log -> Reporting_Year = $reporting_year;
 		$log -> Timestamp = date('U');

@@ -24,12 +24,14 @@ class Data_Delete_Management extends MY_Controller {
 		}
 
 		$data['logs'] = $logs;
-		$data['title'] = "Data Deletion Logs";
-		$data['content_view'] = "data_deletion_logs_v";
-		$data['banner_text'] = "Deletion Logs";
-		$data['link'] = "submissions_management"; 
+		$data['quality_view'] = "data_deletion_logs_v";
 		$data['styles'] = array("pagination.css");
-		$this -> load -> view("template", $data);
+		$data['quick_link'] = "data_delete";
+		$data['title'] = "Data Quality";
+		$data['content_view'] = "data_quality_v";
+		$data['banner_text'] = "Facility Reports";
+		$data['link'] = "data_quality_management";
+		$this -> load -> view('template', $data);
 	}
 
 }

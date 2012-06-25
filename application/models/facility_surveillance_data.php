@@ -44,8 +44,8 @@ class Facility_Surveillance_Data extends Doctrine_Record {
 		return $surveillance;
 	}
 
-	public static function getRawDataArray($year, $start_week, $end_week) {
-		$query = Doctrine_Query::create() -> select("s.*, s.Disease_Object.Name as Disease_Name, f.name as Facility_Name") -> from("Facility_Surveillance_Data s, s.Facility_Object f") -> where("Reporting_Year = '$year' and abs(Epiweek) between '$start_week' and '$end_week'") -> OrderBy("abs(Epiweek) asc");
+	public static function getRawDataArray($year, $start_week, $end_week, $district) {
+		$query = Doctrine_Query::create() -> select("s.*, s.Disease_Object.Name as Disease_Name, f.name as Facility_Name") -> from("Facility_Surveillance_Data s, s.Facility_Object f") -> where("Reporting_Year = '$year' and abs(Epiweek) between '$start_week' and '$end_week' and District = '$district'") -> OrderBy("abs(Epiweek) asc");
 		$surveillance = $query -> execute(array(), Doctrine::HYDRATE_ARRAY);
 		return $surveillance;
 	}
@@ -56,7 +56,7 @@ class Facility_Surveillance_Data extends Doctrine_Record {
 		return $surveillance;
 	}
 
-		public function getLastEpiweek($currentyear) {
+	public function getLastEpiweek($currentyear) {
 		$query = Doctrine_Query::create() -> select("MAX(Epiweek) AS epiweek") -> from("Facility_Surveillance_Data") -> where("Reporting_Year='$currentyear'");
 		$result = $query -> execute();
 		return $result[0];
@@ -123,6 +123,12 @@ class Facility_Surveillance_Data extends Doctrine_Record {
 		$query = Doctrine_Query::create() -> select("*") -> from("Facility_Surveillance_Data") -> where("Reporting_Year = '$year' and Epiweek = '$epiweek'") -> groupBy("Facility");
 		$result = $query -> execute();
 		return $result;
+	}
+
+	public function getFacilityDiseaseData($epiweek, $year, $facility, $disease) {
+		$query = Doctrine_Query::create() -> select("id") -> from("Facility_Surveillance_Data") -> where("Reporting_Year='$year' and Epiweek='$epiweek' and Facility = '$facility' and Disease = '$disease'") -> limit(1);
+		$result = $query -> execute();
+		return $result[0];
 	}
 
 }

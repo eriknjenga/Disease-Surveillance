@@ -8,7 +8,7 @@ class Data_Quality_Management extends MY_Controller {
 	}
 
 	public function index() {
-		redirect("data_duplication");
+		redirect("facility_reports");
 	}
 
 	public function base_params($data) {
