@@ -30,24 +30,9 @@ $("#weekending").attr("value", $("#predicted_weekending").text());
 $("#reporting_year").attr("value", $("#predicted_year").attr("value"));
 $('#prediction').slideUp('slow');
 });
-$("#province").change(function() {
-//Get the selected province
-var province = $(this).attr("value");
-$("#district").children('option').remove();
-$.each($("#district_container").children('option'), function(i, v) {
-var current_province = $(this).attr("province");
-if(current_province == province) {
-$("#district").append($("<option></option>").attr("value", $(this).attr("value")).text($(this).text()));
-} else if(province == 0) {
-$("#district").append($("<option></option>").attr("value", $(this).attr("value")).text($(this).text()));
-}
-});
-//Loop through the list of all districts and display the ones from this province
-
-});
-$("#district").change(function() {
+$("#facility").change(function() {
 if($("#epiweek").attr("value") > 0) {
-checkDistrictData();
+checkFacilityData();
 }
 });
 
@@ -63,10 +48,9 @@ var new_date = new Date(date);
 var week_data = getWeek(new_date);
 $("#epiweek").attr("value", week_data[0]);
 $("#reporting_year").attr("value", week_data[1]);
-if($("#district").attr("value") > 0) {
-checkDistrictData();
+if($("#facility").attr("value") > 0) {
+checkFacilityData();
 }
-
 },
 beforeShowDay : function(date) {
 //Disable all days except sundays
@@ -78,26 +62,32 @@ $(".zero_reporting").change(function() {
 
 zeroReporting(this.id);
 });
+$("#check_all").change(function(){
+	$(".zero_reporting").each(function(){
+		$(this).change();
+		$(this).attr("checked",true);
+		//zeroReporting($(this).attr("id"));
+	})
+});
 });
 /*
-* Function that checks if district data exists
+* Function that checks if facility data exists
 */
-function checkDistrictData() {
+function checkFacilityData() {
 $("#data_exists_error").slideUp("slow");
 var epiweek = $("#epiweek").attr("value");
 var reporting_year = $("#reporting_year").attr("value");
-var district = $("#district").attr("value");
-var url =  '<?php echo base_url()?>'+"weekly_data_management/check_district_data/" + epiweek + "/" + reporting_year + "/" + district;
+var facility = $("#facility").attr("value");
+var url =  '<?php echo base_url()?>'+"weekly_data_management/check_facility_data/" + epiweek + "/" + reporting_year + "/" + facility;
 $.get(url, function(data) {
 if(data == "yes") {
-var edit_url = '<?php echo base_url()?>
-	'+"weekly_data_management/edit_weekly_data/" + epiweek + "/" + reporting_year + "/" + district;
-	var error_html = "<p>Data for this district already exists! <a href='" + edit_url + "' class='link'>Click here</a> to edit the data instead!</p>";
+var edit_url = '<?php echo base_url()?>'+"weekly_data_management/edit_weekly_data/" + epiweek + "/" + reporting_year + "/" + facility;
+	var error_html = "<p>Data for this facility already exists! <a href='" + edit_url + "' class='link'>Click here</a> to edit the data instead!</p>";
 	$("#data_exists_error").html(error_html);
 	$("#data_exists_error").css("border-color", "red");
 	$("#data_exists_error").slideDown("slow");
 	} else {
-		$("#data_exists_error").html("<p>You can enter surveillance data for this district</p>");
+		$("#data_exists_error").html("<p>You can enter surveillance data for this facility</p>");
 		$("#data_exists_error").css("border-color", "green");
 		$("#data_exists_error").slideDown("slow");
 	}
@@ -151,32 +141,26 @@ var edit_url = '<?php echo base_url()?>
 	function zeroReporting(id) {
 		var temp = id.split("_");
 		var disease = temp[1];
-		var lmcase = "lmcase_" + disease;
-		$("#" + lmcase).attr("value", "0");
-		var lfcase = "lfcase_" + disease;
-		$("#" + lfcase).attr("value", "0");
-		var lmdeath = "lmdeath_" + disease;
-		$("#" + lmdeath).attr("value", "0");
-		var lfdeath = "lfdeath_" + disease;
-		$("#" + lfdeath).attr("value", "0");
-		var gmcase = "gmcase_" + disease;
-		$("#" + gmcase).attr("value", "0");
-		var gfcase = "gfcase_" + disease;
-		$("#" + gfcase).attr("value", "0");
-		var gmdeath = "gmdeath_" + disease;
-		$("#" + gmdeath).attr("value", "0");
-		var gfdeath = "gfdeath_" + disease;
-		$("#" + gfdeath).attr("value", "0");
+		var lcase = "lcase_" + disease;
+		$("#" + lcase).attr("value", "0");
+		var ldeath = "ldeath_" + disease;
+		$("#" + ldeath).attr("value", "0");
+		var gcase = "gcase_" + disease;
+		$("#" + gcase).attr("value", "0");
+		var gdeath = "gdeath_" + disease;
+		$("#" + gdeath).attr("value", "0");
 	}
 </script>
 <div class="view_content">
+	
 	<?php if($editing == false){
 	?>
 	<div id="prediction">
-		<table  style="margin: 5px auto; border: 2px solid #EEEEEE; width: 200px">
+		<table  style="margin: 5px auto; border: 2px solid #EEEEEE; width: 400px">
 			<caption>
-				Predicted Variables
+				Confirm
 			</caption>
+			<?php if(isset($success_message)){echo "<tr><td style='color:green' colspan='2'>".$success_message."</td></tr>";}?>
 			<tr>
 				<td>Weekending: </td><td id="predicted_weekending"><?php echo $prediction[2];?></td>
 			</tr>
@@ -187,7 +171,7 @@ var edit_url = '<?php echo base_url()?>
 			<tr>
 				<td colspan="2">
 				<button class="button" id="confirm_variables" style="float:right">
-					Confirm
+					Ok
 				</button></td>
 			</tr>
 		</table>
@@ -198,22 +182,16 @@ var edit_url = '<?php echo base_url()?>
 	if(isset($surveillance_data)){
 	$week_data = $surveillance_data[0];
 	$epiweek = $week_data->Epiweek;
-	$submitted  = $week_data->Submitted;
-	$expected = $week_data->Expected;
-	$returned_district = $week_data->District;
+	$returned_facility = $week_data->Facility;
 	$week_ending = $week_data->Week_Ending;
 	$reporting_year = $week_data->Reporting_Year;
 	$reported_by = $week_data->Reported_By;
 	$designation = $week_data->Designation;
 	foreach($surveillance_data as $data){
-	$disease_surveillance_data[$data->Disease]['lmcase'] = $data->Lmcase;
-	$disease_surveillance_data[$data->Disease]['lfcase'] = $data->Lfcase;
-	$disease_surveillance_data[$data->Disease]['lmdeath'] = $data->Lmdeath;
-	$disease_surveillance_data[$data->Disease]['lfdeath'] = $data->Lfdeath;
-	$disease_surveillance_data[$data->Disease]['gmcase'] = $data->Gmcase;
-	$disease_surveillance_data[$data->Disease]['gfcase'] = $data->Gfcase;
-	$disease_surveillance_data[$data->Disease]['gmdeath'] = $data->Gmdeath;
-	$disease_surveillance_data[$data->Disease]['gfdeath'] = $data->Gfdeath;
+	$disease_surveillance_data[$data->Disease]['lcase'] = $data->Lcase;
+	$disease_surveillance_data[$data->Disease]['ldeath'] = $data->Ldeath;
+	$disease_surveillance_data[$data->Disease]['gcase'] = $data->Gcase;
+	$disease_surveillance_data[$data->Disease]['gdeath'] = $data->Gdeath;
 	$disease_surveillance_data[$data->Disease]['surveillance_id'] = $data->id;
 	}
 	}
@@ -221,20 +199,16 @@ var edit_url = '<?php echo base_url()?>
 	$epiweek = "";
 	$submitted  = "";
 	$expected = "";
-	$returned_district = "";
+	$returned_facility = "";
 	$week_ending = "";
 	$reporting_year = "";
 	$reported_by = "";
 	$designation = "";
 	foreach($diseases as $disease){
-	$disease_surveillance_data[$disease->id]['lmcase'] = '';
-	$disease_surveillance_data[$disease->id]['lfcase'] = '';
-	$disease_surveillance_data[$disease->id]['lmdeath'] = '';
-	$disease_surveillance_data[$disease->id]['lfdeath'] = '';
-	$disease_surveillance_data[$disease->id]['gmcase'] = '';
-	$disease_surveillance_data[$disease->id]['gfcase'] = '';
-	$disease_surveillance_data[$disease->id]['gmdeath'] = '';
-	$disease_surveillance_data[$disease->id]['gfdeath'] = '';
+	$disease_surveillance_data[$disease->id]['lcase'] = '';
+	$disease_surveillance_data[$disease->id]['ldeath'] = '';
+	$disease_surveillance_data[$disease->id]['gcase'] = '';
+	$disease_surveillance_data[$disease->id]['gdeath'] = '';
 	$disease_surveillance_data[$disease->id]['surveillance_id'] = '';
 	}
 	}
@@ -273,65 +247,21 @@ var edit_url = '<?php echo base_url()?>
 			<input type="hidden" name="lab_id" id="lab_id" value="<?php echo $lab_id;?>"/>
 			</td>
 		</tr>
-		<?php if($this -> session -> userdata('user_indicator') != "district_clerk"){?>
-		<tr>
-			<td><b>Province: </b></td><td>
-			<select name="province" id="province">
-				<option value="0">Select Province</option>
-				<?php
-				foreach ($provinces as $province) {
-					echo '<option value="' . $province -> id . '">' . $province -> Name . '</option>';
-				}//end foreach
-				?>
-			</select></td>
-			<td><b>District: </b></td>
-			<td>
-			<select name="district" id="district">
-				<option value="">Select District</option>
-				<?php
-				foreach ($districts as $district) {
-					if ($district -> id == $returned_district) {
-						echo '<option selected value="' . $district -> id . '" province="' . $district -> Province . '" >' . $district -> Name . '</option>';
-					} else {
-						echo '<option value="' . $district -> id . '" province="' . $district -> Province . '" >' . $district -> Name . '</option>';
-					}
-
-				}//end foreach
-				?>
-			</select></td>
-			<td>
-			<select id="district_container" style="display: none">
-				<option value="">Select District</option>
-				<?php
-				foreach ($districts as $district) {
-					echo '<option value="' . $district -> id . '" province="' . $district -> Province . '" >' . $district -> Name . '</option>';
-				}//end foreach
-				?>
-			</select></td>
-		</tr>
-		<tr>
-			<td><b>No. of Health Facility/Site reporting</b></td><td>
-			<input type="text" name="reporting_facilities" id="reporting_facilities" class="validate[required,custom[onlyNumberSp]]" value="<?php echo $submitted;?>"/>
-			</td><td><b>No. of Health Facility/Site reports expected</b></td><td>
-			<input type="text" name="expected_facilities" id="expected_facilities" class="validate[required,custom[onlyNumberSp]]" value="<?php echo $expected;?>"/>
-			</td>
-		</tr>
-		<?php
-		}
-else{?>
 			<tr>
 			<td><b>Facility: </b></td><td>
-			<select name="facility" id="facility">
+			<select name="facility" id="facility"   class="validate[required]">
 				<option value="0">Select Facility</option>
 				<?php
 				foreach ($facilities as $facility) {
-					echo '<option value="' . $facility -> id . '">' . $facility -> name . '</option>';
+					if ($facility -> facilitycode == $returned_facility) {
+						echo '<option selected value="' . $facility -> facilitycode . '">' . $facility -> name . '</option>';
+					} else {
+						echo '<option value="' . $facility -> facilitycode . '">' . $facility -> name . '</option>';
+					}
 				}//end foreach
 				?>
 			</select></td> 
 		</tr>
-		
-		<?php }?>
 		
 	</table>
 	<div id="data_exists_error" <?php
@@ -340,33 +270,23 @@ else{?>
 	?>>
 		<?php
 		if ($existing_data == true) {
-			$edit_link = base_url()."weekly_data_management/edit_weekly_data/".$duplicate_epiweek."/".$duplicate_reporting_year."/". $duplicate_district[0]->id;
-			echo "<p>Epiweek " . $duplicate_epiweek . " data for " . $duplicate_district[0] -> Name . " district already exists for " . $duplicate_reporting_year . ".</p><p><a class='link' style='margin:0' href='$edit_link'>Click Here</a> to edit the existing data or select different parameters.</p>";
+			$edit_link = base_url()."weekly_data_management/edit_weekly_data/".$duplicate_epiweek."/".$duplicate_reporting_year."/". $duplicate_facility->facilitycode;
+			echo "<p>Epiweek " . $duplicate_epiweek . " data for <b>" . $duplicate_facility-> name . "</b> already exists for " . $duplicate_reporting_year . ".</p><p><a class='link' style='margin:0' href='$edit_link'>Click Here</a> to edit the existing data or select different parameters.</p>";
 		}
 		?>
 	</div>
 	<table class="data-table" style="margin: 0 auto;">
 		<tr>
-			<th rowspan="3">Disease</th>
-			<th colspan="4">&le;5 Years</th>
-			<th colspan="4">&ge;5 Years</th>
-			<th rowspan="3">Zero Reporting (Check as appropriate)</th>
+			<th rowspan="2">Disease</th>
+			<th colspan="2">&le;5 Years</th>
+			<th colspan="2">&ge;5 Years</th>
+			<th rowspan="2">Zero Reporting</br><input type="checkbox" id ="check_all"></th>
 		</tr>
 		<tr>
-			<th colspan="2">Cases</th>
-			<th colspan="2">Deaths</th>
-			<th colspan="2">Cases</th>
-			<th colspan="2">Deaths</th>
-		</tr>
-		<tr class="even">
-			<th >Males</th>
-			<th >Females</th>
-			<th >Males</th>
-			<th >Females</th>
-			<th >Males</th>
-			<th >Females</th>
-			<th >Males</th>
-			<th >Females</th>
+			<th>Cases</th>
+			<th>Deaths</th>
+			<th>Cases</th>
+			<th>Deaths</th>
 		</tr>
 		<?php
 $counter = 1;
@@ -376,67 +296,52 @@ $class = "odd";
 if($rem == 0){
 $class = "even";
 }
-if($disease -> id != "12"){
 		?>
 		<tr class="<?php echo $class;?>">
+			
 			<td><?php echo $disease -> Name;?></td>
+			<?php if($disease->Has_Lcase == "1"){?>
 			<td style="background-color: #C4E8B7">
-			<input type="text" name="lmcase[]" id="<?php echo "lmcase_" . $disease -> id;?>"   class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease -> id]['lmcase'];?>"/>
-			</td>
+			<input type="text" name="lcase[]" id="<?php echo "lcase_" . $disease -> id;?>"   class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease -> id]['lcase'];?>"/>
+			</td> 
+			<?php }
+			else{?>
+				<td style="background-color: #C4E8B7">N/A <input name="lcase[]" type="hidden" /></td> 
+			<?php }
+			if($disease->Has_Ldeath == "1"){
+			?>
 			<td style="background-color: #C4E8B7">
-			<input type="text" name="lfcase[]" id="<?php echo "lfcase_" . $disease -> id;?>"   class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease -> id]['lfcase'];?>"/>
+			<input type="text" name="ldeath[]" id="<?php echo "ldeath_" . $disease -> id;?>"   class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease -> id]['ldeath'];?>"/>
 			</td>
+			<?php }
+			else{?>
+				<td style="background-color: #C4E8B7">N/A <input name="ldeath[]" type="hidden" /></td> 
+			<?php }
+			if($disease->Has_Gcase == "1"){
+			?>
 			<td style="background-color: #C4E8B7">
-			<input type="text" name="lmdeath[]" id="<?php echo "lmdeath_" . $disease -> id;?>"   class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease -> id]['lmdeath'];?>"/>
+			<input type="text" name="gcase[]" id="<?php echo "gcase_" . $disease -> id;?>"   class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease -> id]['gcase'];?>"/>
 			</td>
+			<?php }
+			else{?>
+				<td style="background-color: #C4E8B7">N/A<input name="gcase[]" type="hidden" /></td> 
+			<?php }
+			if($disease->Has_Gdeath == "1"){
+			?> 
 			<td style="background-color: #C4E8B7">
-			<input type="text" name="lfdeath[]" id="<?php echo "lfdeath_" . $disease -> id;?>"   class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease -> id]['lfdeath'];?>"/>
+			<input type="text" name="gdeath[]" id="<?php echo "gdeath_" . $disease -> id;?>"   class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease -> id]['gdeath'];?>"/>
 			</td>
-			<td style="background-color: #C4E8B7">
-			<input type="text" name="gmcase[]" id="<?php echo "gmcase_" . $disease -> id;?>"   class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease -> id]['gmcase'];?>"/>
-			</td>
-			<td style="background-color: #C4E8B7">
-			<input type="text" name="gfcase[]" id="<?php echo "gfcase_" . $disease -> id;?>"  class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease -> id]['gfcase'];?>"/>
-			</td>
-			<td style="background-color: #C4E8B7">
-			<input type="text" name="gmdeath[]" id="<?php echo "gmdeath_" . $disease -> id;?>"   class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease -> id]['gmdeath'];?>"/>
-			</td>
-			<td style="background-color: #C4E8B7">
-			<input type="text" name="gfdeath[]" id="<?php echo "gfdeath_" . $disease -> id;?>"  class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease -> id]['gfdeath'];?>"/>
-			</td>
+			<?php }
+			else{?>
+			<td style="background-color: #C4E8B7">N/A<input name="gdeath[]" type="hidden" /></td> 
+			<?php }
+			?> 
 			<td>
 			<input type="checkbox" id ="<?php echo "check_" . $disease -> id;?>" class="zero_reporting">
 			</td>
 			<input type="hidden" name="surveillance_ids[]" value="<?php echo $disease_surveillance_data[$disease->id]['surveillance_id']?>" />
 		</tr>
 		<?php
-		}else{
-		?>
-		<tr class="<?php echo $class;?>">
-			<td><?php echo $disease -> Name;?></td>
-			<td style="background-color: #C4E8B7">
-			<input type="text" name="lmcase[]" id="<?php echo "lmcase_" . $disease -> id;?>" class="disease_input validate[required,custom[onlyNumberSp]]" value="<?php echo $disease_surveillance_data[$disease -> id]['lmcase'];?>"/>
-			</td>
-			<td style="background-color: #C4E8B7">
-			<input type="text" name="lfcase[]" id="<?php echo "lfcase_" . $disease -> id;?>"  class="disease_input validate[required,custom[onlyNumberSp]]" value="<?php echo $disease_surveillance_data[$disease -> id]['lfcase'];?>"/>
-			</td>
-			<td style="background-color: #C4E8B7">
-			<input type="text" name="lmdeath[]" id="<?php echo "lmdeath_" . $disease -> id;?>"  class="disease_input validate[required,custom[onlyNumberSp]]" value="<?php echo $disease_surveillance_data[$disease -> id]['lmdeath'];?>"/>
-			</td>
-			<td style="background-color: #C4E8B7">
-			<input type="text" name="lfdeath[]" id="<?php echo "lfdeath_" . $disease -> id;?>"  class="disease_input validate[required,custom[onlyNumberSp]]" value="<?php echo $disease_surveillance_data[$disease -> id]['lfdeath'];?>"/>
-			</td>
-			<td style="background-color: #C4E8B7"> - </td>
-			<td style="background-color: #C4E8B7"> - </td>
-			<td style="background-color: #C4E8B7"> - </td>
-			<td style="background-color: #C4E8B7"> - </td>
-			<td>
-			<input type="checkbox" id ="<?php echo "check_" . $disease -> id;?>" class="zero_reporting">
-			</td>
-			<input type="hidden" name="surveillance_ids[]" value="<?php echo $disease_surveillance_data[$disease->id]['surveillance_id']?>" />
-		</tr>
-		<?php
-		}//end else if
 		$counter ++;
 		}//end foreach
 		?>

@@ -12,7 +12,7 @@ class Facilities extends Doctrine_Record {
 
 	public function setUp() {
 		$this -> setTableName('facilities');
-		$this -> hasOne('Districts as Parent_District', array('local' => 'district', 'foreign' => 'id'));
+		$this -> hasOne('District as Parent_District', array('local' => 'district', 'foreign' => 'id'));
 		$this -> hasOne('Facility_Types as Type', array('local' => 'facilitytype', 'foreign' => 'id'));
 	}
 
@@ -56,7 +56,7 @@ class Facilities extends Doctrine_Record {
 	}
 
 	public static function getFacility($id) {
-		$query = Doctrine_Query::create() -> select("*") -> from("Facilities") -> where("id = '$id'");
+		$query = Doctrine_Query::create() -> select("*") -> from("Facilities") -> where("facilitycode = '$id'");
 		$facility = $query -> execute();
 		return $facility[0];
 	}
