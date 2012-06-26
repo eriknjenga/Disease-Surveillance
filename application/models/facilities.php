@@ -3,17 +3,14 @@ class Facilities extends Doctrine_Record {
 	public function setTableDefinition() {
 		$this -> hasColumn('facilitycode', 'int', 32);
 		$this -> hasColumn('name', 'varchar', 100);
-		$this -> hasColumn('facilitytype', 'varchar', 5);
 		$this -> hasColumn('district', 'varchar', 5);
-		$this -> hasColumn('flag', 'varchar', 2);
 		$this -> hasColumn('email', 'varchar', 50);
-		$this -> hasColumn('phone', 'varchar', 50);
+		$this -> hasColumn('mobile', 'varchar', 50);
 	}
 
 	public function setUp() {
 		$this -> setTableName('facilities');
 		$this -> hasOne('District as Parent_District', array('local' => 'district', 'foreign' => 'id'));
-		$this -> hasOne('Facility_Types as Type', array('local' => 'facilitytype', 'foreign' => 'id'));
 		$this -> hasOne('Facility_Surveillance_Data as Surveillance', array('local' => 'facilitycode', 'foreign' => 'Facility'));
 	}
 

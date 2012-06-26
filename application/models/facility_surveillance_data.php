@@ -119,8 +119,8 @@ class Facility_Surveillance_Data extends Doctrine_Record {
 		return $result;
 	}
 
-	public function getReports($year, $epiweek) {
-		$query = Doctrine_Query::create() -> select("*") -> from("Facility_Surveillance_Data") -> where("Reporting_Year = '$year' and Epiweek = '$epiweek'") -> groupBy("Facility");
+	public function getReports($year, $epiweek,$district) {
+		$query = Doctrine_Query::create() -> select("*") -> from("Facility_Surveillance_Data") -> where("Reporting_Year = '$year' and Epiweek = '$epiweek' and district = '$district'") -> groupBy("Facility");
 		$result = $query -> execute();
 		return $result;
 	}
