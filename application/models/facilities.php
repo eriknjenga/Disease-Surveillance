@@ -6,6 +6,7 @@ class Facilities extends Doctrine_Record {
 		$this -> hasColumn('district', 'varchar', 5);
 		$this -> hasColumn('email', 'varchar', 50);
 		$this -> hasColumn('mobile', 'varchar', 50);
+		$this -> hasColumn('reporting', 'varchar', 1);
 	}
 
 	public function setUp() {
@@ -15,7 +16,7 @@ class Facilities extends Doctrine_Record {
 	}
 
 	public function getDistrictFacilities($district) {
-		$query = Doctrine_Query::create() -> select("facilitycode,name") -> from("Facilities") -> where("District = '" . $district . "'");
+		$query = Doctrine_Query::create() -> select("facilitycode,name") -> from("Facilities") -> where("District = '" . $district . "' and reporting = '1'")->orderBy("name asc");
 		$facilities = $query -> execute();
 		return $facilities;
 	}
@@ -42,9 +43,15 @@ class Facilities extends Doctrine_Record {
 		return $count[0] -> Total_Facilities;
 	}
 
+	public static function getExpected($district) {
+		$query = Doctrine_Query::create() -> select("COUNT(*) as Total_Facilities") -> from("Facilities") -> where("district = '$district' and reporting = '1'");
+		$count = $query -> execute();
+		return $count[0] -> Total_Facilities;
+	}
+
 	public function getPagedFacilities($offset, $items, $district = 0) {
 		if ($district == 0) {
-			$query = Doctrine_Query::create() -> select("*") -> from("Facilities") -> orderBy("name") -> offset($offset) -> limit($items);
+			$query = Doctrine_Query::create() -> select("*") -> from("Facilities") -> orderBy("name asc") -> offset($offset) -> limit($items);
 		} else if ($district > 0) {
 			$query = Doctrine_Query::create() -> select("*") -> from("Facilities") -> where("district = '$district'") -> orderBy("name") -> offset($offset) -> limit($items);
 		}

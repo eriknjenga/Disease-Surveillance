@@ -257,4 +257,11 @@ class User_Management extends MY_Controller {
 		$this -> load -> view('template', $data);
 	}
 
+	public function change_availability($code, $availability) {
+		$user = Users::getUser($code);
+		$user -> Disabled = $availability;
+		$user -> save();
+		redirect("user_management/listing");
+	}
+
 }

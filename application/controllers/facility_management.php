@@ -7,7 +7,7 @@ class Facility_Management extends MY_Controller {
 	}
 
 	public function index() {
-		$this -> view_list();
+		$this -> whole_list();
 	}
 
 	public function whole_list($offset = 0) {
@@ -25,8 +25,10 @@ class Facility_Management extends MY_Controller {
 		}
 
 		$data['facilities'] = $facilities;
+		$data['banner_text'] = "All Facilities";
 		$data['title'] = "Facility Management::All Facilities";
 		$data['module_view'] = "view_facilities_view";
+		$data['styles'] = array("pagination.css");
 		$this -> new_base_params($data);
 	}
 
@@ -46,10 +48,14 @@ class Facility_Management extends MY_Controller {
 		}
 
 		$data['facilities'] = $facilities;
-		$data['title'] = "Facility Management::All Facilities";
-		$data['content_view'] = "view_district_facilities";
-		$data['link'] = "facility_management/district_list";
-		$this -> base_params($data);
+		$data['quality_view'] = "view_district_facilities";
+		$data['styles'] = array("pagination.css");
+		$data['quick_link'] = "facility_management";
+		$data['title'] = "Data Quality";
+		$data['content_view'] = "data_quality_v";
+		$data['banner_text'] = "My Facilities";
+		$data['link'] = "data_quality_management";
+		$this -> load -> view('template', $data);
 	}
 
 	public function view_list() {
@@ -70,97 +76,62 @@ class Facility_Management extends MY_Controller {
 	}
 
 	public function new_facility() {
-		$data['title'] = "Facility Management:: Add New Facility";
-		$data['content_view'] = "add_facility_view";
-		$data['link'] = "facility_management/district_list";
-		$data['quick_link'] = "new_facility";
-		$data['types'] = Facility_Types::getAll();
-		$this -> base_params($data);
+		$data['quality_view'] = "add_facility_view";
+		$data['styles'] = array("pagination.css");
+		$data['quick_link'] = "facility_management";
+		$data['sub_link'] = "add_facility";
+		$data['title'] = "Data Quality";
+		$data['content_view'] = "data_quality_v";
+		$data['banner_text'] = "Add Facility";
+		$data['link'] = "data_quality_management";
+		$this -> load -> view('template', $data);
 	}
 
-	public function edit_facility($code) {
-		$facility = Facilities::getFacility($code);
-		$data['facility'] = $facility;
-		$data['title'] = "Facility Management::Edit Details For -- " . $facility -> name;
-		$data['content_view'] = "add_facility_view";
-		$data['link'] = "facility_management/district_list";
-		$data['fridges'] = Fridges::getAll();
-		$data['types'] = Facility_Types::getAll();
-		$data['facility_fridges'] = Facility_Fridges::getFacilityFridges($code);
-		$this -> base_params($data);
+	public function search_facility() {
+		$data['banner_text'] = "Search Facility";
+		$data['title'] = "Facility Management::Search Facility";
+		$data['module_view'] = "search_facility_view";
+		$this -> new_base_params($data);
+
 	}
 
 	public function search() {
 		$search_term = $this -> input -> post('search');
 		$data['facilities'] = Facilities::search($search_term);
 		$data['search_term'] = $search_term;
-		$data['title'] = "Facility Management::Click on a Facility";
-		$data['content_view'] = "search_facilities_result_view";
-		$this -> base_params($data);
+		$data['quality_view'] = "search_facilities_result_view";
+		$data['styles'] = array("pagination.css");
+		$data['quick_link'] = "facility_management";
+		$data['sub_link'] = "add_facility";
+		$data['title'] = "Data Quality";
+		$data['content_view'] = "data_quality_v";
+		$data['banner_text'] = "Add Facility";
+		$data['link'] = "data_quality_management";
+		$this -> load -> view('template', $data);
+	}
+
+	public function facility_search() {
+		$search_term = $this -> input -> post('search');
+		$data['facilities'] = Facilities::search($search_term);
+		$data['banner_text'] = "'".$search_term."' Results";
+		$data['title'] = "Facility Management::Searches Facilities";
+		$data['module_view'] = "view_facilities_view";
+		$this -> new_base_params($data);
 	}
 
 	//This method is for saving the details of additional facilities
-	public function save($code) {
-		$additional_facility = new Additional_Facilities();
-		$exists = $additional_facility -> record_exists($this -> session -> userdata('district_province_id'), $code);
-		if (!$exists) {
-			$additional_facility -> District_Id = $this -> session -> userdata('district_province_id');
-			$additional_facility -> Facility = $code;
-			$additional_facility -> Added_By = $this -> session -> userdata('user_id');
-			$additional_facility -> Timestamp = date('U');
-			$additional_facility -> save();
-		}
-		redirect("facility_management");
-	}
-
-	//This method is for saving a new/edited facility
-	public function save_details() {
+	public function change_ownership($code) {
 		$district = $this -> session -> userdata("district_province_id");
-		$facility_id = $this -> input -> post('facility_id');
-		//Check if we are in editing mode first; if so, retrieve the edited record. if not, create a new one!
-		if (strlen($facility_id) > 0) {
-			$facility = Facilities::getFacility($facility_id);
-			//Retrieve the fridges for this facility
-			$fridges = Facility_Fridges::getFacilityFridges($facility_id);
-			//Delete all these existing facility-fridge combinations
-			foreach ($fridges as $fridge) {
-				$fridge -> delete();
-			}
-		} else {
-			$facility = new Facilities();
-		}
-
-		$facility -> facilitycode = $this -> input -> post('facilitycode');
-		$facility -> name = $this -> input -> post('name');
-		$facility -> facilitytype = $this -> input -> post('type');
+		$facility = Facilities::getFacility($code);
 		$facility -> district = $district;
-		$facility -> email = $this -> input -> post('email');
-		$facility -> phone = $this -> input -> post('phone');
 		$facility -> save();
-		$facility_id = $facility -> id;
-		$fridges = $this -> input -> post('fridges');
-		$counter = 0;
-		foreach ($fridges as $fridge) {
-			if ($fridge > 0) {
-				$facility_fridge = new Facility_Fridges();
-				$facility_fridge->Facility = $facility_id;
-				$facility_fridge->Fridge = $fridge;
-				$facility_fridge->Timestamp = date('U');
-				$facility_fridge->save();
-				$counter++;
-			} else {
-				$counter++;
-				continue;
-			}
-
-		}
-
 		redirect("facility_management/district_list");
 	}
 
-	public function remove($code) {
-		$facility = Additional_Facilities::get_facility($this -> session -> userdata('district_province_id'), $code);
-		$facility -> delete();
+	public function change_reporting($code, $reporting) {
+		$facility = Facilities::getFacility($code);
+		$facility -> reporting = $reporting;
+		$facility -> save();
 		redirect("facility_management");
 	}
 
@@ -173,8 +144,6 @@ class Facility_Management extends MY_Controller {
 	}
 
 	private function new_base_params($data) {
-		$data['scripts'] = array("jquery-ui.js", "tab.js");
-		$data['styles'] = array("jquery-ui.css", "tab.css");
 		$data['content_view'] = "admin_view";
 		$data['quick_link'] = "facility_management";
 		$data['link'] = "system_administration";

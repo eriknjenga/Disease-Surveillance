@@ -179,7 +179,7 @@ class Weekly_Data_Management extends MY_Controller {
 				$district_data -> Week_Ending = $weekending;
 				$district_data -> Epiweek = $epiweek;
 				$district_data -> District = $district;
-				$district_data -> Expected = Facilities::getTotalNumber($district);
+				$district_data -> Expected = Facilities::getExpected($district);
 				//If the district data already existed, update it. Else, create it
 				if ($existing_district_data) {
 					//If we are editing a record,

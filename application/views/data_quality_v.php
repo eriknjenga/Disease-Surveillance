@@ -8,6 +8,10 @@ if (!isset($quick_link)) {
 	if ($quick_link == "facility_reports") {echo "top_menu_active";
 	}
 	?>">Facility Reports</a>
+	<a href="<?php echo site_url('facility_management/district_list');?>" class="top_menu_link sub_menu_link  <?php
+	if ($quick_link == "facility_management") {echo "top_menu_active";
+	}
+	?>">My Facilities</a>
 	<a href="<?php echo site_url('data_delete_management');?>" class="top_menu_link sub_menu_link last_link  <?php
 	if ($quick_link == "data_delete") {echo "top_menu_active";
 	}

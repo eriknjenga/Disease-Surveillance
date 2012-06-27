@@ -59,7 +59,7 @@ class District extends Doctrine_Record {
 	}
 
 	public function getPagedDistricts($offset, $items) {
-		$query = Doctrine_Query::create() -> select("*") -> from("District") ->where("Disabled = '0'")-> orderBy("name") -> offset($offset) -> limit($items);
+		$query = Doctrine_Query::create() -> select("*") -> from("District")-> orderBy("name") -> offset($offset) -> limit($items);
 		$districts = $query -> execute();
 		return $districts;
 	}
