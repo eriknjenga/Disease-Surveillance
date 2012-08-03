@@ -32,7 +32,10 @@ if($this -> session -> userdata('can_download_raw_data') == '1'){
 	}
 	?>">Intra-District Reporting</a>
 	<?php }?>
-
+	<a href="<?php echo site_url("timeliness_report");?>" class=" top_menu_link sub_menu_link  <?php
+	if ($quick_link == "timeliness_report") {echo "top_menu_active";
+	}
+	?>">Timeliness Report</a>
 	<a href="<?php echo site_url("weekly_report");?>" class=" top_menu_link sub_menu_link last_link  <?php
 	if ($quick_link == "weekly_report") {echo "top_menu_active";
 	}

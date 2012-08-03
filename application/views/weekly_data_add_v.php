@@ -238,7 +238,7 @@ var edit_url = '<?php echo base_url()?>'+"weekly_data_management/edit_weekly_dat
 	<table  style="margin: 5px auto; border: 2px solid #EEEEEE;">
 		<tr>
 			<td><b>Week Ending:</b></td><td>
-			<input type="text" name="week_ending" id="weekending" class="validate[required]" value="<?php echo $week_ending;?>"/>
+			<input readonly="" type="text" name="week_ending" id="weekending" class="validate[required]" value="<?php echo $week_ending;?>"/>
 			</td>
 			<td><b>Epiweek: </b></td>
 			<td>

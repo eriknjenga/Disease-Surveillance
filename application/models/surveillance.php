@@ -122,6 +122,7 @@ class Surveillance extends Doctrine_Record {
 		$year_result = $year_query -> execute();
 		$last_year = $year_result[0] -> Reporting_Year;
 		$week_query = Doctrine_Query::create() -> select("Epiweek,Week_Ending") -> from("Surveillance") -> where("Reporting_Year = '$last_year'") -> orderBy("abs(Epiweek) DESC") -> limit(1);
+	
 		$week_result = $week_query -> execute();
 		$last_epiweek = $week_result[0] -> Epiweek;
 		$last_weekending = $week_result[0] -> Week_Ending;
@@ -132,7 +133,7 @@ class Surveillance extends Doctrine_Record {
 	}
 
 	public function getDistrictData($epiweek, $year, $district) {
-		$query = Doctrine_Query::create() -> select("id") -> from("surveillance") -> where("Reporting_Year='$year' and Epiweek='$epiweek' and District = '$district'") -> limit(1);
+		$query = Doctrine_Query::create() -> select("id,expected") -> from("surveillance") -> where("Reporting_Year='$year' and Epiweek='$epiweek' and District = '$district'") -> limit(1);
 		$result = $query -> execute();
 		return $result[0];
 	}
