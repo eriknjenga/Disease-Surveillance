@@ -174,6 +174,18 @@ class Surveillance extends Doctrine_Record {
 		return $result;
 	}
 
+	public function getDiseaseCases($disease, $epiweek, $year) {
+		$query = Doctrine_Query::create() -> select("sum(Lcase+Gcase) as Cases") -> from("surveillance") -> where("Reporting_Year='$year' and Epiweek='$epiweek' and Disease = '$disease'");
+		$result = $query -> execute(array(), Doctrine::HYDRATE_ARRAY);
+		return $result[0]['Cases'];
+	}
+
+	public function getDiseaseDeaths($disease, $epiweek, $year) {
+		$query = Doctrine_Query::create() -> select("sum(Ldeath+Gdeath) as Cases") -> from("surveillance") -> where("Reporting_Year='$year' and Epiweek='$epiweek' and Disease = '$disease'");
+		$result = $query -> execute(array(), Doctrine::HYDRATE_ARRAY);
+		return $result[0]['Cases'];
+	}
+
 	public function getReports($year, $epiweek) {
 		$query = Doctrine_Query::create() -> select("*") -> from("surveillance") -> where("Reporting_Year = '$year' and Epiweek = '$epiweek'") -> groupBy("District");
 		$result = $query -> execute();

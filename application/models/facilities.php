@@ -16,7 +16,7 @@ class Facilities extends Doctrine_Record {
 	}
 
 	public function getDistrictFacilities($district) {
-		$query = Doctrine_Query::create() -> select("facilitycode,name") -> from("Facilities") -> where("District = '" . $district . "' and reporting = '1'")->orderBy("name asc");
+		$query = Doctrine_Query::create() -> select("facilitycode,name") -> from("Facilities") -> where("District = '" . $district . "' and reporting = '1'") -> orderBy("name asc");
 		$facilities = $query -> execute();
 		return $facilities;
 	}
@@ -45,6 +45,12 @@ class Facilities extends Doctrine_Record {
 
 	public static function getExpected($district) {
 		$query = Doctrine_Query::create() -> select("COUNT(*) as Total_Facilities") -> from("Facilities") -> where("district = '$district' and reporting = '1'");
+		$count = $query -> execute();
+		return $count[0] -> Total_Facilities;
+	}
+
+	public static function getAllExpected() {
+		$query = Doctrine_Query::create() -> select("COUNT(*) as Total_Facilities") -> from("Facilities") -> where("reporting = '1'");
 		$count = $query -> execute();
 		return $count[0] -> Total_Facilities;
 	}

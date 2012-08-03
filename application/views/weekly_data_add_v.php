@@ -302,7 +302,7 @@ $class = "even";
 			<td><?php echo $disease -> Name;?></td>
 			<?php if($disease->Has_Lcase == "1"){?>
 			<td style="background-color: #C4E8B7">
-			<input type="text" name="lcase[]" id="<?php echo "lcase_" . $disease -> id;?>"   class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease -> id]['lcase'];?>"/>
+			<input type="text" name="lcase[]" id="<?php echo "lcase_" . $disease -> id;?>"   class="disease_input validate[required,custom[integer,min[0]]]" value="<?php echo $disease_surveillance_data[$disease -> id]['lcase'];?>"/>
 			</td> 
 			<?php }
 			else{?>
@@ -311,7 +311,7 @@ $class = "even";
 			if($disease->Has_Ldeath == "1"){
 			?>
 			<td style="background-color: #C4E8B7">
-			<input type="text" name="ldeath[]" id="<?php echo "ldeath_" . $disease -> id;?>"   class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease -> id]['ldeath'];?>"/>
+			<input type="text" name="ldeath[]" id="<?php echo "ldeath_" . $disease -> id;?>"   class="disease_input validate[required,custom[integer,min[0]]]" value="<?php echo $disease_surveillance_data[$disease -> id]['ldeath'];?>"/>
 			</td>
 			<?php }
 			else{?>
@@ -320,7 +320,7 @@ $class = "even";
 			if($disease->Has_Gcase == "1"){
 			?>
 			<td style="background-color: #C4E8B7">
-			<input type="text" name="gcase[]" id="<?php echo "gcase_" . $disease -> id;?>"   class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease -> id]['gcase'];?>"/>
+			<input type="text" name="gcase[]" id="<?php echo "gcase_" . $disease -> id;?>"   class="disease_input validate[required,custom[integer,min[0]]]" value="<?php echo $disease_surveillance_data[$disease -> id]['gcase'];?>"/>
 			</td>
 			<?php }
 			else{?>
@@ -329,7 +329,7 @@ $class = "even";
 			if($disease->Has_Gdeath == "1"){
 			?> 
 			<td style="background-color: #C4E8B7">
-			<input type="text" name="gdeath[]" id="<?php echo "gdeath_" . $disease -> id;?>"   class="disease_input validate[required,onlyNumberSp]" value="<?php echo $disease_surveillance_data[$disease -> id]['gdeath'];?>"/>
+			<input type="text" name="gdeath[]" id="<?php echo "gdeath_" . $disease -> id;?>"   class="disease_input validate[required,custom[integer,min[0]]]" value="<?php echo $disease_surveillance_data[$disease -> id]['gdeath'];?>"/>
 			</td>
 			<?php }
 			else{?>

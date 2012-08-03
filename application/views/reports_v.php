@@ -27,6 +27,10 @@ if($this -> session -> userdata('can_download_raw_data') == '1'){
 	if ($quick_link == "dnr_districts") {echo "top_menu_active";
 	}
 	?>">'DNR' Districts</a>
+	<a href="<?php echo site_url("intra_district");?>" class=" top_menu_link sub_menu_link  <?php
+	if ($quick_link == "intra_district") {echo "top_menu_active";
+	}
+	?>">Intra-District Reporting</a>
 	<?php }?>
 
 	<a href="<?php echo site_url("weekly_report");?>" class=" top_menu_link sub_menu_link last_link  <?php

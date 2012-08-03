@@ -119,7 +119,7 @@ class Facility_Surveillance_Data extends Doctrine_Record {
 		return $result;
 	}
 
-	public function getReports($year, $epiweek,$district) {
+	public function getReports($year, $epiweek, $district) {
 		$query = Doctrine_Query::create() -> select("*") -> from("Facility_Surveillance_Data") -> where("Reporting_Year = '$year' and Epiweek = '$epiweek' and district = '$district'") -> groupBy("Facility");
 		$result = $query -> execute();
 		return $result;
@@ -129,6 +129,12 @@ class Facility_Surveillance_Data extends Doctrine_Record {
 		$query = Doctrine_Query::create() -> select("id") -> from("Facility_Surveillance_Data") -> where("Reporting_Year='$year' and Epiweek='$epiweek' and Facility = '$facility' and Disease = '$disease'") -> limit(1);
 		$result = $query -> execute();
 		return $result[0];
+	}
+
+	public function getSubmittedFacilities($epiweek, $year) {
+		$query = Doctrine_Query::create() -> select("count(DISTINCT Facility) as reported_facilities") -> from("Facility_Surveillance_Data")->where("Reporting_Year='$year' and Epiweek='$epiweek'");
+		$result = $query -> execute();
+		return $result[0]->reported_facilities;
 	}
 
 }
