@@ -14,7 +14,7 @@ class District extends Doctrine_Record {
 	public function setUp() {
 		$this -> setTableName('districts');
 		$this -> hasOne('Province as Province_Object', array('local' => 'Province', 'foreign' => 'id'));
-		$this -> hasOne('Surveillance as Surveillance', array('local' => 'id', 'foreign' => 'District'));
+		$this -> hasMany('Surveillance as Surveillance', array('local' => 'id', 'foreign' => 'District'));
 	}//end setUp
 
 	public function getAll() {
@@ -53,7 +53,7 @@ class District extends Doctrine_Record {
 		return $results;
 	}
 	public static function getTotalNumber() {
-		$query = Doctrine_Query::create() -> select("COUNT(*) as Total_Districts") -> from("District")->where("Disabled = '0'");
+		$query = Doctrine_Query::create() -> select("COUNT(*) as Total_Districts") -> from("District");
 		$count = $query -> execute();
 		return $count[0] -> Total_Districts;
 	}

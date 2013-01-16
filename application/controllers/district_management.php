@@ -12,7 +12,7 @@ class District_Management extends MY_Controller {
 	}
 
 	public function view_list($offset = 0) {
-		$items_per_page = 20;
+		$items_per_page = 15;
 		$number_of_districts = District::getTotalNumber();
 		$districts = District::getPagedDistricts($offset, $items_per_page);
 		if ($number_of_districts > $items_per_page) {

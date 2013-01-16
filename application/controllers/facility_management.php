@@ -113,7 +113,7 @@ class Facility_Management extends MY_Controller {
 	public function facility_search() {
 		$search_term = $this -> input -> post('search');
 		$data['facilities'] = Facilities::search($search_term);
-		$data['banner_text'] = "'".$search_term."' Results";
+		$data['banner_text'] = "'" . $search_term . "' Results";
 		$data['title'] = "Facility Management::Searches Facilities";
 		$data['module_view'] = "view_facilities_view";
 		$this -> new_base_params($data);
@@ -149,6 +149,18 @@ class Facility_Management extends MY_Controller {
 		$data['link'] = "system_administration";
 		$this -> load -> view('template', $data);
 
+	}
+
+	public function get_district_facilities($district) {
+		$facilities = Facilities::getDistrictFacilities($district);
+		$facilities_array = array();
+		$counter = 0;
+		foreach ($facilities as $facility) {
+			$facility_details = array("facility_code" => utf8_encode($facility -> facilitycode), "name" => utf8_encode($facility -> name));
+			$facilities_array[$counter] = $facility_details;
+			$counter++;
+		}
+		echo json_encode($facilities_array);
 	}
 
 }

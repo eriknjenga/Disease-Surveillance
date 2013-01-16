@@ -32,11 +32,29 @@ class Disease extends Doctrine_Record {
 		$results = $query -> execute();
 		return $results[0];
 	}
-	
-	public function getTotal(){
+
+	public function getTotal() {
 		$query = Doctrine_Query::create() -> select("count(*) as Total_Diseases") -> from("Disease");
 		$diseases = $query -> execute();
-		return $diseases[0]->Total_Diseases;
+		return $diseases[0] -> Total_Diseases;
+	}
+
+	public static function getFirstDisease() {
+		$query = Doctrine_Query::create() -> select("*") -> from("Disease") -> limit("1");
+		$disease = $query -> execute();
+		return $disease[0];
+	}
+
+	public static function getDisease($id) {
+		$query = Doctrine_Query::create() -> select("*") -> from("Disease") -> where("id = '$id'");
+		$disease = $query -> execute();
+		return $disease[0];
+	}
+
+	public function getElninoDiseases() {
+		$query = Doctrine_Query::create() -> select("*") -> from("Disease") -> limit(4);
+		$diseases = $query -> execute();
+		return $diseases;
 	}
 
 }

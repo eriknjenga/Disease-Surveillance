@@ -168,6 +168,122 @@ class Submissions_Management extends CI_Controller {
 		return $value;
 	}
 
+	function getTrend($disease = 0, $from = "", $to = "", $year = 0) {
+		if ($year == 0) {
+			$year = date('Y');
+		}
+		if ($from == "") {
+			$from = 1;
+		}
+		if ($to == "") {
+			$to = 52;
+		}
+		$label_from = "Epiweek " . $from;
+		$label_to = "Epiweek " . $to;
+		$loop_from = $from;
+		$loop_to = $to;
+		$disease_name = "";
+		if ($disease == "0") {
+			$disease = Disease::getFirstDisease();
+			$disease_name = $disease -> Name;
+			$disease = $disease -> id;
+		} else {
+			$disease = Disease::getDisease($disease);
+			$disease_name = $disease -> Name;
+			$disease = $disease -> id;
+		}
+		$this -> load -> database();
+		//Save the daily data points
+		$days = array();
+		//Start generating the graph
+		$chart = '<chart caption="Weekly Activity for ' . $disease_name . '" connectNullData="1" lineDashGap="6"  labelDisplay="Rotate" slantLabels="1" subcaption="From ' . $label_from . ' to ' . $label_to . '" xAxisName="Epiweek" yAxisName="Reported No." showValues="0" showBorder="0" showAlternateHGridColor="0" divLineAlpha="10"  bgColor="FFFFFF"  exportEnabled="1" exportHandler="' . base_url() . 'Scripts/FusionCharts/ExportHandlers/PHP/FCExporter.php" exportAtClient="0" exportAction="download">';
+		//Generate the categories i.e. the dates
+		$chart .= '<categories>';
+		$counter = 0;
+		while ($loop_from <= $loop_to) {
+			$days[$counter] = $loop_from;
+			$chart .= '<category label="' . $loop_from . '"/>';
+			$loop_from++;
+			$counter++;
+		}
+		$chart .= '</categories>';
+		$sql = "SELECT sum(lcase+gcase) as total,epiweek FROM `surveillance` s where abs(epiweek) between '" . $from . "' and '" . $to . "' and reporting_year = '" . $year . "' and disease = '" . $disease . "' group by epiweek order by abs(epiweek) asc";
+		$query = $this -> db -> query($sql);
+		$disease_data = $query -> result_array();
+		$chart .= '<dataset seriesName="Cases">';
+		//make the date the key of the array
+		$values_array = array();
+		foreach ($disease_data as $data) {
+			$values_array[$data['epiweek']] = $data['total'];
+		}
+		$counter = 0;
+		foreach ($days as $day) {
+			//if a value exists, continue
+			if (isset($values_array[$day])) {
+				//check if the next value is non-existent, if so, display a dotted line, else, display a kawaida line
+				if (sizeof($values_array) != $counter) {
+					if (isset($values_array[$days[$counter + 1]])) {
+
+						$chart .= '<set value="' . $values_array[$day] . '"/>';
+					} else {
+						$chart .= '<set value="' . $values_array[$day] . '" dashed="1"/>';
+					}
+				}
+
+			} else {
+				$chart .= '<set  />';
+			}
+			$counter++;
+		}
+		$chart .= '</dataset>';
+		//Do one for deaths
+		$sql = "SELECT sum(ldeath+gdeath) as total,epiweek FROM `surveillance` s where abs(epiweek) between '" . $from . "' and '" . $to . "' and reporting_year = '" . $year . "' and disease = '" . $disease . "' group by epiweek order by abs(epiweek) asc";
+		$query = $this -> db -> query($sql);
+		$disease_data = $query -> result_array();
+		$chart .= '<dataset seriesName="Deaths">';
+		//make the date the key of the array
+		$values_array = array();
+		foreach ($disease_data as $data) {
+			$values_array[$data['epiweek']] = $data['total'];
+		}
+		$counter = 0;
+		foreach ($days as $day) {
+			//if a value exists, continue
+			if (isset($values_array[$day])) {
+				//check if the next value is non-existent, if so, display a dotted line, else, display a kawaida line
+				if (sizeof($values_array) != $counter) {
+					if (isset($values_array[$days[$counter + 1]])) {
+
+						$chart .= '<set value="' . $values_array[$day] . '"/>';
+					} else {
+						$chart .= '<set value="' . $values_array[$day] . '" dashed="1"/>';
+					}
+				}
+
+			} else {
+				$chart .= '<set  />';
+			}
+			$counter++;
+		}
+		$chart .= '</dataset>';
+
+		$chart .= '
+		<styles>
+<definition>
+<style name="Anim1" type="animation" param="_xscale" start="0" duration="1"/>
+<style name="Anim2" type="animation" param="_alpha" start="0" duration="0.6"/>
+<style name="DataShadow" type="Shadow" alpha="40"/>
+</definition>
+<application>
+<apply toObject="DIVLINES" styles="Anim1"/>
+<apply toObject="HGRID" styles="Anim2"/>
+<apply toObject="DATALABELS" styles="DataShadow,Anim2"/>
+</application>
+</styles>
+		</chart>';
+		echo $chart;
+	}
+
 	public function base_params($data) {
 		$data['title'] = "Submissions";
 		$data['banner_text'] = "Submissions";

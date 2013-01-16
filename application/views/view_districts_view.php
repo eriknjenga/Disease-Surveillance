@@ -16,6 +16,7 @@
 		<th>Latitude</th>
 		<th>Longitude</th>
 		<th>Disabled?</th>
+		<th>Records</th>
 		<th>Action</th>
 	</tr>
 	<?php
@@ -31,6 +32,7 @@ foreach($districts as $district){
 			} else {echo "Yes";
 			};
 		?></td>
+		<td><?php echo count($district -> Surveillance);?></td>
 		<td><a href="<?php echo base_url()."district_management/edit_district/".$district->id?>" class="link">Edit </a>| <?php
 if($district->Disabled == 0){
 		?>

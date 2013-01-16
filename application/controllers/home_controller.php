@@ -27,12 +27,26 @@ class Home_Controller extends MY_Controller {
 		$this -> session -> set_userdata($menu_data);
 		$this -> session -> set_userdata($menus);
 		$data['title'] = "System Home";
-		$data['content_view'] = "home_v";
+		$data['content_view'] = "data_analyses_v";
+		$data['diseases'] = Disease::getAllObjects();
+		$data['districts'] = District::getAll();
+		$data['scripts'] = array("FusionCharts/FusionCharts.js");
+		$data['banner_text'] = "System Home";
+		$indicator = $this -> session -> userdata('user_indicator');
+		if($indicator == "district_clerk"){
+			$data['districts'] = District::getDistrict($this -> session -> userdata('district_province_id'));
+		}
+		$data['link'] = "home";  
+		$this -> load -> view("template", $data);
+	}
+
+	function management_dashboard() {
+		$data['title'] = "System Home";
+		$data['content_view'] = "management_dashboard_v"; 
 		$data['banner_text'] = "System Home";
 		$data['link'] = "home";
+		$data['scripts'] = array("FusionCharts/FusionCharts.js");
 		$this -> load -> view("template", $data);
-
 	}
- 
 
 }
