@@ -41,12 +41,12 @@ class District_Analysis_Graph extends MY_Controller {
 			} else if ($district > 0) {
 				if ($facility == 0) {
 					$district_object = District::getDistrict($district);
-					$graph_sub_title = "In " . $district_object[0] -> Name . " District";
+					$graph_sub_title = $district_object[0] -> Name . " District";
 					$sql .= " and district = '" . $district . "' and reporting_year = '" . $year . "' and abs(epiweek) between '" . $epiweek_from . "' and '" . $epiweek_to . "'";
 				}
 				if ($facility > 0) {
 					$facility_name = Facilities::getFacilityName($facility);
-					$graph_sub_title = "In " . $facility_name;
+					$graph_sub_title = $facility_name;
 					$sql .= " and facility = '" . $facility . "' and reporting_year = '" . $year . "' and abs(epiweek) between '" . $epiweek_from . "' and '" . $epiweek_to . "'";
 				}
 			}
@@ -59,7 +59,7 @@ class District_Analysis_Graph extends MY_Controller {
 				$disease_data[$case['disease']]['disease'] = $disease_object -> Name;
 			} 
 		}
-		$chart = '<chart caption="Diseases Cases" subcaption="' . $graph_sub_title . ' For ' . $year . '" connectNullData="1" showValues="0" formatNumberScale="0" lineDashGap="6" xAxisName="Epiweek" yAxisName="Cummulative Immunized" showValues="0" showBorder="0" showAlternateHGridColor="0" divLineAlpha="10"  bgColor="FFFFFF"  exportEnabled="1" exportHandler="' . base_url() . 'Scripts/FusionCharts/ExportHandlers/PHP/FCExporter.php" exportAtClient="0" exportAction="download">
+		$chart = '<chart caption="'.$graph_sub_title.'" subcaption="Cases For ' . $year . '" connectNullData="1" showValues="0" formatNumberScale="0" lineDashGap="6" xAxisName="Epiweek" yAxisName="Number of Cases" showValues="0" showBorder="0" showAlternateHGridColor="0" divLineAlpha="10"  bgColor="FFFFFF"  exportEnabled="1" exportHandler="' . base_url() . 'Scripts/FusionCharts/ExportHandlers/PHP/FCExporter.php" exportAtClient="0" exportAction="download">
 <categories>';
 
 		for ($epiweek_from = $epiweek_from; $epiweek_from <= $epiweek_to; $epiweek_from++) {
