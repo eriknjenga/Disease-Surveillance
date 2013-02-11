@@ -22,6 +22,18 @@ class Weekly_Data_Management extends MY_Controller {
 			$data['scripts'] = array("special_date_picker.js", "validationEngine-en.js", "validator.js");
 			$data["styles"] = array("validator.css");
 			$this -> base_params($data);
+		} else if ($access_level == "system_administrator") {
+			if(!isset($data['editing'])){
+				redirect("disease_ranking");
+			} 
+			$data['facilities'] = Facilities::getFacilityArray($data['admin_facility']);
+			$diseases = Disease::getAllObjects();
+			$data['diseases'] = $diseases;
+			$data['editing'] = false;
+			$data['prediction'] = Facility_Surveillance_Data::getPrediction();
+			$data['scripts'] = array("special_date_picker.js", "validationEngine-en.js", "validator.js");
+			$data["styles"] = array("validator.css");
+			$this -> base_params($data);
 		} else {
 			$data['title'] = "Weekly Data";
 			$data['content_view'] = "error_message_v";
@@ -36,11 +48,13 @@ class Weekly_Data_Management extends MY_Controller {
 	public function edit_weekly_data($epiweek, $reporting_year, $facility) {
 		$facility_object = Facilities::getFacility($facility);
 		$district = $this -> session -> userdata('district_province_id');
+		$access_level = $this -> session -> userdata('user_indicator');
 		//Check if the facility that the user wants to edit data for is in their district
-		if ($facility_object -> district == $district) {
+		if ($facility_object -> district == $district || $access_level == "system_administrator") {
 			$data['surveillance_data'] = Facility_Surveillance_Data::getSurveillanceData($epiweek, $reporting_year, $facility);
 			$data['lab_data'] = Facility_Lab_Weekly::getWeeklyFacilityLabData($epiweek, $reporting_year, $facility);
 			$data['editing'] = true;
+			$data['admin_facility'] = $facility;
 			$this -> add($data);
 		} else {
 			$data['title'] = "Weekly Data";
@@ -77,11 +91,13 @@ class Weekly_Data_Management extends MY_Controller {
 			$ldeath = $facility_data -> Ldeath;
 			$gcase = $facility_data -> Gcase;
 			$gdeath = $facility_data -> Gdeath;
-
+			//Edit the number of submitted reports also
+			$district_data -> Submitted -= 1;
 			$district_data -> Lcase -= $lcase;
 			$district_data -> Ldeath -= $ldeath;
 			$district_data -> Gcase -= $gcase;
 			$district_data -> Gdeath -= $gdeath;
+
 			$district_data -> save();
 			$facility_data -> delete();
 		}
@@ -101,8 +117,8 @@ class Weekly_Data_Management extends MY_Controller {
 		$lab_data -> Malaria_Above_5 -= $totaltestedgreaterfive;
 		$lab_data -> Positive_Below_5 -= $totalpositivelessfive;
 		$lab_data -> Positive_Above_5 -= $totalpositivegreaterfive;
-		$lab_data->save();
-		$facility_lab_data->delete();
+		$lab_data -> save();
+		$facility_lab_data -> delete();
 
 		//Log the action
 		$log = new Data_Delete_Log();
@@ -126,6 +142,10 @@ class Weekly_Data_Management extends MY_Controller {
 			$existing_district_lab_data = false;
 			$diseases = Disease::getAllObjects();
 			$district = $this -> session -> userdata('district_province_id');
+			$editing_district_id = $this -> input -> post('editing_district_id');
+			if(strlen($editing_district_id)>0){
+				$district = $editing_district_id;
+			}			
 			$weekending = $this -> input -> post("week_ending");
 			$reporting_year = $this -> input -> post("reporting_year");
 			$epiweek = $this -> input -> post("epiweek");
@@ -399,8 +419,30 @@ class Weekly_Data_Management extends MY_Controller {
 	private function _validate_submission() {
 		$this -> form_validation -> set_rules('facility', 'Facility', 'trim|required|min_length[1]|max_length[25]');
 
-		return $this -> form_validation -> run();
+		$temp_validation = $this -> form_validation -> run();
+		if ($temp_validation) {
+			$this -> form_validation -> set_rules('facility', 'Duplicate Recordset', 'trim|required|callback_weekly_duplication');
+			return $this -> form_validation -> run();
+		} else {
+			return $temp_validation;
+		}
 	}//end validate_submission
+
+	public function weekly_duplication($facility) {
+		$lab_id = $this -> input -> post("lab_id");
+		$epiweek = $this -> input -> post("epiweek");
+		$year = $this -> input -> post("reporting_year");
+		if (strlen($lab_id) > 0) {
+			return TRUE;
+		}
+		$data = Facility_Surveillance_Data::getFacilityData($epiweek, $year, $facility);
+		if ($data -> id) {
+			$this -> form_validation -> set_message('weekly_duplication', 'A report for this week already exists!');
+			return FALSE;
+		} else {
+			return TRUE;
+		}
+	}
 
 	/*
 	 * Function to check if district data for a particular week exists

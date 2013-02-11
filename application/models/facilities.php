@@ -54,7 +54,11 @@ class Facilities extends Doctrine_Record {
 		$count = $query -> execute();
 		return $count[0] -> Total_Facilities;
 	}
-
+	public static function getAll() {
+		$query = Doctrine_Query::create() -> select("*") -> from("Facilities") -> where("reporting = '1'");
+		$count = $query -> execute();
+		return $count;
+	}
 	public function getPagedFacilities($offset, $items, $district = 0) {
 		if ($district == 0) {
 			$query = Doctrine_Query::create() -> select("*") -> from("Facilities") -> orderBy("name asc") -> offset($offset) -> limit($items);
@@ -70,6 +74,11 @@ class Facilities extends Doctrine_Record {
 		$query = Doctrine_Query::create() -> select("*") -> from("Facilities") -> where("facilitycode = '$id'");
 		$facility = $query -> execute();
 		return $facility[0];
+	}
+	public static function getFacilityArray($id) {
+		$query = Doctrine_Query::create() -> select("*") -> from("Facilities") -> where("facilitycode = '$id'");
+		$facility = $query -> execute();
+		return $facility;
 	}
 
 	public static function getDNRFacilities($year, $epiweek, $district) {

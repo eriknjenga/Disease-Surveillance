@@ -21,7 +21,7 @@ class Data_Delete_Log extends Doctrine_Record {
 	}
 
 	public function getPagedLogs($offset, $items) {
-		$query = Doctrine_Query::create() -> select("*") -> from("Data_Delete_Log") -> offset($offset) -> limit($items);
+		$query = Doctrine_Query::create() -> select("*") -> from("Data_Delete_Log") -> offset($offset) -> limit($items)->orderBy("id desc");
 		$logs = $query -> execute(array());
 		return $logs;
 	}

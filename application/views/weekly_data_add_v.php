@@ -40,6 +40,7 @@ $("#weekending").datepicker({
 altField : "#epiweek",
 altFormat : "DD,d MM, yy",
 firstDay : 1,
+maxDate: "+7",
 changeYear : true,
 onClose : function(date, inst) {
 //Create a new date object from the date selected
@@ -182,6 +183,7 @@ var edit_url = '<?php echo base_url()?>'+"weekly_data_management/edit_weekly_dat
 	if(isset($surveillance_data)){
 	$week_data = $surveillance_data[0];
 	$epiweek = $week_data->Epiweek;
+	$editing_district_id = $week_data->District;
 	$returned_facility = $week_data->Facility;
 	$week_ending = $week_data->Week_Ending;
 	$reporting_year = $week_data->Reporting_Year;
@@ -196,6 +198,7 @@ var edit_url = '<?php echo base_url()?>'+"weekly_data_management/edit_weekly_dat
 	}
 	}
 	else{
+	$editing_district_id = "";
 	$epiweek = "";
 	$submitted  = "";
 	$expected = "";
@@ -245,6 +248,7 @@ var edit_url = '<?php echo base_url()?>'+"weekly_data_management/edit_weekly_dat
 			<input type="text" name="epiweek" id="epiweek" readonly="" class="validate[required,custom[onlyNumberSp]]" value="<?php echo $epiweek;?>"/>
 			<input type="hidden" name="reporting_year" id="reporting_year" value="<?php echo $reporting_year;?>"/>
 			<input type="hidden" name="lab_id" id="lab_id" value="<?php echo $lab_id;?>"/>
+			<input type="hidden" name="editing_district_id" id="editing_district_id" value="<?php echo $editing_district_id;?>"/>
 			</td>
 		</tr>
 			<tr>

@@ -23,7 +23,6 @@ class Facility_Management extends MY_Controller {
 			$this -> pagination -> initialize($config);
 			$data['pagination'] = $this -> pagination -> create_links();
 		}
-
 		$data['facilities'] = $facilities;
 		$data['banner_text'] = "All Facilities";
 		$data['title'] = "Facility Management::All Facilities";

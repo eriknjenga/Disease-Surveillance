@@ -125,6 +125,18 @@ class Facility_Surveillance_Data extends Doctrine_Record {
 		return $result;
 	}
 
+	public function getRankedReports($year, $epiweek, $disease,$offset,$items) {
+		$query = Doctrine_Query::create() -> select("*") -> from("Facility_Surveillance_Data") -> where("Reporting_Year = '$year' and Epiweek = '$epiweek' and disease = '$disease'") -> orderBy("abs(Gcase+Lcase) desc, abs(Gdeath+Ldeath) desc")-> offset($offset) -> limit($items);;
+		$result = $query -> execute();
+		return $result;
+	}
+
+	public function getTotalRankedReports($year, $epiweek, $disease) {
+		$query = Doctrine_Query::create() -> select("count(*) as Total_Reports") -> from("Facility_Surveillance_Data") -> where("Reporting_Year = '$year' and Epiweek = '$epiweek' and disease = '$disease'");
+		$result = $query -> execute();
+		return $result[0]->Total_Reports;
+	}
+
 	public function getFacilityDiseaseData($epiweek, $year, $facility, $disease) {
 		$query = Doctrine_Query::create() -> select("id") -> from("Facility_Surveillance_Data") -> where("Reporting_Year='$year' and Epiweek='$epiweek' and Facility = '$facility' and Disease = '$disease'") -> limit(1);
 		$result = $query -> execute();
@@ -132,9 +144,9 @@ class Facility_Surveillance_Data extends Doctrine_Record {
 	}
 
 	public function getSubmittedFacilities($epiweek, $year) {
-		$query = Doctrine_Query::create() -> select("count(DISTINCT Facility) as reported_facilities") -> from("Facility_Surveillance_Data")->where("Reporting_Year='$year' and Epiweek='$epiweek'");
+		$query = Doctrine_Query::create() -> select("count(DISTINCT Facility) as reported_facilities") -> from("Facility_Surveillance_Data") -> where("Reporting_Year='$year' and Epiweek='$epiweek'");
 		$result = $query -> execute();
-		return $result[0]->reported_facilities;
+		return $result[0] -> reported_facilities;
 	}
 
 }
