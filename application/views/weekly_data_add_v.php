@@ -23,7 +23,72 @@ if (!isset($existing_data)) {
 </style>
 <script type="text/javascript">
 	$(function() {
-$("#entry-form").validationEngine();
+//$("#entry-form").validationEngine();
+//$('#entry-form').validationEngine();
+$('#submit_form').click(function(e){
+	 e.preventDefault();
+	  var cases_pass = true;
+	  var deaths_pass = true;
+	  var cases_counter = 0;
+	  var response_counter = 0;
+	//Loop through all the diseases that should trigger alerts both for cases and deaths reported
+	$('.alert_cases').each(function() { 
+		cases_counter++;
+		response_counter++;
+		//get the disease for this input box
+		var disease = $(this).attr("disease");
+		//Get the number reported
+		var reported = $(this).attr("value");
+		//Get the threshold
+		var alert_level = $(this).attr("alert_cases");
+		console.log(reported+" and "+alert_level);
+		if(parseInt(reported)>=parseInt(alert_level)){
+			var question = "Are you sure you want to report "+reported+" "+disease+"?";
+			var r=confirm(question);
+			if(r == false){
+				response_counter--;
+			} 
+		}
+	});
+	if(parseInt(cases_counter) != parseInt(response_counter)){
+		cases_pass = false;
+	} 
+	var deaths_counter = 0;
+	var deaths_response_counter = 0;
+	$('.alert_deaths').each(function() {
+		deaths_counter++;
+		deaths_response_counter++;
+		//get the disease for this input box
+		var disease = $(this).attr("disease");
+		//Get the number reported
+		var reported = $(this).attr("value");
+		//Get the threshold
+		var alert_level = $(this).attr("alert_deaths");
+		console.log(reported+" and "+alert_level);
+		if(parseInt(reported)>=parseInt(alert_level)){
+			
+			var question = "Are you sure you want to report "+reported+" "+disease+"?";
+			var r=confirm(question);
+			if(r == false){
+				deaths_response_counter--;
+			} 
+		}
+	}); 
+	if(parseInt(deaths_counter) != parseInt(deaths_response_counter)){
+		deaths_pass = false;
+	}  
+	if(cases_pass == false || deaths_pass == false){
+		
+		return false;
+	}
+	else{
+		if($('#entry-form').validationEngine("validate")){
+			$('#entry-form').submit();
+		}
+		
+	}
+	
+});
 $("#confirm_variables").click(function() {
 $("#epiweek").attr("value", $("#predicted_epiweek").text());
 $("#weekending").attr("value", $("#predicted_weekending").text());
@@ -153,34 +218,14 @@ var edit_url = '<?php echo base_url()?>'+"weekly_data_management/edit_weekly_dat
 	}
 </script>
 <div class="view_content">
-	
-	<?php if($editing == false){
-	?>
-	<div id="prediction">
-		<table  style="margin: 5px auto; border: 2px solid #EEEEEE; width: 400px">
-			<caption>
-				Confirm
-			</caption>
-			<?php if(isset($success_message)){echo "<tr><td style='color:green' colspan='2'>".$success_message."</td></tr>";}?>
-			<tr>
-				<td>Weekending: </td><td id="predicted_weekending"><?php echo $prediction[2];?></td>
-			</tr>
-			<tr>
-				<td>Epiweek: </td><td id="predicted_epiweek"><?php echo $prediction[1];?></td>
-				<input type="hidden" id="predicted_year" value="<?php echo $prediction[0];?>"/>
-			</tr>
-			<tr>
-				<td colspan="2">
-				<button class="button" id="confirm_variables" style="float:right">
-					Ok
-				</button></td>
-			</tr>
-		</table>
-	</div>
 	<?php
-	}
 	$disease_surveillance_data = array();
 	if(isset($surveillance_data)){
+	//First check if this data is complete. If not, show the user an error page 
+	if(!isset($surveillance_data[($surveillance_data[0]->Total_Diseases)-1])){
+		$corrupt_link = base_url()."weekly_data_management/corrupt_data/".$surveillance_data[0]->Epiweek."/".$surveillance_data[0]->Reporting_Year."/".$surveillance_data[0]->Facility;
+		redirect($corrupt_link);
+	}
 	$week_data = $surveillance_data[0];
 	$epiweek = $week_data->Epiweek;
 	$editing_district_id = $week_data->District;
@@ -257,10 +302,10 @@ var edit_url = '<?php echo base_url()?>'+"weekly_data_management/edit_weekly_dat
 				<option value="0">Select Facility</option>
 				<?php
 				foreach ($facilities as $facility) {
-					if ($facility -> facilitycode == $returned_facility) {
-						echo '<option selected value="' . $facility -> facilitycode . '">' . $facility -> name . '</option>';
+					if ($facility['facilitycode'] == $returned_facility) {
+						echo '<option selected value="' . $facility['facilitycode'] . '">' . $facility['name'] . '</option>';
 					} else {
-						echo '<option value="' . $facility -> facilitycode . '">' . $facility -> name . '</option>';
+						echo '<option value="' . $facility['facilitycode'] . '">' . $facility['name'] . '</option>';
 					}
 				}//end foreach
 				?>
@@ -306,7 +351,7 @@ $class = "even";
 			<td><?php echo $disease -> Name;?></td>
 			<?php if($disease->Has_Lcase == "1"){?>
 			<td style="background-color: #C4E8B7">
-			<input type="text" name="lcase[]" id="<?php echo "lcase_" . $disease -> id;?>"   class="disease_input validate[required,custom[integer,min[0]]]" value="<?php echo $disease_surveillance_data[$disease -> id]['lcase'];?>"/>
+			<input <?php echo "disease='".$disease -> Name." Cases Under 5'"; if($disease->Alert_Cases>0){echo "alert_cases='".$disease->Alert_Cases."'";}?> type="text" name="lcase[]" id="<?php echo "lcase_" . $disease -> id;?>"   class="<?php if($disease->Alert_Cases>0){echo "alert_cases ";}?>disease_input validate[required,custom[integer,min[0]]]" value="<?php echo $disease_surveillance_data[$disease -> id]['lcase'];?>"/>
 			</td> 
 			<?php }
 			else{?>
@@ -315,7 +360,7 @@ $class = "even";
 			if($disease->Has_Ldeath == "1"){
 			?>
 			<td style="background-color: #C4E8B7">
-			<input type="text" name="ldeath[]" id="<?php echo "ldeath_" . $disease -> id;?>"   class="disease_input validate[required,custom[integer,min[0]]]" value="<?php echo $disease_surveillance_data[$disease -> id]['ldeath'];?>"/>
+			<input <?php echo "disease='".$disease -> Name." Deaths Under 5'";  if($disease->Alert_Deaths>0){echo "alert_deaths='".$disease->Alert_Deaths."'";}?> type="text" name="ldeath[]" id="<?php echo "ldeath_" . $disease -> id;?>"   class="<?php if($disease->Alert_Deaths>0){echo "alert_deaths ";}?>disease_input validate[required,custom[integer,min[0]]]" value="<?php echo $disease_surveillance_data[$disease -> id]['ldeath'];?>"/>
 			</td>
 			<?php }
 			else{?>
@@ -324,7 +369,7 @@ $class = "even";
 			if($disease->Has_Gcase == "1"){
 			?>
 			<td style="background-color: #C4E8B7">
-			<input type="text" name="gcase[]" id="<?php echo "gcase_" . $disease -> id;?>"   class="disease_input validate[required,custom[integer,min[0]]]" value="<?php echo $disease_surveillance_data[$disease -> id]['gcase'];?>"/>
+			<input <?php echo "disease='".$disease -> Name." Cases Above 5'";  if($disease->Alert_Cases>0){echo "alert_cases='".$disease->Alert_Cases."'";}?> type="text" name="gcase[]" id="<?php echo "gcase_" . $disease -> id;?>"   class="<?php if($disease->Alert_Cases>0){echo "alert_cases ";}?>disease_input validate[required,custom[integer,min[0]]]" value="<?php echo $disease_surveillance_data[$disease -> id]['gcase'];?>"/>
 			</td>
 			<?php }
 			else{?>
@@ -333,7 +378,7 @@ $class = "even";
 			if($disease->Has_Gdeath == "1"){
 			?> 
 			<td style="background-color: #C4E8B7">
-			<input type="text" name="gdeath[]" id="<?php echo "gdeath_" . $disease -> id;?>"   class="disease_input validate[required,custom[integer,min[0]]]" value="<?php echo $disease_surveillance_data[$disease -> id]['gdeath'];?>"/>
+			<input <?php echo "disease='".$disease -> Name." Deaths Above 5'";  if($disease->Alert_Deaths>0){echo "alert_deaths='".$disease->Alert_Deaths."'";}?> type="text" name="gdeath[]" id="<?php echo "gdeath_" . $disease -> id;?>"   class="<?php if($disease->Alert_Deaths>0){echo "alert_deaths ";}?>disease_input validate[required,custom[integer,min[0]]]" value="<?php echo $disease_surveillance_data[$disease -> id]['gdeath'];?>"/>
 			</td>
 			<?php }
 			else{?>
@@ -392,7 +437,7 @@ $class = "even";
 	<table style="margin: 5px auto;">
 		<tr>
 			<td>
-			<input name="save" type="submit" class="button" value="Save " style="width:200px; height: 30px; font-size: 16px; letter-spacing: 2px !important" />
+			<input name="save" id="submit_form" type="submit" class="button" value="Save " style="width:200px; height: 30px; font-size: 16px; letter-spacing: 2px !important" />
 			</td>
 		</tr>
 	</table>

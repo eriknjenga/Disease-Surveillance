@@ -42,7 +42,7 @@ foreach ($surveillance_sets as $set) {
 	if($set[0]->id == ""){
 		$surveillance_id = "0";
 	}
-	$edit_url = base_url()."data_duplication/edit_duplicate/".$set[0] -> Total_Diseases."/".$surveillance_id."/".$malaria_id;
+	$edit_url = base_url()."data_duplication/edit_duplicate/".$set[0] -> Facility."/".$set[0] -> Total_Diseases."/".$surveillance_id."/".$malaria_id;
 	$delete_url = base_url()."data_duplication/delete_duplicate/".$set[0] -> Total_Diseases."/".$surveillance_id."/".$malaria_id."/".$set[0]->District."/".$set[0]->Epiweek."/".$set[0]->Reporting_Year;
 ?>
 <style>
@@ -56,8 +56,8 @@ foreach ($surveillance_sets as $set) {
 <div  class="section" align="center">
 	<table class="data-table" style="margin: 10px auto;">
 		<tr class="even">
-			<td ><strong>Reporting District </strong></td>
-			<td><?php echo $set[0] -> District_Object -> Name;?></td>
+			<td ><strong>Reporting Facility </strong></td>
+			<td><?php echo $set[0] -> Facility_Object -> name;?></td>
 		</tr>
 		<tr class="odd">
 			<td ><strong> Reporting Epiweek </strong></td>
@@ -82,26 +82,16 @@ foreach ($surveillance_sets as $set) {
 	</table>
 	<table class="data-table">
 		<tr>
-			<th rowspan="3">Diseases</th>
-			<th colspan="4">&le; 5 Years</th>
-			<th colspan="4">&ge; 5 Years</th>
+			<th rowspan="2">Diseases</th>
+			<th colspan="2">&le; 5 Years</th>
+			<th colspan="2">&ge; 5 Years</th>
 		</tr>
 		<tr>
-			<th colspan="2">Cases</th>
-			<th colspan="2">Deaths</th>
-			<th colspan="2">Cases</th>
-			<th colspan="2">Deaths</th>
-		</tr>
-		<tr>
-			<th>M</th>
-			<th>F</th>
-			<th>M</th>
-			<th>F</th>
-			<th>M</th>
-			<th>F</th>
-			<th>M</th>
-			<th>F</th>
-		</tr>
+			<th>Cases</th>
+			<th>Deaths</th>
+			<th>Cases</th>
+			<th>Deaths</th>
+		</tr> 
 		<?php
 $disease_counter = 1;
 foreach($diseases as $disease){
@@ -113,14 +103,10 @@ $class = "even";
 		?>
 		<tr class="<?php echo $class;?>">
 			<td><?php echo $disease -> Name;?></td>
-			<td><?php echo $set[$disease -> id - 1] -> Lmcase;?></td>
-			<td><?php echo $set[$disease -> id - 1] -> Lfcase;?></td>
-			<td><?php echo $set[$disease -> id - 1] -> Lmdeath;?></td>
-			<td><?php echo $set[$disease -> id - 1] -> Lfdeath;?></td>
-			<td><?php echo $set[$disease -> id - 1] -> Gmcase;?></td>
-			<td><?php echo $set[$disease -> id - 1] -> Gfcase;?></td>
-			<td><?php echo $set[$disease -> id - 1] -> Gmdeath;?></td>
-			<td><?php echo $set[$disease -> id - 1] -> Gfdeath;?></td>
+			<td><?php if(isset($set[$disease -> id - 1])){echo $set[$disease -> id - 1] -> Lcase;} else{echo "N/A";}?></td>
+			<td><?php if(isset($set[$disease -> id - 1])){echo $set[$disease -> id - 1] -> Ldeath;} else{echo "N/A";}?></td>
+			<td><?php if(isset($set[$disease -> id - 1])){echo $set[$disease -> id - 1] -> Ldeath;} else{echo "N/A";}?></td>
+			<td><?php if(isset($set[$disease -> id - 1])){echo $set[$disease -> id - 1] -> Ldeath;} else{echo "N/A";}?></td> 
 		</tr>
 		<?php
 		$disease_counter++;

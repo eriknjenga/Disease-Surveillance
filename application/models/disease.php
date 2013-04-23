@@ -9,6 +9,8 @@ class Disease extends Doctrine_Record {
 		$this -> hasColumn('Has_Ldeath', 'varchar', 5);
 		$this -> hasColumn('Has_Gcase', 'varchar', 5);
 		$this -> hasColumn('Has_Gdeath', 'varchar', 5);
+		$this -> hasColumn('Alert_Cases', 'varchar', 5);
+		$this -> hasColumn('Alert_Deaths', 'varchar', 5);
 	}
 
 	public function setUp() {

@@ -14,7 +14,7 @@ class Weekly_Data_Management extends MY_Controller {
 		$access_level = $this -> session -> userdata('user_indicator');
 		if ($access_level == "district_clerk") {
 			$district = $this -> session -> userdata('district_province_id');
-			$data['facilities'] = Facilities::getDistrictFacilities($district);
+			$data['facilities'] = Facilities::getDistrictFacilitiesArrays($district);
 			$diseases = Disease::getAllObjects();
 			$data['diseases'] = $diseases;
 			$data['editing'] = false;
@@ -23,9 +23,9 @@ class Weekly_Data_Management extends MY_Controller {
 			$data["styles"] = array("validator.css");
 			$this -> base_params($data);
 		} else if ($access_level == "system_administrator") {
-			if(!isset($data['editing'])){
+			if (!isset($data['editing'])) {
 				redirect("disease_ranking");
-			} 
+			}
 			$data['facilities'] = Facilities::getFacilityArray($data['admin_facility']);
 			$diseases = Disease::getAllObjects();
 			$data['diseases'] = $diseases;
@@ -77,33 +77,29 @@ class Weekly_Data_Management extends MY_Controller {
 		$this -> load -> view("template", $data);
 	}
 
+	public function corrupt_data($epiweek, $reporting_year, $facility) {
+		$data['surveillance_data'] = Facility_Surveillance_Data::getSurveillanceData($epiweek, $reporting_year, $facility);
+		$data['title'] = "Data Corruption";
+		$data['content_view'] = "data_inconsistency_v";
+		$data['banner_text'] = "Corrupt Data"; 
+		$this -> load -> view("template", $data); 
+	}
+
 	public function confirm_delete_weekly_data($epiweek, $reporting_year, $facility) {
 		$district = $this -> session -> userdata('district_province_id');
 		//Get the diseases
 		$diseases = Disease::getAllObjects();
 		//Loop through the diseases to update the relevant data
 		foreach ($diseases as $disease) {
-			//Get the district surveillance data
-			$district_data = Surveillance::getDistrictDiseaseData($epiweek, $reporting_year, $district, $disease -> id);
 			//Get the facility surveillance data
 			$facility_data = Facility_Surveillance_Data::getFacilityDiseaseData($epiweek, $reporting_year, $facility, $disease -> id);
+			$district = $facility_data -> District;
 			$lcase = $facility_data -> Lcase;
 			$ldeath = $facility_data -> Ldeath;
 			$gcase = $facility_data -> Gcase;
 			$gdeath = $facility_data -> Gdeath;
-			//Edit the number of submitted reports also
-			$district_data -> Submitted -= 1;
-			$district_data -> Lcase -= $lcase;
-			$district_data -> Ldeath -= $ldeath;
-			$district_data -> Gcase -= $gcase;
-			$district_data -> Gdeath -= $gdeath;
-
-			$district_data -> save();
 			$facility_data -> delete();
 		}
-		//Get the district malaria lab data
-		$lab_data = Lab_Weekly::getWeeklyDistrictLabData($epiweek, $reporting_year, $district);
-		$lab_data = $lab_data[0];
 		//Get the facility malaria lab data
 		$facility_lab_data = Facility_Lab_Weekly::getWeeklyFacilityLabData($epiweek, $reporting_year, $facility);
 		$facility_lab_data = $facility_lab_data[0];
@@ -112,14 +108,8 @@ class Weekly_Data_Management extends MY_Controller {
 		$totaltestedgreaterfive = $facility_lab_data -> Malaria_Above_5;
 		$totalpositivelessfive = $facility_lab_data -> Positive_Below_5;
 		$totalpositivegreaterfive = $facility_lab_data -> Positive_Above_5;
-
-		$lab_data -> Malaria_Below_5 -= $totaltestedlessfive;
-		$lab_data -> Malaria_Above_5 -= $totaltestedgreaterfive;
-		$lab_data -> Positive_Below_5 -= $totalpositivelessfive;
-		$lab_data -> Positive_Above_5 -= $totalpositivegreaterfive;
-		$lab_data -> save();
 		$facility_lab_data -> delete();
-
+		$this -> update_district_record($district, $epiweek, $reporting_year);
 		//Log the action
 		$log = new Data_Delete_Log();
 		$log -> Deleted_By = $this -> session -> userdata('user_id');
@@ -131,7 +121,84 @@ class Weekly_Data_Management extends MY_Controller {
 		redirect("data_delete_management");
 	}
 
+	public function update_district_record($district, $epiweek, $reporting_year) {
+		$this -> load -> database();
+		//retrieve the original district summary record
+		//Code to retrieve the cases vs. deaths variables
+		$district_sql = "SELECT disease FROM `surveillance` where district = '$district' and epiweek = '$epiweek' and reporting_year = '$reporting_year'";
+		$district_query = $this -> db -> query($district_sql);
+		$district_surveillance_data = $district_query -> result_array();
+
+		$district_data_array = array();
+		foreach ($district_surveillance_data as $district_data) {
+			$district_data_array[$district_data['disease']] = $district_data['disease'];
+
+		}
+		//var_dump($district_surveillance_data);
+
+		//Code to retrieve the submitted and expected variables
+		$expected_facilities = Facilities::getExpected($district);
+
+		$sql = "SELECT count(distinct facility) as total FROM `facility_surveillance_data` where district = '$district' and epiweek = '$epiweek' and reporting_year = '$reporting_year'";
+		$query = $this -> db -> query($sql);
+		$reported_array = $query -> row_array();
+		$reported_facilities = $reported_array['total'];
+		//echo $reported_facilities;
+		//echo $expected_facilities;
+
+		//Code to retrieve the cases vs. deaths variables
+		$facilities_sql = "SELECT disease,sum(lcase) as lcase,sum(ldeath) as ldeath,sum(gcase) as gcase,sum(gdeath) as gdeath,`date_created`, `created_by`, `week_ending`, `reported_by`, `designation`, `date_reported`, `reporting_year`, `total_diseases` FROM `facility_surveillance_data` where district = '$district' and epiweek = '$epiweek' and reporting_year = '$reporting_year' group by disease";
+		$facilities_query = $this -> db -> query($facilities_sql);
+		$facility_surveillance_data = $facilities_query -> result_array();
+		//loop the summaries from the facility and replace the ristrict summaries
+		foreach ($facility_surveillance_data as $facility_data) {
+			//Check whether any district data was returned, if not, generate an insert query, if so, generate an update query
+			if (!isset($district_data_array[$facility_data['disease']])) {
+				//generate insert statement
+				$insert_query = "INSERT INTO `surveillance`(`disease`, `lcase`, `ldeath`, `date_created`, `created_by`, `epiweek`, `submitted`, `expected`, `district`, `week_ending`, `gcase`, `gdeath`, `reported_by`, `designation`, `date_reported`, `reporting_year`, `total_diseases`) VALUES ('" . $facility_data['disease'] . "','" . $facility_data['lcase'] . "','" . $facility_data['ldeath'] . "','" . $facility_data['date_created'] . "','" . $facility_data['created_by'] . "','" . $epiweek . "','" . $reported_facilities . "','" . $expected_facilities . "','" . $district . "','" . $facility_data['week_ending'] . "','" . $facility_data['gcase'] . "','" . $facility_data['gdeath'] . "','" . $facility_data['reported_by'] . "','" . $facility_data['designation'] . "','" . $facility_data['date_reported'] . "','" . $facility_data['reporting_year'] . "','" . $facility_data['total_diseases'] . "')";
+				$insert = $this -> db -> query($insert_query);
+				//echo $insert . "da";
+			} else {
+				//generate update statement
+				$update_query = "UPDATE `surveillance` SET `lcase`='" . $facility_data['lcase'] . "',`ldeath`='" . $facility_data['ldeath'] . "',`submitted`='" . $reported_facilities . "',`expected`='" . $expected_facilities . "',`gcase`='" . $facility_data['gcase'] . "',`gdeath`='" . $facility_data['gdeath'] . "',`total_diseases`='" . $facility_data['total_diseases'] . "' WHERE district = '$district' and epiweek = '$epiweek' and reporting_year = '$reporting_year' and disease = '" . $facility_data['disease'] . "'";
+
+				$update = $this -> db -> query($update_query);
+				//echo $update;
+			}
+		}
+		//If no facility data was returned, then delete the report
+		if (!isset($facility_surveillance_data[0])) {
+			$delete_district_data = "delete from surveillance where district = '$district' and epiweek = '$epiweek' and reporting_year = '$reporting_year'";
+			//echo $delete_district_data;
+			$delete = $this -> db -> query($delete_district_data);
+			//echo $delete;
+		}
+
+		//Proceed to update the lab results
+		//retrieve the district lab result
+		$district_lab_sql = "SELECT district FROM `lab_weekly` where district = '$district' and epiweek = '$epiweek' and reporting_year = '$reporting_year'";
+		$district_lab_query = $this -> db -> query($district_lab_sql);
+		$district_lab_data = $district_lab_query -> row_array();
+		//var_dump($district_lab_surveillance_data);
+		//retrieve the totals of the facility lab reports
+		$facility_lab_results = "SELECT `epiweek`, `week_ending`, `district`, `facility`, `remarks`, sum(malaria_below_5) as malaria_below_5, sum(malaria_above_5) as malaria_above_5, sum(positive_below_5) as positive_below_5, sum(positive_above_5) as positive_above_5, `date_created`, `reporting_year` FROM `facility_lab_weekly` WHERE district = '$district' and epiweek = '$epiweek' and reporting_year = '$reporting_year'";
+		$facilities_lab_query = $this -> db -> query($facility_lab_results);
+		$facility_lab_data = $facilities_lab_query -> row_array();
+		//Check if district lab data is available. If so, update it. If not, create it.
+		if (isset($district_lab_data['district'])) {
+			$update_lab_query = "UPDATE `lab_weekly` SET `remarks`='" . $facility_lab_data['remarks'] . "',`malaria_below_5`='" . $facility_lab_data['malaria_below_5'] . "',`malaria_above_5`='" . $facility_lab_data['malaria_above_5'] . "',`positive_below_5`='" . $facility_lab_data['positive_below_5'] . "',`positive_above_5`='" . $facility_lab_data['positive_above_5'] . "' WHERE district = '$district' and epiweek = '$epiweek' and reporting_year = '$reporting_year'";
+			$lab_update = $this -> db -> query($update_lab_query);
+			//echo $lab_update;
+		} else {
+			$insert_lab_query = "INSERT INTO `lab_weekly`(`epiweek`, `week_ending`, `district`, `facility`, `remarks`, `malaria_below_5`, `malaria_above_5`, `positive_below_5`, `positive_above_5`, `date_created`, `reporting_year`) VALUES ('" . $epiweek . "','" . $facility_lab_data['week_ending'] . "','" . $district . "','','" . $facility_lab_data['remarks'] . "','" . $facility_lab_data['malaria_below_5'] . "','" . $facility_lab_data['malaria_above_5'] . "','" . $facility_lab_data['positive_below_5'] . "','" . $facility_lab_data['positive_above_5'] . "','" . $facility_lab_data['date_created'] . "','" . $reporting_year . "')";
+			$lab_insert = $this -> db -> query($insert_lab_query);
+			//echo $lab_insert . "in";
+		}
+
+	}
+
 	public function save() {
+		$this -> load -> database();
 		$i = 0;
 		$valid = $this -> _validate_submission();
 		if ($valid == false) {
@@ -143,19 +210,19 @@ class Weekly_Data_Management extends MY_Controller {
 			$diseases = Disease::getAllObjects();
 			$district = $this -> session -> userdata('district_province_id');
 			$editing_district_id = $this -> input -> post('editing_district_id');
-			if(strlen($editing_district_id)>0){
+			if (strlen($editing_district_id) > 0) {
 				$district = $editing_district_id;
-			}			
-			$weekending = $this -> input -> post("week_ending");
-			$reporting_year = $this -> input -> post("reporting_year");
-			$epiweek = $this -> input -> post("epiweek");
-			$facility = $this -> input -> post("facility");
+			}
+			$weekending = $this -> db -> escape_str($this -> input -> post("week_ending"));
+			$reporting_year = $this -> db -> escape_str($this -> input -> post("reporting_year"));  
+			$epiweek = $this -> db -> escape_str($this -> input -> post("epiweek"));  
+			$facility = $this -> db -> escape_str($this -> input -> post("facility"));  
 			$lcase = $this -> input -> post("lcase");
 			$ldeath = $this -> input -> post("ldeath");
 			$gcase = $this -> input -> post("gcase");
 			$gdeath = $this -> input -> post("gdeath");
-			$reported_by = $this -> input -> post("reported_by");
-			$designation = $this -> input -> post("designation");
+			$reported_by = $this -> db -> escape_str($this -> input -> post("reported_by"));  
+			$designation = $this -> db -> escape_str($this -> input -> post("designation"));  
 			$lab_id = $this -> input -> post("lab_id");
 			$surveillance_ids = $this -> input -> post("surveillance_ids");
 			//Check if a duplicate for facility data exists
@@ -178,14 +245,6 @@ class Weekly_Data_Management extends MY_Controller {
 			$timestamp = date('d/m/Y');
 			$i = 0;
 			foreach ($diseases as $disease) {
-				//also retrieve the aggregated district record to update it
-				$district_data = Surveillance::getDistrictDiseaseData($epiweek, $reporting_year, $district, $disease -> id);
-				//If the record already existed, just update it. If not, create a new one!
-				if (!$district_data -> id) {
-					$district_data = new Surveillance();
-				} else {
-					$existing_district_data = true;
-				}
 				if ($editing == true) {
 					//If we are editing, retrieve the record being edited from the database
 					$surveillance = Facility_Surveillance_Data::getSurveillance($surveillance_ids[$i]);
@@ -196,92 +255,6 @@ class Weekly_Data_Management extends MY_Controller {
 				}
 
 				//Populate the district surveillance data
-				$district_data -> Week_Ending = $weekending;
-				$district_data -> Epiweek = $epiweek;
-				$district_data -> District = $district;
-				$district_data -> Expected = Facilities::getExpected($district);
-				//If the district data already existed, update it. Else, create it
-				if ($existing_district_data) {
-					//If we are editing a record,
-					if ($editing == true) {
-						//retrieve the value in the district row,
-						$district_lcase = $district_data -> Lcase;
-						//subtract the old value and add the new value
-						$district_lcase -= $surveillance -> Lcase;
-						$district_lcase += $lcase[$i];
-
-						//retrieve the value in the district row,
-						$district_ldeath = $district_data -> Ldeath;
-						//subtract the old value and add the new value
-						$district_ldeath -= $surveillance -> Ldeath;
-						$district_ldeath += $ldeath[$i];
-
-						//retrieve the value in the district row,
-						$district_gcase = $district_data -> Gcase;
-						//subtract the old value and add the new value
-						$district_gcase -= $surveillance -> Gcase;
-						$district_gcase += $gcase[$i];
-
-						//retrieve the value in the district row,
-						$district_gdeath = $district_data -> Gdeath;
-						//subtract the old value and add the new value
-						$district_gdeath -= $surveillance -> Gdeath;
-						$district_gdeath += $gdeath[$i];
-
-						$district_data -> clearRelated();
-						$district_data -> Lcase = $district_lcase;
-						$district_data -> Ldeath = $district_ldeath;
-						$district_data -> Gcase = $district_gcase;
-						$district_data -> Gdeath = $district_gdeath;
-					}
-					//If it is a new facility record, just add it to the existing values
-					else {
-						//retrieve the value in the district row,
-						$district_lcase = $district_data -> Lcase;
-						$district_lcase += $lcase[$i];
-
-						//retrieve the value in the district row,
-						$district_ldeath = $district_data -> Ldeath;
-						$district_ldeath += $ldeath[$i];
-
-						//retrieve the value in the district row,
-						$district_gcase = $district_data -> Gcase;
-						$district_gcase += $gcase[$i];
-
-						//retrieve the value in the district row,
-						$district_gdeath = $district_data -> Gdeath;
-						$district_gdeath += $gdeath[$i];
-
-						//Update the submitted/expected parameters
-						$district_submitted = $district_data -> Submitted;
-						$district_submitted += 1;
-
-						$district_data -> clearRelated();
-						$district_data -> Lcase = $district_lcase;
-						$district_data -> Ldeath = $district_ldeath;
-						$district_data -> Gcase = $district_gcase;
-						$district_data -> Gdeath = $district_gdeath;
-						$district_data -> Submitted = $district_submitted;
-
-					}
-
-				} else {
-					$district_data -> Lcase = $lcase[$i];
-					$district_data -> Ldeath = $ldeath[$i];
-					$district_data -> Gcase = $gcase[$i];
-					$district_data -> Gdeath = $gdeath[$i];
-					$district_data -> Submitted = '1';
-				}
-
-				$district_data -> Disease = $disease;
-				$district_data -> Reporting_Year = $reporting_year;
-				$district_data -> Created_By = $this -> session -> userdata('user_id');
-				$district_data -> Date_Created = date("Y-m-d");
-				$district_data -> Reported_By = $reported_by;
-				$district_data -> Designation = $designation;
-				$district_data -> Total_Diseases = $total_diseases;
-				$district_data -> Date_Reported = $timestamp;
-				$district_data -> save();
 
 				//Populate the facility surveillance data
 				$surveillance -> clearRelated();
@@ -307,15 +280,6 @@ class Weekly_Data_Management extends MY_Controller {
 
 			//Lab Data
 			//also retrieve the aggregated district record to update it
-			$district_lab__data = Lab_Weekly::getWeeklyDistrictLabData($epiweek, $reporting_year, $district);
-			$district_lab__data = $district_lab__data[0];
-			//If the record already existed, just update it. If not, create a new one!
-			if (!$district_lab__data -> id) {
-				$district_lab__data = new Lab_Weekly();
-			} else {
-				$existing_district_lab_data = true;
-			}
-
 			//Check if we are editing the facility lab data
 			if ($editing == true) {
 				$labdata = Facility_Lab_Weekly::getLabObject($lab_id);
@@ -327,70 +291,6 @@ class Weekly_Data_Management extends MY_Controller {
 			$totalpositivelessfive = $this -> input -> post("total_positive_less_than_five");
 			$totalpositivegreaterfive = $this -> input -> post("total_positive_greater_than_five");
 			$remarks = $this -> input -> post("remarks");
-
-			//Populate the district lab data
-			$district_lab__data -> Week_Ending = $weekending;
-			$district_lab__data -> Epiweek = $epiweek;
-			$district_lab__data -> District = $district;
-			//If the district data already existed, update it. Else, create it
-			if ($existing_district_lab_data) {
-				//If we are editing a record,
-				//retrieve the value in the district row,
-				$district_mbelow = $district_lab__data -> Malaria_Below_5;
-				//retrieve the value in the district row,
-				$district_mabove = $district_lab__data -> Malaria_Above_5;
-
-				//retrieve the value in the district row,
-				$district_pbelow = $district_lab__data -> Positive_Below_5;
-
-				//retrieve the value in the district row,
-				$district_pabove = $district_lab__data -> Positive_Above_5;
-
-				if ($editing == true) {
-					//subtract the old value and add the new value
-					$district_mbelow -= $labdata -> Malaria_Below_5;
-					$district_mbelow += $totaltestedlessfive;
-
-					//subtract the old value and add the new value
-					$district_mabove -= $labdata -> Malaria_Above_5;
-					$district_mabove += $totaltestedgreaterfive;
-
-					//subtract the old value and add the new value
-					$district_pbelow -= $labdata -> Positive_Below_5;
-					$district_pbelow += $totalpositivelessfive;
-
-					//subtract the old value and add the new value
-					$district_pabove -= $labdata -> Positive_Above_5;
-					$district_pabove += $totalpositivegreaterfive;
-				}
-				//If it is a new facility record, just add it to the existing values
-				else {
-					$district_mbelow += $totaltestedlessfive;
-
-					$district_mabove += $totaltestedgreaterfive;
-
-					$district_pbelow += $totalpositivelessfive;
-
-					$district_pabove += $totalpositivegreaterfive;
-
-				}
-				$district_lab__data -> clearRelated();
-				$district_lab__data -> Malaria_Below_5 = $district_mbelow;
-				$district_lab__data -> Malaria_Above_5 = $district_mabove;
-				$district_lab__data -> Positive_Below_5 = $district_pbelow;
-				$district_lab__data -> Positive_Above_5 = $district_pabove;
-
-			} else {
-				$district_lab__data -> Malaria_Below_5 = $totaltestedlessfive;
-				$district_lab__data -> Malaria_Above_5 = $totaltestedgreaterfive;
-				$district_lab__data -> Positive_Below_5 = $totalpositivelessfive;
-				$district_lab__data -> Positive_Above_5 = $totalpositivegreaterfive;
-			}
-
-			$district_lab__data -> Reporting_Year = $reporting_year;
-			$district_lab__data -> Date_Created = date("Y-m-d");
-			$district_lab__data -> Remarks = $remarks;
-			$district_lab__data -> save();
 
 			//Populate the facility lab data
 			$labdata -> Epiweek = $epiweek;
@@ -405,6 +305,7 @@ class Weekly_Data_Management extends MY_Controller {
 			$labdata -> Reporting_Year = $reporting_year;
 			$labdata -> Date_Created = date("Y-m-d");
 			$labdata -> save();
+			$this -> update_district_record($district, $epiweek, $reporting_year);
 			if ($editing) {
 				$data['success_message'] = "You have successfully edited data for <b>" . $labdata -> Facility_Object -> name . "</b>";
 				$this -> add($data);

@@ -49,13 +49,14 @@ class Disease_Ranking extends MY_Controller {
 			$this -> pagination -> initialize($config);
 			$data['pagination'] = $this -> pagination -> create_links();
 		}
+		$disease_object = Disease::getDisease($disease);
 		$data['reports'] = $facilities;
 		$data['total_diseases'] = Disease::getTotal();
 		$data['banner_text'] = "All Facilities";
 		$data['epiweek'] = $epiweek;
 		$data['year'] = $year;
 		$data['module_view'] = "disease_ranking_listing_v"; 
-		$data['small_title'] = "Malaria Reports for " . $year . " Epiweek " . $epiweek;
+		$data['small_title'] = $disease_object->Name." Reports for " . $year . " Epiweek " . $epiweek;
 		$this -> base_params($data);
 	}
 

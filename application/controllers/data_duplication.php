@@ -30,35 +30,34 @@ class Data_Duplication extends MY_Controller {
 	public function analyze() {
 		$year = $this -> input -> post('year');
 		$epiweek = $this -> input -> post('epiweek');
-		$data['duplicates'] = Surveillance::getDuplicates($year, $epiweek);
+		$district = $this -> session -> userdata('district_province_id');
+		$data['duplicates'] = Facility_Surveillance_Data::getDuplicates($year, $epiweek, $district);
 		$data['quality_view'] = "data_duplication_v";
 		$data['total_diseases'] = Disease::getTotal();
 		$data['epiweek'] = $epiweek;
 		$data['year'] = $year;
-		$data['small_title'] = "Districts with duplicates in " . $year . " Epiweek " . $epiweek;
+		$data['small_title'] = "Facilities with duplicate reports in " . $year . " Epiweek " . $epiweek;
 		$this -> base_params($data);
 	}
 
-	public function view_details($epiweek, $year, $district) {
-		$data['surveillance_data'] = Surveillance::getSurveillanceData($epiweek, $year, $district);
-		$data['lab_data'] = Lab_Weekly::getWeeklyDistrictLabData($epiweek, $year, $district);
+	public function view_details($epiweek, $year, $facility) {
+		$data['surveillance_data'] = Facility_Surveillance_Data::getSurveillanceData($epiweek, $year, $facility);
+		$data['lab_data'] = Facility_Lab_Weekly::getWeeklyFacilityLabData($epiweek, $year, $facility);
 		$data['quality_view'] = "data_duplication_details_v";
 		$data['diseases'] = Disease::getAllObjects();
 		$this -> base_params($data);
 	}
 
-	public function edit_duplicate($number_of_diseases, $first_surveillance_id, $malaria_data_id) {
+	public function edit_duplicate($facility, $number_of_diseases, $first_surveillance_id, $malaria_data_id) {
 		$last_surveillance_id = $first_surveillance_id + $number_of_diseases - 1;
-		$provinces = Province::getAll();
-		$districts = District::getAll();
+		$district = $this -> session -> userdata('district_province_id');
+		$data['facilities'] = Facilities::getDistrictFacilities($district);
 		$diseases = Disease::getAllObjects();
-
-		$data['provinces'] = $provinces;
-		$data['districts'] = $districts;
+		$data['admin_facility'] = $facility;
 		$data['diseases'] = $diseases;
 		$data['prediction'] = Surveillance::getPrediction();
-		$data['surveillance_data'] = Surveillance::getSurveillanceDataRange($first_surveillance_id, $last_surveillance_id);
-		$data['lab_data'] = Lab_Weekly::getLabObjects($malaria_data_id);
+		$data['surveillance_data'] = Facility_Surveillance_Data::getSurveillanceDataRange($first_surveillance_id, $last_surveillance_id);
+		$data['lab_data'] = Facility_Lab_Weekly::getLabObjects($malaria_data_id);
 		$data['editing'] = true;
 		$data['scripts'] = array("special_date_picker.js", "validationEngine-en.js", "validator.js");
 		$data["styles"] = array("validator.css");
@@ -69,16 +68,57 @@ class Data_Duplication extends MY_Controller {
 		$this -> load -> view("template", $data);
 	}
 
-	public function delete_duplicate($number_of_diseases, $first_surveillance_id, $malaria_data_id,$district,$epiweek,$year) {
+	public function delete_duplicate($number_of_diseases, $first_surveillance_id, $malaria_data_id, $district, $epiweek, $year) {
+		
 		$last_surveillance_id = $first_surveillance_id + $number_of_diseases - 1;
-		$surveillance_records = Surveillance::getSurveillanceDataRange($first_surveillance_id, $last_surveillance_id);
-		foreach($surveillance_records as $surveillance_record){
-			$surveillance_record->delete();
+		$surveillance_records = Facility_Surveillance_Data::getSurveillanceDataRange($first_surveillance_id, $last_surveillance_id);
+		$facility = $surveillance_records[0]->Facility;
+		//loop through all the records returned, delete them and update the relevant district data
+		foreach ($surveillance_records as $surveillance_record) {
+			//Get the district surveillance data
+			$district_data = Surveillance::getDistrictDiseaseData($epiweek, $year, $district,$surveillance_record->Disease);
+			$lcase = $surveillance_record -> Lcase;
+			$ldeath = $surveillance_record -> Ldeath;
+			$gcase = $surveillance_record -> Gcase;
+			$gdeath = $surveillance_record -> Gdeath;
+			//Edit the number of submitted reports also
+			$district_data -> Submitted -= 1;
+			$district_data -> Lcase -= $lcase;
+			$district_data -> Ldeath -= $ldeath;
+			$district_data -> Gcase -= $gcase;
+			$district_data -> Gdeath -= $gdeath;
+
+			$district_data -> save();
+			$surveillance_record -> delete(); 
 		}
-		$lab_data = Lab_Weekly::getLabObjects($malaria_data_id);
-		$lab_data->delete();
-		$redirection_url = base_url()."data_duplication/view_details/".$epiweek."/".$year."/".$district;
-		redirect($redirection_url); 
+		//Get the district malaria lab data
+		$lab_data = Lab_Weekly::getWeeklyDistrictLabData($epiweek, $year, $district);
+		$lab_data = $lab_data[0];
+		//Get the facility malaria lab data
+		$facility_lab_data = Facility_Lab_Weekly::getLabObjects($malaria_data_id);
+		$facility_lab_data = $facility_lab_data[0];
+
+		$totaltestedlessfive = $facility_lab_data -> Malaria_Below_5;
+		$totaltestedgreaterfive = $facility_lab_data -> Malaria_Above_5;
+		$totalpositivelessfive = $facility_lab_data -> Positive_Below_5;
+		$totalpositivegreaterfive = $facility_lab_data -> Positive_Above_5;
+
+		$lab_data -> Malaria_Below_5 -= $totaltestedlessfive;
+		$lab_data -> Malaria_Above_5 -= $totaltestedgreaterfive;
+		$lab_data -> Positive_Below_5 -= $totalpositivelessfive;
+		$lab_data -> Positive_Above_5 -= $totalpositivegreaterfive;
+		$lab_data -> save();
+		$facility_lab_data -> delete();
+
+		//Log the action
+		$log = new Data_Delete_Log();
+		$log -> Deleted_By = $this -> session -> userdata('user_id');
+		$log -> Facility_Affected = $facility;
+		$log -> Epiweek = $epiweek;
+		$log -> Reporting_Year = $year;
+		$log -> Timestamp = date('U');
+		$log -> save();
+		redirect("data_delete_management");
 	}
 
 }

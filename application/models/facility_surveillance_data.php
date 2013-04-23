@@ -100,13 +100,6 @@ class Facility_Surveillance_Data extends Doctrine_Record {
 		return $result[0];
 	}
 
-	public function getDuplicates($year, $epiweek) {
-		$total_diseases = Disease::getTotal();
-		$query = Doctrine_Query::create() -> select("Facility, Reporting_Year, Week_Ending, Epiweek, count(id) as Records") -> from("Facility_Surveillance_Data") -> where("epiweek = '$epiweek' and Reporting_Year = '$year'") -> groupBy("Facility") -> having("Records > '$total_diseases'");
-		$result = $query -> execute();
-		return $result;
-	}
-
 	public function getSurveillanceDataArray($epiweek, $reporting_year, $facility) {
 		$query = Doctrine_Query::create() -> select("*") -> from("Facility_Surveillance_Data") -> where("Reporting_Year='$reporting_year' and Epiweek='$epiweek' and Facility = '$facility'");
 		$result = $query -> execute(array(), Doctrine::HYDRATE_ARRAY);
@@ -125,8 +118,8 @@ class Facility_Surveillance_Data extends Doctrine_Record {
 		return $result;
 	}
 
-	public function getRankedReports($year, $epiweek, $disease,$offset,$items) {
-		$query = Doctrine_Query::create() -> select("*") -> from("Facility_Surveillance_Data") -> where("Reporting_Year = '$year' and Epiweek = '$epiweek' and disease = '$disease'") -> orderBy("abs(Gcase+Lcase) desc, abs(Gdeath+Ldeath) desc")-> offset($offset) -> limit($items);;
+	public function getRankedReports($year, $epiweek, $disease, $offset, $items) {
+		$query = Doctrine_Query::create() -> select("*") -> from("Facility_Surveillance_Data") -> where("Reporting_Year = '$year' and Epiweek = '$epiweek' and disease = '$disease'") -> orderBy("abs(Gcase+Lcase) desc, abs(Gdeath+Ldeath) desc") -> offset($offset) -> limit($items); ;
 		$result = $query -> execute();
 		return $result;
 	}
@@ -134,7 +127,7 @@ class Facility_Surveillance_Data extends Doctrine_Record {
 	public function getTotalRankedReports($year, $epiweek, $disease) {
 		$query = Doctrine_Query::create() -> select("count(*) as Total_Reports") -> from("Facility_Surveillance_Data") -> where("Reporting_Year = '$year' and Epiweek = '$epiweek' and disease = '$disease'");
 		$result = $query -> execute();
-		return $result[0]->Total_Reports;
+		return $result[0] -> Total_Reports;
 	}
 
 	public function getFacilityDiseaseData($epiweek, $year, $facility, $disease) {
@@ -147,6 +140,23 @@ class Facility_Surveillance_Data extends Doctrine_Record {
 		$query = Doctrine_Query::create() -> select("count(DISTINCT Facility) as reported_facilities") -> from("Facility_Surveillance_Data") -> where("Reporting_Year='$year' and Epiweek='$epiweek'");
 		$result = $query -> execute();
 		return $result[0] -> reported_facilities;
+	}
+
+	public function getDuplicates($year, $epiweek, $district) {
+		$total_diseases = 0;
+		//First, get the total number of diseases being reported at the time
+		$query_diseases = Doctrine_Query::create() -> select("Total_Diseases") -> from("facility_surveillance_data") -> where("epiweek = '$epiweek' and Reporting_Year = '$year' and District = '$district'") -> limit("1");
+		$result_diseases = $query_diseases -> execute(array(), Doctrine::HYDRATE_ARRAY);
+		if(isset($result_diseases[0]['Total_Diseases'])){
+			$total_diseases =  $result_diseases[0]['Total_Diseases'];
+		}
+		//If none is reported, assume the current number
+		else{
+			$total_diseases = Disease::getTotal();
+		} 
+		$query = Doctrine_Query::create() -> select("Facility,District, Reporting_Year, Week_Ending, Epiweek, count(id) as Records") -> from("facility_surveillance_data") -> where("epiweek = '$epiweek' and Reporting_Year = '$year' and District = '$district'") -> groupBy("Facility") -> having("Records > '$total_diseases'");
+		$result = $query -> execute();
+		return $result;
 	}
 
 }

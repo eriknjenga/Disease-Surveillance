@@ -75,13 +75,14 @@ if(isset($duplicates[0])){
 		<caption>
 			<?php echo $small_title;?>
 		</caption>
-		<th>District</th>
+		<th>Facility Code</th>
+		<th>Facility Name</th>
 		<th>Recordsets</th>
 		<th>Action</th>
 		<?php
 		foreach ($duplicates as $duplicate) {
-			$details_url = base_url() . "data_duplication/view_details/" . $epiweek . "/" . $year . "/" . $duplicate -> District;
-			echo "<tr><td>" . $duplicate -> District_Object -> Name . "</td><td>" . $duplicate -> Records / $total_diseases . "</td><td><a class='link' href='" . $details_url . "'>View Details</a></td></tr>";
+			$details_url = base_url() . "data_duplication/view_details/" . $epiweek . "/" . $year . "/" . $duplicate -> Facility_Object -> facilitycode;
+			echo "<tr><td>" . $duplicate -> Facility_Object -> facilitycode . "</td><td>" . $duplicate -> Facility_Object -> name . "</td><td>" . $duplicate -> Records / $total_diseases . "</td><td><a class='link' href='" . $details_url . "'>View Details</a></td></tr>";
 		}
 		?>
 	</table>

@@ -21,6 +21,12 @@ class Facilities extends Doctrine_Record {
 		return $facilities;
 	}
 
+	public function getDistrictFacilitiesArrays($district) {
+		$query = Doctrine_Query::create() -> select("facilitycode,name") -> from("Facilities") -> where("District = '" . $district . "' and reporting = '1'") -> orderBy("name asc");
+		$facilities = $query -> execute(array(), Doctrine::HYDRATE_ARRAY);
+		return $facilities;
+	}
+
 	public static function search($search) {
 		$query = Doctrine_Query::create() -> select("facilitycode,name") -> from("Facilities") -> where("name like '%" . $search . "%'");
 		$facilities = $query -> execute();
@@ -54,11 +60,13 @@ class Facilities extends Doctrine_Record {
 		$count = $query -> execute();
 		return $count[0] -> Total_Facilities;
 	}
+
 	public static function getAll() {
 		$query = Doctrine_Query::create() -> select("*") -> from("Facilities") -> where("reporting = '1'");
 		$count = $query -> execute();
 		return $count;
 	}
+
 	public function getPagedFacilities($offset, $items, $district = 0) {
 		if ($district == 0) {
 			$query = Doctrine_Query::create() -> select("*") -> from("Facilities") -> orderBy("name asc") -> offset($offset) -> limit($items);
@@ -75,6 +83,7 @@ class Facilities extends Doctrine_Record {
 		$facility = $query -> execute();
 		return $facility[0];
 	}
+
 	public static function getFacilityArray($id) {
 		$query = Doctrine_Query::create() -> select("*") -> from("Facilities") -> where("facilitycode = '$id'");
 		$facility = $query -> execute();
