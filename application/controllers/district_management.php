@@ -37,12 +37,14 @@ class District_Management extends MY_Controller {
 		$data['module_view'] = "add_district_view";
 		$data['quick_link'] = "new_district";
 		$data['provinces'] = Province::getAll();
+		$data['counties'] = County::getAll();
 		$this -> base_params($data);
 	}
 
 	public function save() {
 		$name = $this -> input -> post("name");
 		$province = $this -> input -> post("province");
+		$county = $this -> input -> post("county");
 		$latitude = $this -> input -> post("latitude");
 		$longitude = $this -> input -> post("longitude");
 		 
@@ -59,6 +61,7 @@ class District_Management extends MY_Controller {
 
 		$district -> Name = $name;
 		$district -> Province = $province;
+		$district -> County = $county;
 		$district -> Latitude = $latitude;
 		$district -> Longitude = $longitude;
 		$district -> save();
@@ -80,6 +83,7 @@ class District_Management extends MY_Controller {
 		$data['module_view'] = "add_district_view";
 		$data['quick_link'] = "new_district";
 		$data['provinces'] = Province::getAll();
+		$data['counties'] = County::getAll();
 		$this -> base_params($data);
 	}
 

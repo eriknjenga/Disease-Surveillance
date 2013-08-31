@@ -12,7 +12,8 @@
 	<th class="subsection-title" colspan="11">Districts</th>
 	<tr>
 		<th>Name</th>
-		<th>Province</th>
+		<th>County</th>
+		<th>Region</th>		
 		<th>Latitude</th>
 		<th>Longitude</th>
 		<th>Disabled?</th>
@@ -24,7 +25,8 @@ foreach($districts as $district){
 	?>
 	<tr>
 		<td><?php echo $district -> Name;?></td>
-		<td><?php echo $district -> Province_Object -> Name;?></td>
+		<td><?php echo $district -> County_Object -> Name;?></td>
+		<td><?php echo $district -> Province_Object -> Name;?></td>		
 		<td><?php echo $district -> Latitude;?></td>
 		<td><?php echo $district -> Longitude;?></td>
 		<td><?php

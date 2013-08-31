@@ -45,7 +45,7 @@ class Surveillance extends Doctrine_Record {
 	}
 
 	public static function getRawDataArray($year, $start_week, $end_week) {
-		$query = Doctrine_Query::create() -> select("s.*, s.Disease_Object.Name as Disease_Name, d.Name as District_Name, d.Province_Object.Name as Province_Name") -> from("surveillance s, s.District_Object d") -> where("Reporting_Year = '$year' and abs(Epiweek) between '$start_week' and '$end_week'") -> OrderBy("abs(Epiweek) asc");
+		$query = Doctrine_Query::create() -> select("s.*, s.Disease_Object.Name as Disease_Name, d.Name as District_Name, d.Province_Object.Name as Province_Name,d.County_Object.Name as County_Name") -> from("surveillance s, s.District_Object d") -> where("Reporting_Year = '$year' and abs(Epiweek) between '$start_week' and '$end_week'") -> OrderBy("abs(Epiweek) asc");
 		$surveillance = $query -> execute(array(), Doctrine::HYDRATE_ARRAY);
 		return $surveillance;
 	}

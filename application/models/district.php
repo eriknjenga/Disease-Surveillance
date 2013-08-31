@@ -9,16 +9,18 @@ class District extends Doctrine_Record {
 		$this -> hasColumn('Latitude', 'varchar', 100);
 		$this -> hasColumn('Longitude', 'varchar', 100);
 		$this -> hasColumn('Disabled', 'varchar', 1);
+		$this -> hasColumn('County', 'varchar', 10);
 	}//end setTableDefinition
 
 	public function setUp() {
 		$this -> setTableName('districts');
 		$this -> hasOne('Province as Province_Object', array('local' => 'Province', 'foreign' => 'id'));
+		$this -> hasOne('County as County_Object', array('local' => 'County', 'foreign' => 'id'));
 		$this -> hasMany('Surveillance as Surveillance', array('local' => 'id', 'foreign' => 'District'));
 	}//end setUp
 
 	public function getAll() {
-		$query = Doctrine_Query::create() -> select("*") -> from("District")->where("Disabled = '0'")->OrderBy("Name asc");
+		$query = Doctrine_Query::create() -> select("*") -> from("District") -> where("Disabled = '0'") -> OrderBy("Name asc");
 		$districtData = $query -> execute();
 		return $districtData;
 	}//end getAll
@@ -31,6 +33,12 @@ class District extends Doctrine_Record {
 
 	public static function getProvinceDistrict($id) {
 		$query = Doctrine_Query::create() -> select("*") -> from("District") -> where("Province = '$id' and Disabled = '0'");
+		$districtData = $query -> execute(array(), Doctrine::HYDRATE_ARRAY);
+		return $districtData;
+	}
+
+	public static function getCountyDistrict($id) {
+		$query = Doctrine_Query::create() -> select("*") -> from("District") -> where("County = '$id' and Disabled = '0'");
 		$districtData = $query -> execute(array(), Doctrine::HYDRATE_ARRAY);
 		return $districtData;
 	}
@@ -52,6 +60,7 @@ class District extends Doctrine_Record {
 		$results = $query -> execute();
 		return $results;
 	}
+
 	public static function getTotalNumber() {
 		$query = Doctrine_Query::create() -> select("COUNT(*) as Total_Districts") -> from("District");
 		$count = $query -> execute();
@@ -59,7 +68,7 @@ class District extends Doctrine_Record {
 	}
 
 	public function getPagedDistricts($offset, $items) {
-		$query = Doctrine_Query::create() -> select("*") -> from("District")-> orderBy("name") -> offset($offset) -> limit($items);
+		$query = Doctrine_Query::create() -> select("*") -> from("District") -> orderBy("name") -> offset($offset) -> limit($items);
 		$districts = $query -> execute();
 		return $districts;
 	}

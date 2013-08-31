@@ -36,8 +36,8 @@ if($this -> session -> userdata('can_download_raw_data') == '1'){
 	if ($quick_link == "timeliness_report") {echo "top_menu_active";
 	}
 	?>">Timeliness Report</a>
-	<a href="<?php echo site_url("weekly_report");?>" class=" top_menu_link sub_menu_link last_link  <?php
-	if ($quick_link == "weekly_report") {echo "top_menu_active";
+	<a href="<?php echo site_url("weekly_report_demo");?>" class=" top_menu_link sub_menu_link last_link  <?php
+	if ($quick_link == "weekly_report_demo") {echo "top_menu_active";
 	}
 	?>">Weekly Report</a>
 </div>
