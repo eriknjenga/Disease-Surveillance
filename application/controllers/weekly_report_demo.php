@@ -71,10 +71,12 @@ class Weekly_Report_Demo extends MY_Controller {
                 <th rowspan=2>District</th>
                 <th rowspan=2>Reports Expected</th>
                 <th rowspan=2>Reports Received</th>
-                <th rowspan=2>%RR</th>";
+                <th rowspan=2>%RR</th>
+                <th rowspan=2>%Timely</th>";
 		$diseases["reports"] = "reports";
 		$diseases["submitted"] = "submitted";
 		$diseases["percentage"] = "percentage";
+		$diseases["timely"] = "timely";
 		$disease_array = Disease::getAll();
 		foreach ($disease_array as $disease) {
 			if ($disease['Name'] == 'Malaria') {
@@ -128,12 +130,14 @@ class Weekly_Report_Demo extends MY_Controller {
 					if (isset($surveillance_data[0])) {
 						$available_data['reports'] = $surveillance_data[0]['Expected'];
 						$available_data['submitted'] = $surveillance_data[0]['Submitted'];
+						$available_data['timely_reports'] = $surveillance_data[0]['Timely_Reports'];
 						//Calculate the reporting
 						$available_data['percentage'] = floor(($available_data['submitted'] / $available_data['reports']) * 100);
+						$available_data['timely'] = floor(($available_data['timely_reports'] / $available_data['submitted']) * 100);
 						//Display these Parameters
-						$bata_buffer .= "<td>" . $available_data['reports'] . "</td><td>" . $available_data['submitted'] . "</td><td>" . $available_data['percentage'] . "</td>";
+						$bata_buffer .= "<td>" . $available_data['reports'] . "</td><td>" . $available_data['submitted'] . "</td><td>" . $available_data['percentage'] . "</td><td>" . $available_data['timely'] . "</td>";
 					} else {
-						$bata_buffer .= "<td>DNR</td><td>DNR</td><td>0</td>";
+						$bata_buffer .= "<td>DNR</td><td>DNR</td><td>0</td><td>0</td>";
 					}
 
 					//Check if there is any surveillance data

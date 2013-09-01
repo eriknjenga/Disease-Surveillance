@@ -81,8 +81,8 @@ class Weekly_Data_Management extends MY_Controller {
 		$data['surveillance_data'] = Facility_Surveillance_Data::getSurveillanceData($epiweek, $reporting_year, $facility);
 		$data['title'] = "Data Corruption";
 		$data['content_view'] = "data_inconsistency_v";
-		$data['banner_text'] = "Corrupt Data"; 
-		$this -> load -> view("template", $data); 
+		$data['banner_text'] = "Corrupt Data";
+		$this -> load -> view("template", $data);
 	}
 
 	public function confirm_delete_weekly_data($epiweek, $reporting_year, $facility) {
@@ -139,12 +139,19 @@ class Weekly_Data_Management extends MY_Controller {
 		//Code to retrieve the submitted and expected variables
 		$expected_facilities = Facilities::getExpected($district);
 
+		//Get the actual reported facilities
 		$sql = "SELECT count(distinct facility) as total FROM `facility_surveillance_data` where district = '$district' and epiweek = '$epiweek' and reporting_year = '$reporting_year'";
 		$query = $this -> db -> query($sql);
 		$reported_array = $query -> row_array();
 		$reported_facilities = $reported_array['total'];
 		//echo $reported_facilities;
 		//echo $expected_facilities;
+
+		//Get the number of timely reports (4 days before the week ending)
+		$timeliness_sql = "select count(distinct facility) as timely_reports from facility_surveillance_data where district = '$district' and epiweek = '$epiweek' and reporting_year = '$reporting_year' and str_to_date(date_created,'%Y-%m-%d') <= DATE_SUB(str_to_date(week_ending,'%Y-%m-%d'), INTERVAL 4 day)";
+		$timeliness_query = $this -> db -> query($timeliness_sql);
+		$timeliness_array = $timeliness_query -> row_array();
+		$timely_facilities = $timeliness_array['timely_reports'];
 
 		//Code to retrieve the cases vs. deaths variables
 		$facilities_sql = "SELECT disease,sum(lcase) as lcase,sum(ldeath) as ldeath,sum(gcase) as gcase,sum(gdeath) as gdeath,`date_created`, `created_by`, `week_ending`, `reported_by`, `designation`, `date_reported`, `reporting_year`, `total_diseases` FROM `facility_surveillance_data` where district = '$district' and epiweek = '$epiweek' and reporting_year = '$reporting_year' group by disease";
@@ -155,12 +162,12 @@ class Weekly_Data_Management extends MY_Controller {
 			//Check whether any district data was returned, if not, generate an insert query, if so, generate an update query
 			if (!isset($district_data_array[$facility_data['disease']])) {
 				//generate insert statement
-				$insert_query = "INSERT INTO `surveillance`(`disease`, `lcase`, `ldeath`, `date_created`, `created_by`, `epiweek`, `submitted`, `expected`, `district`, `week_ending`, `gcase`, `gdeath`, `reported_by`, `designation`, `date_reported`, `reporting_year`, `total_diseases`) VALUES ('" . $facility_data['disease'] . "','" . $facility_data['lcase'] . "','" . $facility_data['ldeath'] . "','" . $facility_data['date_created'] . "','" . $facility_data['created_by'] . "','" . $epiweek . "','" . $reported_facilities . "','" . $expected_facilities . "','" . $district . "','" . $facility_data['week_ending'] . "','" . $facility_data['gcase'] . "','" . $facility_data['gdeath'] . "','" . $facility_data['reported_by'] . "','" . $facility_data['designation'] . "','" . $facility_data['date_reported'] . "','" . $facility_data['reporting_year'] . "','" . $facility_data['total_diseases'] . "')";
+				$insert_query = "INSERT INTO `surveillance`(`disease`, `lcase`, `ldeath`, `date_created`, `created_by`, `epiweek`, `submitted`,`timely_reports`, `expected`, `district`, `week_ending`, `gcase`, `gdeath`, `reported_by`, `designation`, `date_reported`, `reporting_year`, `total_diseases`) VALUES ('" . $facility_data['disease'] . "','" . $facility_data['lcase'] . "','" . $facility_data['ldeath'] . "','" . $facility_data['date_created'] . "','" . $facility_data['created_by'] . "','" . $epiweek . "','" . $reported_facilities. "','" . $timely_facilities . "','" . $expected_facilities . "','" . $district . "','" . $facility_data['week_ending'] . "','" . $facility_data['gcase'] . "','" . $facility_data['gdeath'] . "','" . $facility_data['reported_by'] . "','" . $facility_data['designation'] . "','" . $facility_data['date_reported'] . "','" . $facility_data['reporting_year'] . "','" . $facility_data['total_diseases'] . "')";
 				$insert = $this -> db -> query($insert_query);
 				//echo $insert . "da";
 			} else {
 				//generate update statement
-				$update_query = "UPDATE `surveillance` SET `lcase`='" . $facility_data['lcase'] . "',`ldeath`='" . $facility_data['ldeath'] . "',`submitted`='" . $reported_facilities . "',`expected`='" . $expected_facilities . "',`gcase`='" . $facility_data['gcase'] . "',`gdeath`='" . $facility_data['gdeath'] . "',`total_diseases`='" . $facility_data['total_diseases'] . "' WHERE district = '$district' and epiweek = '$epiweek' and reporting_year = '$reporting_year' and disease = '" . $facility_data['disease'] . "'";
+				$update_query = "UPDATE `surveillance` SET `lcase`='" . $facility_data['lcase'] . "',`ldeath`='" . $facility_data['ldeath'] . "',`submitted`='" . $reported_facilities . "',`timely_reports`='" . $timely_facilities. "',`expected`='" . $expected_facilities . "',`gcase`='" . $facility_data['gcase'] . "',`gdeath`='" . $facility_data['gdeath'] . "',`total_diseases`='" . $facility_data['total_diseases'] . "' WHERE district = '$district' and epiweek = '$epiweek' and reporting_year = '$reporting_year' and disease = '" . $facility_data['disease'] . "'";
 
 				$update = $this -> db -> query($update_query);
 				//echo $update;
@@ -214,15 +221,15 @@ class Weekly_Data_Management extends MY_Controller {
 				$district = $editing_district_id;
 			}
 			$weekending = $this -> db -> escape_str($this -> input -> post("week_ending"));
-			$reporting_year = $this -> db -> escape_str($this -> input -> post("reporting_year"));  
-			$epiweek = $this -> db -> escape_str($this -> input -> post("epiweek"));  
-			$facility = $this -> db -> escape_str($this -> input -> post("facility"));  
+			$reporting_year = $this -> db -> escape_str($this -> input -> post("reporting_year"));
+			$epiweek = $this -> db -> escape_str($this -> input -> post("epiweek"));
+			$facility = $this -> db -> escape_str($this -> input -> post("facility"));
 			$lcase = $this -> input -> post("lcase");
 			$ldeath = $this -> input -> post("ldeath");
 			$gcase = $this -> input -> post("gcase");
 			$gdeath = $this -> input -> post("gdeath");
-			$reported_by = $this -> db -> escape_str($this -> input -> post("reported_by"));  
-			$designation = $this -> db -> escape_str($this -> input -> post("designation"));  
+			$reported_by = $this -> db -> escape_str($this -> input -> post("reported_by"));
+			$designation = $this -> db -> escape_str($this -> input -> post("designation"));
 			$lab_id = $this -> input -> post("lab_id");
 			$surveillance_ids = $this -> input -> post("surveillance_ids");
 			//Check if a duplicate for facility data exists
@@ -356,6 +363,19 @@ class Weekly_Data_Management extends MY_Controller {
 		} else {
 			echo "no";
 		}
+	}
+	function update_district_reports($week, $year){
+		$this -> load -> database();
+		$districts_sql = "select distinct district from surveillance where epiweek = '$week' and reporting_year = '$year'";
+		$districts_query = $this -> db -> query($districts_sql);
+		$districts_array = $districts_query -> result_array();
+		foreach($districts_array as $districts_data){
+			$this->update_district_record($districts_data['district'], $week, $year);
+			echo "Updated For district: ".$districts_data['district']."<br>";
+		}
+		
+		
+		
 	}
 
 	public function base_params($data) {

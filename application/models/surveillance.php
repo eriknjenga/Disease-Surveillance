@@ -8,6 +8,7 @@ class Surveillance extends Doctrine_Record {
 		$this -> hasColumn('Created_By', 'varchar', 32);
 		$this -> hasColumn('Epiweek', 'varchar', 4);
 		$this -> hasColumn('Submitted', 'varchar', 15);
+		$this -> hasColumn('Timely_Reports', 'varchar', 10);
 		$this -> hasColumn('Expected', 'varchar', 15);
 		$this -> hasColumn('District', 'varchar', 15);
 		$this -> hasColumn('Week_Ending', 'varchar', 20);
@@ -51,7 +52,7 @@ class Surveillance extends Doctrine_Record {
 	}
 
 	public static function getWeeklySummaries($year, $epiweek, $district) {
-		$query = Doctrine_Query::create() -> select("Submitted, Expected, Disease, Lcase+Gcase as Cases, Ldeath+Gdeath as Deaths") -> from("surveillance") -> where("Reporting_Year = '$year' and Epiweek = '$epiweek' and District = '$district'") -> OrderBy("abs(Disease) asc");
+		$query = Doctrine_Query::create() -> select("Submitted, Expected,Timely_Reports, Disease, Lcase+Gcase as Cases, Ldeath+Gdeath as Deaths") -> from("surveillance") -> where("Reporting_Year = '$year' and Epiweek = '$epiweek' and District = '$district'") -> OrderBy("abs(Disease) asc");
 		$surveillance = $query -> execute(array(), Doctrine::HYDRATE_ARRAY);
 		return $surveillance;
 	}
